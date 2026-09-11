@@ -1,0 +1,26 @@
+{
+  "name": "AL BRAZILLI TECHNOLOGIES",
+  "short_name": "AL BRAZILLI",
+  "description": "نظام إدارة الأعمال المتكامل - إدارة رخص البناء والتعمير والتصالح",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#CE1126",
+  "theme_color": "#CE1126",
+  "orientation": "portrait",
+  "lang": "ar",
+  "dir": "rtl",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
