@@ -10,707 +10,238 @@
     
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        
         :root {
-            --red: #CE1126;
-            --gold: #C9A84C;
-            --black: #1a1a2e;
-            --white: #FFFFFF;
-            --success: #009739;
-            --danger: #e53e3e;
-            --warning: #f39c12;
-            --info: #3498db;
-            --shadow: 0 3px 15px rgba(0,0,0,0.08);
-            --radius: 12px;
+            --red: #CE1126; --gold: #C9A84C; --black: #1a1a2e; --white: #FFFFFF;
+            --success: #009739; --danger: #e53e3e; --warning: #f39c12;
+            --info: #3498db; --purple: #9f7aea;
+            --shadow: 0 3px 15px rgba(0,0,0,0.08); --radius: 12px;
         }
+        body { font-family: 'Segoe UI','Tahoma',Arial,sans-serif; background:#f0f2f5; color:#2d3748; direction:rtl; min-height:100vh; }
         
-        body {
-            font-family: 'Segoe UI', 'Tahoma', Arial, sans-serif;
-            background: #f0f2f5;
-            color: #2d3748;
-            direction: rtl;
-            min-height: 100vh;
-        }
+        .loading-screen { display:flex; align-items:center; justify-content:center; min-height:100vh; background:linear-gradient(135deg,var(--red),var(--black)); position:fixed; top:0;left:0;right:0;bottom:0; z-index:10000; color:white; flex-direction:column; gap:20px; }
+        .loading-screen .spinner { width:60px; height:60px; border:4px solid rgba(255,255,255,0.2); border-top-color:var(--gold); border-radius:50%; animation:spin 1s linear infinite; }
+        @keyframes spin { to { transform:rotate(360deg); } }
+        .loading-screen .text { font-size:18px; font-weight:bold; }
+        .loading-screen .subtext { font-size:13px; opacity:0.7; }
+        .loading-screen.hidden { display:none; }
         
-        .loading-screen {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            background: linear-gradient(135deg, var(--red), var(--black));
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            z-index: 10000;
-            color: white;
-            flex-direction: column;
-            gap: 20px;
-        }
-        .loading-screen .spinner {
-            width: 60px; height: 60px;
-            border: 4px solid rgba(255,255,255,0.2);
-            border-top-color: var(--gold);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-        @keyframes spin { to { transform: rotate(360deg); } }
-        .loading-screen .text { font-size: 18px; font-weight: bold; }
-        .loading-screen .subtext { font-size: 13px; opacity: 0.7; }
-        .loading-screen.hidden { display: none; }
+        .connection-status { position:fixed; bottom:10px; left:10px; background:white; padding:6px 14px; border-radius:20px; font-size:11px; box-shadow:0 3px 10px rgba(0,0,0,0.15); z-index:9998; display:flex; align-items:center; gap:6px; font-weight:600; }
+        .connection-status .dot { width:8px; height:8px; border-radius:50%; background:#ccc; }
+        .connection-status.online .dot { background:var(--success); animation:pulse 2s infinite; }
+        .connection-status.offline .dot { background:var(--danger); }
+        .connection-status.syncing .dot { background:var(--warning); animation:pulse 1s infinite; }
+        @keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:0.4;} }
         
-        .connection-status {
-            position: fixed;
-            bottom: 10px; left: 10px;
-            background: white;
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-size: 11px;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.15);
-            z-index: 9998;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            font-weight: 600;
-        }
-        .connection-status .dot {
-            width: 8px; height: 8px;
-            border-radius: 50%;
-            background: #ccc;
-        }
-        .connection-status.online .dot { background: var(--success); animation: pulse 2s infinite; }
-        .connection-status.offline .dot { background: var(--danger); }
-        .connection-status.syncing .dot { background: var(--warning); animation: pulse 1s infinite; }
-        @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
+        .login-screen { display:flex; align-items:center; justify-content:center; min-height:100vh; background:linear-gradient(135deg,var(--red),var(--black)); position:fixed; top:0;left:0;right:0;bottom:0; z-index:9999; padding:20px; transition:all 0.5s ease; }
+        .login-screen.hidden { opacity:0; pointer-events:none; transform:scale(1.1); }
+        .login-box { background:rgba(255,255,255,0.95); padding:35px 25px; border-radius:var(--radius); text-align:center; max-width:400px; width:100%; border:2px solid var(--gold); box-shadow:0 15px 50px rgba(0,0,0,0.2); }
+        .login-box .flag { font-size:50px; margin-bottom:8px; display:block; }
+        .login-box .title { font-size:22px; font-weight:900; color:var(--red); }
+        .login-box .title .gold { color:var(--gold); }
+        .login-box .sub { font-size:12px; color:#888; display:block; }
+        .login-box .subtitle { color:var(--gold); font-size:13px; margin:10px 0; }
+        .login-box .lock { font-size:30px; background:var(--red); color:white; width:60px; height:60px; line-height:60px; border-radius:50%; display:inline-block; margin:10px 0; }
+        .login-box .input-group { position:relative; margin:15px 0; }
+        .login-box .input-group span { position:absolute; right:15px; top:50%; transform:translateY(-50%); font-size:18px; }
+        .login-box .input-group input { width:100%; padding:14px 50px 14px 18px; border:2px solid #ddd; border-radius:10px; font-size:16px; }
+        .login-box .input-group input:focus { border-color:var(--red); outline:none; }
+        .login-box .btn-login { width:100%; padding:14px; background:linear-gradient(135deg,var(--red),var(--black)); color:white; border:none; border-radius:10px; font-size:18px; font-weight:700; cursor:pointer; }
+        .login-box .btn-login:hover { transform:scale(1.02); }
+        .login-box .error-msg { background:#fee; color:#c53030; padding:8px; border-radius:8px; font-size:13px; margin-top:10px; display:none; }
         
-        .login-screen {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            background: linear-gradient(135deg, var(--red), var(--black));
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            z-index: 9999;
-            padding: 20px;
-            transition: all 0.5s ease;
-        }
-        .login-screen.hidden {
-            opacity: 0;
-            pointer-events: none;
-            transform: scale(1.1);
-        }
+        .app { display:none; padding:15px; max-width:1200px; margin:0 auto; }
+        .app.active { display:block; }
         
-        .login-box {
-            background: rgba(255,255,255,0.95);
-            padding: 35px 25px;
-            border-radius: var(--radius);
-            text-align: center;
-            max-width: 400px;
-            width: 100%;
-            border: 2px solid var(--gold);
-            box-shadow: 0 15px 50px rgba(0,0,0,0.2);
-        }
-        .login-box .flag { font-size: 50px; margin-bottom: 8px; display: block; }
-        .login-box .title { font-size: 22px; font-weight: 900; color: var(--red); }
-        .login-box .title .gold { color: var(--gold); }
-        .login-box .sub { font-size: 12px; color: #888; display: block; }
-        .login-box .subtitle { color: var(--gold); font-size: 13px; margin: 10px 0; }
-        .login-box .lock { font-size: 30px; background: var(--red); color: white; width: 60px; height: 60px; line-height: 60px; border-radius: 50%; display: inline-block; margin: 10px 0; }
-        .login-box .input-group { position: relative; margin: 15px 0; }
-        .login-box .input-group span { position: absolute; right: 15px; top: 50%; transform: translateY(-50%); font-size: 18px; }
-        .login-box .input-group input { width: 100%; padding: 14px 50px 14px 18px; border: 2px solid #ddd; border-radius: 10px; font-size: 16px; }
-        .login-box .input-group input:focus { border-color: var(--red); outline: none; }
-        .login-box .btn-login { width: 100%; padding: 14px; background: linear-gradient(135deg, var(--red), var(--black)); color: white; border: none; border-radius: 10px; font-size: 18px; font-weight: 700; cursor: pointer; }
-        .login-box .btn-login:hover { transform: scale(1.02); }
-        .login-box .error-msg { background: #fee; color: #c53030; padding: 8px; border-radius: 8px; font-size: 13px; margin-top: 10px; display: none; }
+        .header { background:linear-gradient(135deg,var(--red),var(--black)); color:white; padding:15px 18px; border-radius:0 0 18px 18px; margin-bottom:18px; position:sticky; top:0; z-index:100; }
+        .header-content { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; }
+        .header-brand { display:flex; align-items:center; gap:10px; }
+        .header-brand .logo { font-size:28px; background:rgba(255,255,255,0.1); border-radius:50%; padding:8px; border:2px solid var(--gold); width:50px; height:50px; display:flex; align-items:center; justify-content:center; }
+        .header-brand .name { font-size:18px; font-weight:900; }
+        .header-brand .name .gold { color:var(--gold); }
+        .header-brand .sub { font-size:10px; opacity:0.7; display:block; }
+        .header-actions { display:flex; gap:8px; align-items:center; }
+        .header-actions .badge { background:rgba(255,255,255,0.1); padding:4px 12px; border-radius:20px; font-size:11px; }
+        .header-actions .btn-out { background:rgba(255,255,255,0.1); border:none; color:white; padding:6px 12px; border-radius:20px; cursor:pointer; font-size:16px; }
+        .header-stats { display:flex; gap:8px; flex-wrap:wrap; margin-top:10px; }
+        .header-stats .stat { background:rgba(255,255,255,0.08); padding:4px 12px; border-radius:20px; font-size:11px; display:flex; align-items:center; gap:5px; }
+        .header-stats .stat strong { font-size:14px; }
         
-        .app { display: none; padding: 15px; max-width: 1200px; margin: 0 auto; }
-        .app.active { display: block; }
+        .tabs { display:flex; gap:4px; background:white; padding:6px; border-radius:var(--radius); box-shadow:var(--shadow); overflow-x:auto; margin-bottom:18px; flex-wrap:nowrap; }
+        .tabs::-webkit-scrollbar { display:none; }
+        .tab-btn { padding:10px 14px; border:none; border-radius:8px; background:transparent; font-weight:600; font-size:12px; cursor:pointer; flex:1 0 auto; min-width:60px; white-space:nowrap; display:flex; align-items:center; gap:5px; justify-content:center; }
+        .tab-btn.active { background:linear-gradient(135deg,var(--red),var(--black)); color:white; }
+        .tab-content { display:none; }
+        .tab-content.active { display:block; animation:fadeIn 0.3s ease; }
+        @keyframes fadeIn { from{opacity:0;transform:translateY(10px);} to{opacity:1;transform:translateY(0);} }
         
-        .header {
-            background: linear-gradient(135deg, var(--red), var(--black));
-            color: white;
-            padding: 15px 18px;
-            border-radius: 0 0 18px 18px;
-            margin-bottom: 18px;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-        .header-content { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
-        .header-brand { display: flex; align-items: center; gap: 10px; }
-        .header-brand .logo { font-size: 28px; background: rgba(255,255,255,0.1); border-radius: 50%; padding: 8px; border: 2px solid var(--gold); width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; }
-        .header-brand .name { font-size: 18px; font-weight: 900; }
-        .header-brand .name .gold { color: var(--gold); }
-        .header-brand .sub { font-size: 10px; opacity: 0.7; display: block; }
-        .header-actions { display: flex; gap: 8px; align-items: center; }
-        .header-actions .badge { background: rgba(255,255,255,0.1); padding: 4px 12px; border-radius: 20px; font-size: 11px; }
-        .header-actions .btn-out { background: rgba(255,255,255,0.1); border: none; color: white; padding: 6px 12px; border-radius: 20px; cursor: pointer; font-size: 16px; }
-        .header-stats { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
-        .header-stats .stat { background: rgba(255,255,255,0.08); padding: 4px 12px; border-radius: 20px; font-size: 11px; display: flex; align-items: center; gap: 5px; }
-        .header-stats .stat strong { font-size: 14px; }
+        .card { background:white; border-radius:var(--radius); padding:15px; box-shadow:var(--shadow); margin-bottom:15px; }
+        .card-header { display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid #f0f2f5; padding-bottom:10px; margin-bottom:15px; }
+        .card-header h2 { font-size:17px; display:flex; align-items:center; gap:8px; }
+        .card-header .badge-count { background:var(--red); color:white; padding:2px 12px; border-radius:20px; font-size:11px; }
         
-        .tabs {
-            display: flex;
-            gap: 4px;
-            background: white;
-            padding: 6px;
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-            overflow-x: auto;
-            margin-bottom: 18px;
-            flex-wrap: nowrap;
-        }
-        .tabs::-webkit-scrollbar { display: none; }
-        .tab-btn {
-            padding: 10px 14px;
-            border: none;
-            border-radius: 8px;
-            background: transparent;
-            font-weight: 600;
-            font-size: 12px;
-            cursor: pointer;
-            flex: 1 0 auto;
-            min-width: 60px;
-            white-space: nowrap;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            justify-content: center;
-        }
-        .tab-btn.active { background: linear-gradient(135deg, var(--red), var(--black)); color: white; }
-        .tab-content { display: none; }
-        .tab-content.active { display: block; animation: fadeIn 0.3s ease; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+        .grid-4 { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+        @media (min-width:600px) { .grid-4 { grid-template-columns:1fr 1fr 1fr 1fr; } }
+        @media (max-width:500px) { .grid-2 { grid-template-columns:1fr; } }
         
-        .card {
-            background: white;
-            border-radius: var(--radius);
-            padding: 15px;
-            box-shadow: var(--shadow);
-            margin-bottom: 15px;
-        }
-        .card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 2px solid #f0f2f5;
-            padding-bottom: 10px;
-            margin-bottom: 15px;
-        }
-        .card-header h2 { font-size: 17px; display: flex; align-items: center; gap: 8px; }
-        .card-header .badge-count { background: var(--red); color: white; padding: 2px 12px; border-radius: 20px; font-size: 11px; }
+        .stat-card { background:white; padding:16px; border-radius:var(--radius); box-shadow:var(--shadow); text-align:center; border-bottom:3px solid var(--red); cursor:pointer; transition:all 0.3s ease; }
+        .stat-card:hover { transform:translateY(-5px); box-shadow:0 10px 25px rgba(0,0,0,0.12); }
+        .stat-card .icon { font-size:30px; display:block; }
+        .stat-card .number { font-size:24px; font-weight:900; color:var(--red); }
+        .stat-card .label { font-size:12px; color:#718096; }
+        .stat-card .trend { font-size:10px; padding:1px 10px; border-radius:20px; display:inline-block; margin-top:3px; }
+        .stat-card .trend.up { background:#c6f6d5; color:#22543d; }
         
-        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-        .grid-4 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-        @media (min-width: 600px) { .grid-4 { grid-template-columns: 1fr 1fr 1fr 1fr; } }
-        @media (max-width: 500px) { .grid-2 { grid-template-columns: 1fr; } }
+        .form-group { margin-bottom:12px; }
+        .form-group label { display:block; font-weight:600; font-size:13px; margin-bottom:4px; }
+        .form-group label .required { color:var(--danger); }
+        .form-group input, .form-group select, .form-group textarea { width:100%; padding:10px 14px; border:2px solid #e2e8f0; border-radius:8px; font-size:14px; font-family:inherit; }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color:var(--red); outline:none; }
+        .form-group textarea { resize:vertical; min-height:50px; }
+        .form-row { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+        @media (max-width:400px) { .form-row { grid-template-columns:1fr; } }
         
-        .stat-card {
-            background: white;
-            padding: 16px;
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-            text-align: center;
-            border-bottom: 3px solid var(--red);
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        .stat-card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.12); }
-        .stat-card:active { transform: translateY(-2px); }
-        .stat-card .icon { font-size: 30px; display: block; }
-        .stat-card .number { font-size: 24px; font-weight: 900; color: var(--red); }
-        .stat-card .label { font-size: 12px; color: #718096; }
-        .stat-card .trend { font-size: 10px; padding: 1px 10px; border-radius: 20px; display: inline-block; margin-top: 3px; }
-        .stat-card .trend.up { background: #c6f6d5; color: #22543d; }
-        .stat-card .trend.down { background: #fed7d7; color: #742a2a; }
+        .btn { padding:10px 20px; border:none; border-radius:8px; font-size:14px; font-weight:700; cursor:pointer; display:inline-flex; align-items:center; gap:6px; justify-content:center; }
+        .btn-primary { background:linear-gradient(135deg,var(--red),var(--black)); color:white; width:100%; }
+        .btn-success { background:var(--success); color:white; }
+        .btn-danger { background:var(--danger); color:white; }
+        .btn-warning { background:var(--warning); color:white; }
+        .btn-info { background:var(--info); color:white; }
+        .btn-gold { background:var(--gold); color:white; }
+        .btn-whatsapp { background:#25D366; color:white; }
+        .btn-purple { background:var(--purple); color:white; }
+        .btn-sm { padding:4px 12px; font-size:11px; border-radius:6px; }
         
-        .form-group { margin-bottom: 12px; }
-        .form-group label { display: block; font-weight: 600; font-size: 13px; margin-bottom: 4px; }
-        .form-group label .required { color: var(--danger); }
-        .form-group input, .form-group select, .form-group textarea {
-            width: 100%; padding: 10px 14px; border: 2px solid #e2e8f0; border-radius: 8px; font-size: 14px; font-family: inherit;
-        }
-        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
-            border-color: var(--red); outline: none;
-        }
-        .form-group textarea { resize: vertical; min-height: 50px; }
-        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        @media (max-width: 400px) { .form-row { grid-template-columns: 1fr; } }
+        .docs-section { background:#fef8f0; padding:12px; border-radius:10px; border:1px solid var(--gold); margin-bottom:12px; }
+        .docs-section > label.title { font-weight:700; font-size:14px; display:block; margin-bottom:10px; color:#92400e; }
+        .docs-grid { display:grid; grid-template-columns:1fr; gap:8px; }
+        @media (min-width:500px) { .docs-grid { grid-template-columns:1fr 1fr; } }
         
-        .btn {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: 700;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            justify-content: center;
-        }
-        .btn:disabled { opacity: 0.5; cursor: not-allowed; }
-        .btn-primary { background: linear-gradient(135deg, var(--red), var(--black)); color: white; width: 100%; }
-        .btn-success { background: var(--success); color: white; }
-        .btn-danger { background: var(--danger); color: white; }
-        .btn-warning { background: var(--warning); color: white; }
-        .btn-info { background: var(--info); color: white; }
-        .btn-gold { background: var(--gold); color: white; }
-        .btn-whatsapp { background: #25D366; color: white; }
-        .btn-sm { padding: 4px 12px; font-size: 11px; border-radius: 6px; }
+        .doc-item { background:white; padding:10px 12px; border-radius:8px; border:2px solid #e2e8f0; transition:all 0.2s; }
+        .doc-item.uploaded { border-color:var(--success); background:#f0fdf4; }
+        .doc-item .doc-header { display:flex; align-items:center; gap:8px; margin-bottom:6px; }
+        .doc-item .doc-header input[type="checkbox"] { width:18px; height:18px; cursor:pointer; flex-shrink:0; }
+        .doc-item .doc-header label { font-weight:600; font-size:13px; cursor:pointer; flex:1; margin:0; }
+        .doc-item .file-upload-area { display:flex; flex-direction:column; gap:6px; }
+        .doc-item .file-upload-area input[type="file"] { display:none; }
+        .doc-item .file-upload-area .upload-btn { padding:8px 12px; background:var(--info); color:white; border-radius:6px; font-size:12px; font-weight:600; cursor:pointer; display:inline-flex; align-items:center; gap:4px; width:100%; justify-content:center; }
         
-        .docs-section {
-            background: #fef8f0;
-            padding: 12px;
-            border-radius: 10px;
-            border: 1px solid var(--gold);
-            margin-bottom: 12px;
-        }
-        .docs-section > label.title {
-            font-weight: 700;
-            font-size: 14px;
-            display: block;
-            margin-bottom: 10px;
-            color: #92400e;
-        }
-        .docs-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 8px;
-        }
-        @media (min-width: 500px) {
-            .docs-grid { grid-template-columns: 1fr 1fr; }
-        }
+        .files-list { margin-top:8px; }
+        .file-item { display:flex; align-items:center; gap:8px; padding:6px 10px; background:#f0fdf4; border:1px solid var(--success); border-radius:6px; margin-bottom:4px; font-size:12px; }
+        .file-item .file-info { flex:1; min-width:0; }
+        .file-item .file-info .file-name { font-weight:600; color:#166534; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+        .file-item .file-info .file-size { font-size:10px; color:#718096; }
+        .file-item .remove-file-btn { background:var(--danger); color:white; border:none; padding:4px 8px; border-radius:4px; font-size:11px; cursor:pointer; flex-shrink:0; }
         
-        .doc-item {
-            background: white;
-            padding: 10px 12px;
-            border-radius: 8px;
-            border: 2px solid #e2e8f0;
-            transition: all 0.2s;
-        }
-        .doc-item:hover { border-color: var(--gold); }
-        .doc-item.uploaded { border-color: var(--success); background: #f0fdf4; }
+        .project-card .docs-view { background:#f7fafc; padding:12px; border-radius:10px; margin-top:10px; border-right:3px solid var(--gold); }
+        .project-card .docs-view .docs-title { font-weight:700; color:#92400e; margin-bottom:8px; font-size:13px; }
+        .project-card .docs-view .doc-group { margin-bottom:10px; }
+        .project-card .docs-view .doc-group-title { font-size:12px; font-weight:600; color:#4a5568; margin-bottom:5px; }
         
-        .doc-item .doc-header {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 6px;
-        }
-        .doc-item .doc-header input[type="checkbox"] {
-            width: 18px;
-            height: 18px;
-            cursor: pointer;
-            flex-shrink: 0;
-        }
-        .doc-item .doc-header label {
-            font-weight: 600;
-            font-size: 13px;
-            cursor: pointer;
-            flex: 1;
-            margin: 0;
-        }
-        .doc-item .file-upload-area {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-        .doc-item .file-upload-area input[type="file"] {
-            display: none;
-        }
-        .doc-item .file-upload-area .upload-btn {
-            padding: 8px 12px;
-            background: var(--info);
-            color: white;
-            border-radius: 6px;
-            font-size: 12px;
-            font-weight: 600;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            width: 100%;
-            justify-content: center;
-        }
-        .doc-item .file-upload-area .upload-btn:hover { background: #2471a3; }
+        .file-card { display:flex; align-items:center; gap:8px; background:white; padding:8px 10px; border-radius:8px; border:1px solid #e2e8f0; margin-bottom:5px; }
+        .file-card .file-icon { width:32px; height:32px; border-radius:6px; background:#ebf8ff; display:flex; align-items:center; justify-content:center; font-size:16px; flex-shrink:0; }
+        .file-card .file-details { flex:1; min-width:0; }
+        .file-card .file-details .name { font-size:13px; font-weight:600; color:#2d3748; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+        .file-card .file-details .meta { font-size:10px; color:#a0aec0; }
+        .file-card .file-actions { display:flex; gap:4px; flex-shrink:0; }
+        .file-card .file-actions button, .file-card .file-actions a { width:32px; height:32px; border-radius:6px; border:none; cursor:pointer; display:flex; align-items:center; justify-content:center; font-size:14px; text-decoration:none; }
+        .file-card .file-actions .btn-view { background:#ebf8ff; color:var(--info); }
+        .file-card .file-actions .btn-download { background:#f0fdf4; color:var(--success); }
         
-        .files-list {
-            margin-top: 8px;
-        }
-        .file-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 6px 10px;
-            background: #f0fdf4;
-            border: 1px solid var(--success);
-            border-radius: 6px;
-            margin-bottom: 4px;
-            font-size: 12px;
-        }
-        .file-item .file-info {
-            flex: 1;
-            min-width: 0;
-        }
-        .file-item .file-info .file-name {
-            font-weight: 600;
-            color: #166534;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-        .file-item .file-info .file-size {
-            font-size: 10px;
-            color: #718096;
-        }
-        .file-item .remove-file-btn {
-            background: var(--danger);
-            color: white;
-            border: none;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 11px;
-            cursor: pointer;
-            flex-shrink: 0;
-        }
+        /* STEPS */
+        .steps-view { background:#f8fafc; padding:12px; border-radius:10px; margin-top:10px; border-right:3px solid var(--info); }
+        .steps-view .steps-title { font-weight:700; color:#2c5282; margin-bottom:10px; font-size:13px; display:flex; justify-content:space-between; align-items:center; }
+        .steps-view .steps-progress-info { font-size:11px; background:var(--info); color:white; padding:2px 10px; border-radius:12px; }
+        .steps-list { display:flex; flex-direction:column; gap:4px; }
+        .step-row { display:flex; align-items:center; gap:8px; padding:6px 10px; border-radius:6px; font-size:12px; background:white; border:1px solid #e2e8f0; }
+        .step-row.completed { background:#f0fdf4; border-color:var(--success); }
+        .step-row.current { background:#fffbeb; border-color:var(--warning); font-weight:700; }
+        .step-row.pending { opacity:0.65; }
+        .step-row .step-num { width:24px; height:24px; border-radius:50%; background:#e2e8f0; color:#4a5568; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; flex-shrink:0; }
+        .step-row.completed .step-num { background:var(--success); color:white; }
+        .step-row.current .step-num { background:var(--warning); color:white; }
+        .step-row .step-name { flex:1; }
+        .step-row .step-dept { font-size:10px; color:#718096; }
+        .step-row .step-status { font-size:14px; flex-shrink:0; }
         
-        /* بطاقة المشروع - المستندات */
-        .project-card .docs-view {
-            background: #f7fafc;
-            padding: 12px;
-            border-radius: 10px;
-            margin-top: 10px;
-            border-right: 3px solid var(--gold);
-        }
-        .project-card .docs-view .docs-title {
-            font-weight: 700;
-            color: #92400e;
-            margin-bottom: 8px;
-            font-size: 13px;
-        }
-        .project-card .docs-view .doc-group {
-            margin-bottom: 10px;
-        }
-        .project-card .docs-view .doc-group-title {
-            font-size: 12px;
-            font-weight: 600;
-            color: #4a5568;
-            margin-bottom: 5px;
-        }
+        /* APPOINTMENTS */
+        .appointment-card { background:white; border-radius:10px; padding:12px; margin-bottom:10px; border-right:4px solid var(--purple); box-shadow:0 2px 8px rgba(0,0,0,0.04); }
+        .appointment-card.overdue { border-right-color:var(--danger); background:#fff5f5; }
+        .appointment-card.today { border-right-color:var(--warning); background:#fffbeb; }
+        .appointment-card.upcoming { border-right-color:var(--info); background:#ebf8ff; }
+        .appointment-card.completed { border-right-color:var(--success); background:#f0fdf4; opacity:0.85; }
+        .appointment-card .app-header { display:flex; justify-content:space-between; align-items:start; gap:8px; flex-wrap:wrap; }
+        .appointment-card .app-title { font-size:15px; font-weight:800; }
+        .appointment-card .app-badge { padding:3px 12px; border-radius:20px; font-size:10px; font-weight:700; }
+        .app-badge.overdue { background:var(--danger); color:white; }
+        .app-badge.today { background:var(--warning); color:white; }
+        .app-badge.upcoming { background:var(--info); color:white; }
+        .app-badge.completed { background:var(--success); color:white; }
+        .appointment-card .app-details { display:grid; grid-template-columns:repeat(auto-fit,minmax(120px,1fr)); gap:6px; margin-top:8px; padding-top:8px; border-top:1px solid #edf2f7; font-size:12px; }
+        .appointment-card .app-details .item .label { font-size:10px; color:#a0aec0; }
+        .appointment-card .app-details .item .value { font-weight:700; }
+        .appointment-card .app-actions { margin-top:8px; display:flex; gap:6px; flex-wrap:wrap; }
         
-        /* بطاقة الملف الواحد */
-        .file-card {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            background: white;
-            padding: 8px 10px;
-            border-radius: 8px;
-            border: 1px solid #e2e8f0;
-            margin-bottom: 5px;
-            transition: all 0.2s;
-        }
-        .file-card:hover { border-color: var(--info); box-shadow: 0 2px 8px rgba(52,152,219,0.15); }
-        .file-card .file-icon {
-            width: 32px;
-            height: 32px;
-            border-radius: 6px;
-            background: #ebf8ff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 16px;
-            flex-shrink: 0;
-        }
-        .file-card .file-details {
-            flex: 1;
-            min-width: 0;
-        }
-        .file-card .file-details .name {
-            font-size: 13px;
-            font-weight: 600;
-            color: #2d3748;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-        .file-card .file-details .meta {
-            font-size: 10px;
-            color: #a0aec0;
-        }
-        .file-card .file-actions {
-            display: flex;
-            gap: 4px;
-            flex-shrink: 0;
-        }
-        .file-card .file-actions button,
-        .file-card .file-actions a {
-            width: 32px;
-            height: 32px;
-            border-radius: 6px;
-            border: none;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 14px;
-            text-decoration: none;
-            transition: all 0.2s;
-        }
-        .file-card .file-actions .btn-view {
-            background: #ebf8ff;
-            color: var(--info);
-        }
-        .file-card .file-actions .btn-view:hover { background: var(--info); color: white; }
-        .file-card .file-actions .btn-download {
-            background: #f0fdf4;
-            color: var(--success);
-        }
-        .file-card .file-actions .btn-download:hover { background: var(--success); color: white; }
+        .preview-modal { display:none; position:fixed; top:0;left:0;right:0;bottom:0; background:rgba(0,0,0,0.95); z-index:10001; flex-direction:column; align-items:center; justify-content:center; padding:20px; }
+        .preview-modal.active { display:flex; }
+        .preview-modal .preview-header { position:absolute; top:0;left:0;right:0; padding:15px 20px; display:flex; justify-content:space-between; align-items:center; background:linear-gradient(to bottom,rgba(0,0,0,0.8),transparent); color:white; z-index:10; }
+        .preview-modal .preview-header .preview-title { font-size:14px; font-weight:600; max-width:60%; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+        .preview-modal .preview-header .preview-actions { display:flex; gap:8px; }
+        .preview-modal .preview-header .preview-actions button, .preview-modal .preview-header .preview-actions a { background:rgba(255,255,255,0.15); color:white; border:none; padding:8px 16px; border-radius:8px; cursor:pointer; font-size:13px; font-weight:600; text-decoration:none; display:inline-flex; align-items:center; gap:5px; }
+        .preview-modal .preview-content { max-width:95%; max-height:85%; display:flex; align-items:center; justify-content:center; width:100%; height:100%; }
+        .preview-modal .preview-content img { max-width:100%; max-height:85vh; border-radius:8px; }
+        .preview-modal .preview-content iframe { width:100%; height:85vh; border:none; border-radius:8px; background:white; }
+        .preview-modal .preview-content .no-preview { color:white; text-align:center; padding:40px; }
+        .preview-modal .preview-content .no-preview .big-icon { font-size:80px; margin-bottom:20px; display:block; }
         
-        /* نموذج المعاينة (Modal) */
-        .preview-modal {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0,0,0,0.95);
-            z-index: 10001;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-        .preview-modal.active { display: flex; }
+        .project-card { background:white; border-radius:10px; padding:15px; margin-bottom:12px; border-right:4px solid var(--red); box-shadow:0 2px 8px rgba(0,0,0,0.04); }
+        .project-card .header-row { display:flex; justify-content:space-between; align-items:start; flex-wrap:wrap; gap:8px; }
+        .project-card .title { font-size:16px; font-weight:800; }
+        .project-card .subtitle { font-size:13px; color:#718096; }
+        .project-card .status-badge { padding:3px 12px; border-radius:20px; font-size:11px; font-weight:700; }
+        .status-draft { background:#e2e8f0; color:#4a5568; }
+        .status-under_review { background:#fefcbf; color:#744210; }
+        .status-approved { background:#c6f6d5; color:#22543d; }
+        .status-rejected { background:#fed7d7; color:#742a2a; }
+        .status-issued { background:#bee3f8; color:#2a4365; }
+        .status-completed { background:#9ae6b4; color:#22543d; }
         
-        .preview-modal .preview-header {
-            position: absolute;
-            top: 0; left: 0; right: 0;
-            padding: 15px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent);
-            color: white;
-            z-index: 10;
-        }
-        .preview-modal .preview-header .preview-title {
-            font-size: 14px;
-            font-weight: 600;
-            max-width: 60%;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-        .preview-modal .preview-header .preview-actions {
-            display: flex;
-            gap: 8px;
-        }
-        .preview-modal .preview-header .preview-actions button,
-        .preview-modal .preview-header .preview-actions a {
-            background: rgba(255,255,255,0.15);
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 13px;
-            font-weight: 600;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-        }
-        .preview-modal .preview-header .preview-actions button:hover,
-        .preview-modal .preview-header .preview-actions a:hover {
-            background: rgba(255,255,255,0.3);
-        }
-        .preview-modal .preview-header .close-preview {
-            font-size: 24px;
-            padding: 8px 14px;
-            background: rgba(255,255,255,0.15);
-            border: none;
-            color: white;
-            border-radius: 8px;
-            cursor: pointer;
-        }
-        .preview-modal .preview-content {
-            max-width: 95%;
-            max-height: 85%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 100%;
-            height: 100%;
-        }
-        .preview-modal .preview-content img {
-            max-width: 100%;
-            max-height: 85vh;
-            border-radius: 8px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
-        }
-        .preview-modal .preview-content iframe {
-            width: 100%;
-            height: 85vh;
-            border: none;
-            border-radius: 8px;
-            background: white;
-        }
-        .preview-modal .preview-content .no-preview {
-            color: white;
-            text-align: center;
-            padding: 40px;
-            font-size: 16px;
-        }
-        .preview-modal .preview-content .no-preview .big-icon {
-            font-size: 80px;
-            margin-bottom: 20px;
-            display: block;
-        }
-        .preview-modal .preview-content .no-preview .download-link {
-            display: inline-block;
-            margin-top: 20px;
-            background: var(--info);
-            color: white;
-            padding: 12px 30px;
-            border-radius: 10px;
-            text-decoration: none;
-            font-weight: 600;
-        }
+        .project-card .details-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(110px,1fr)); gap:8px; margin-top:10px; padding-top:10px; border-top:1px solid #edf2f7; }
+        .project-card .details-grid .item .label { font-size:10px; color:#a0aec0; }
+        .project-card .details-grid .item .value { font-weight:700; font-size:14px; }
+        .project-card .agreement-box { background:#fef8f0; padding:10px 14px; border-radius:8px; margin-top:10px; font-size:13px; border-right:3px solid var(--gold); }
+        .project-card .next-step-box { background:linear-gradient(135deg,#e6f7ff,#d1ecf9); padding:10px 14px; border-radius:8px; margin-top:10px; font-size:13px; border-right:3px solid #0ea5e9; color:#075985; font-weight:600; }
+        .project-card .transaction-box { background:linear-gradient(135deg,#f0fdf4,#dcfce7); padding:8px 14px; border-radius:8px; margin-top:10px; font-size:13px; border-right:3px solid var(--success); color:#166534; font-weight:600; }
+        .project-card .progress-bar { height:5px; background:#edf2f7; border-radius:10px; overflow:hidden; margin-top:4px; }
+        .project-card .progress-bar .fill { height:100%; background:linear-gradient(90deg,var(--red),var(--gold)); border-radius:10px; transition:width 0.5s ease; }
         
-        .project-card {
-            background: white;
-            border-radius: 10px;
-            padding: 15px;
-            margin-bottom: 12px;
-            border-right: 4px solid var(--red);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-        }
-        .project-card .header-row { display: flex; justify-content: space-between; align-items: start; flex-wrap: wrap; gap: 8px; }
-        .project-card .title { font-size: 16px; font-weight: 800; }
-        .project-card .subtitle { font-size: 13px; color: #718096; }
-        .project-card .status-badge { padding: 3px 12px; border-radius: 20px; font-size: 11px; font-weight: 700; }
-        .status-draft { background: #e2e8f0; color: #4a5568; }
-        .status-under_review { background: #fefcbf; color: #744210; }
-        .status-approved { background: #c6f6d5; color: #22543d; }
-        .status-rejected { background: #fed7d7; color: #742a2a; }
-        .status-issued { background: #bee3f8; color: #2a4365; }
-        .status-completed { background: #9ae6b4; color: #22543d; }
-        .status-expired { background: #e2e8f0; color: #4a5568; }
+        .alert-item { padding:12px 16px; border-radius:8px; margin-bottom:8px; display:flex; justify-content:space-between; align-items:center; border-right:3px solid; background:#f7fafc; font-size:13px; }
+        .alert-payment { border-color:var(--warning); background:#fffbeb; }
+        .alert-deadline { border-color:var(--danger); background:#fff5f5; }
+        .alert-document { border-color:var(--red); background:#fef2f2; }
+        .alert-status { border-color:var(--success); background:#f0fff4; }
+        .alert-engineer { border-color:#9f7aea; background:#faf5ff; }
+        .alert-appointment { border-color:var(--purple); background:#faf5ff; }
+        .alert-item .time { font-size:10px; color:#a0aec0; }
         
-        .project-card .details-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
-            gap: 8px;
-            margin-top: 10px;
-            padding-top: 10px;
-            border-top: 1px solid #edf2f7;
-        }
-        .project-card .details-grid .item .label { font-size: 10px; color: #a0aec0; text-transform: uppercase; }
-        .project-card .details-grid .item .value { font-weight: 700; font-size: 14px; }
-        .project-card .agreement-box {
-            background: #fef8f0;
-            padding: 10px 14px;
-            border-radius: 8px;
-            margin-top: 10px;
-            font-size: 13px;
-            border-right: 3px solid var(--gold);
-        }
-        .project-card .next-step-box {
-            background: linear-gradient(135deg, #e6f7ff, #d1ecf9);
-            padding: 10px 14px;
-            border-radius: 8px;
-            margin-top: 10px;
-            font-size: 13px;
-            border-right: 3px solid #0ea5e9;
-            color: #075985;
-            font-weight: 600;
-        }
-        .project-card .transaction-box {
-            background: linear-gradient(135deg, #f0fdf4, #dcfce7);
-            padding: 8px 14px;
-            border-radius: 8px;
-            margin-top: 10px;
-            font-size: 13px;
-            border-right: 3px solid var(--success);
-            color: #166534;
-            font-weight: 600;
-        }
+        .communication-item { padding:10px 14px; background:#f7fafc; border-radius:8px; margin-bottom:6px; border-right:3px solid #9f7aea; font-size:13px; }
+        .communication-item .msg-subject { font-weight:700; color:var(--red); }
+        .communication-item .msg-body { font-size:13px; color:#4a5568; margin-top:3px; }
+        .communication-item .msg-meta { font-size:11px; color:#a0aec0; margin-top:3px; display:flex; gap:10px; flex-wrap:wrap; }
         
-        .project-card .progress-section { margin-top: 10px; }
-        .project-card .progress-bar {
-            height: 5px; background: #edf2f7;
-            border-radius: 10px; overflow: hidden; margin-top: 4px;
-        }
-        .project-card .progress-bar .fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--red), var(--gold));
-            border-radius: 10px;
-            transition: width 0.5s ease;
-        }
+        .archive-stats { display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; margin-bottom:12px; }
+        .archive-stat { background:linear-gradient(135deg,#667eea,#764ba2); color:white; padding:10px; border-radius:8px; text-align:center; }
+        .archive-stat .num { font-size:20px; font-weight:900; }
+        .archive-stat .lbl { font-size:10px; opacity:0.9; }
         
-        .alert-item {
-            padding: 12px 16px;
-            border-radius: 8px;
-            margin-bottom: 8px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-right: 3px solid;
-            background: #f7fafc;
-            font-size: 13px;
-        }
-        .alert-payment { border-color: var(--warning); background: #fffbeb; }
-        .alert-deadline { border-color: var(--danger); background: #fff5f5; }
-        .alert-document { border-color: var(--red); background: #fef2f2; }
-        .alert-status { border-color: var(--success); background: #f0fff4; }
-        .alert-engineer { border-color: #9f7aea; background: #faf5ff; }
-        .alert-item .time { font-size: 10px; color: #a0aec0; }
+        .company-badge { background:linear-gradient(135deg,var(--red),var(--black)); color:white; padding:3px 12px; border-radius:20px; font-size:11px; font-weight:700; }
         
-        .communication-item {
-            padding: 10px 14px;
-            background: #f7fafc;
-            border-radius: 8px;
-            margin-bottom: 6px;
-            border-right: 3px solid #9f7aea;
-            font-size: 13px;
-        }
-        .communication-item .msg-subject { font-weight: 700; color: var(--red); }
-        .communication-item .msg-body { font-size: 13px; color: #4a5568; margin-top: 3px; }
-        .communication-item .msg-meta {
-            font-size: 11px; color: #a0aec0;
-            margin-top: 3px;
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
+        .footer { text-align:center; padding:15px; color:#a0aec0; font-size:11px; border-top:1px solid #edf2f7; margin-top:20px; }
+        .footer .company { font-weight:700; color:var(--red); }
         
-        .company-badge {
-            background: linear-gradient(135deg, var(--red), var(--black));
-            color: white;
-            padding: 3px 12px;
-            border-radius: 20px;
-            font-size: 11px;
-            font-weight: 700;
-        }
-        
-        .footer {
-            text-align: center;
-            padding: 15px;
-            color: #a0aec0;
-            font-size: 11px;
-            border-top: 1px solid #edf2f7;
-            margin-top: 20px;
-        }
-        .footer .company { font-weight: 700; color: var(--red); }
-        
-        @media (max-width: 480px) {
-            .header-brand .name { font-size: 15px; }
-            .header-brand .logo { width: 40px; height: 40px; font-size: 20px; }
-            .tab-btn { font-size: 10px; padding: 8px 10px; min-width: 50px; }
-            .card { padding: 12px; }
-            .project-card { padding: 12px; }
-            .project-card .details-grid { grid-template-columns: 1fr 1fr; }
+        @media (max-width:480px) {
+            .header-brand .name { font-size:15px; }
+            .tab-btn { font-size:10px; padding:8px 10px; min-width:50px; }
         }
     </style>
 </head>
@@ -743,7 +274,6 @@
     </div>
 </div>
 
-<!-- Modal معاينة الملفات -->
 <div class="preview-modal" id="previewModal">
     <div class="preview-header">
         <div class="preview-title" id="previewTitle">معاينة الملف</div>
@@ -774,7 +304,7 @@
             <div class="stat">📄 <strong id="totalRequests">0</strong></div>
             <div class="stat">⏳ <strong id="underReview">0</strong></div>
             <div class="stat">✅ <strong id="approvedCount">0</strong></div>
-            <div class="stat">⚠️ <strong id="delayedCount">0</strong></div>
+            <div class="stat">📅 <strong id="appointmentsCountHeader">0</strong></div>
         </div>
     </div>
 
@@ -785,10 +315,13 @@
         <button class="tab-btn" data-tab="reconciliation">⚖️ تصالح</button>
         <button class="tab-btn" data-tab="engineers">👷 مهندسين</button>
         <button class="tab-btn" data-tab="communications">💬 تواصل</button>
+        <button class="tab-btn" data-tab="appointments">📅 مواعيد</button>
+        <button class="tab-btn" data-tab="archive">📁 أرشيف</button>
         <button class="tab-btn" data-tab="alerts">🔔 تنبيهات</button>
         <button class="tab-btn" data-tab="reports">📄 تقارير</button>
     </div>
-
+    
+    <!-- DASHBOARD -->
     <div id="tab-dashboard" class="tab-content active">
         <div class="grid-4">
             <div class="stat-card" onclick="switchTab('building')">
@@ -807,12 +340,12 @@
                 <span class="icon">⚖️</span>
                 <div class="number" id="dash_reconciliation">0</div>
                 <div class="label">طلبات التصالح</div>
-                <span class="trend down">⬇️ اضغط للفتح</span>
+                <span class="trend up">⬆️ اضغط للفتح</span>
             </div>
-            <div class="stat-card" style="border-bottom-color:var(--black);" onclick="switchTab('engineers')">
-                <span class="icon">👷</span>
-                <div class="number" id="dash_engineers">0</div>
-                <div class="label">المهندسين</div>
+            <div class="stat-card" style="border-bottom-color:var(--purple);" onclick="switchTab('appointments')">
+                <span class="icon">📅</span>
+                <div class="number" id="dash_appointments">0</div>
+                <div class="label">المواعيد</div>
                 <span class="trend up">⬆️ اضغط للفتح</span>
             </div>
         </div>
@@ -833,6 +366,7 @@
         </div>
     </div>
 
+    <!-- BUILDING -->
     <div id="tab-building" class="tab-content">
         <div class="card">
             <div class="card-header"><h2 id="buildingFormTitle">➕ إضافة رخصة بناء</h2><span class="company-badge">🇪🇬 مصر</span></div>
@@ -856,12 +390,10 @@
                     <div class="form-group"><label>✅ المبلغ المحصل (ج.م)</label><input type="number" id="b_paid" placeholder="المحصل" value="0"></div>
                 </div>
                 <div class="form-group"><label>📝 المتفق عليه <span class="required">*</span></label><textarea id="b_agreement" rows="2" placeholder="تفاصيل الاتفاق..." required></textarea></div>
-                
                 <div class="docs-section">
                     <label class="title">📎 المستندات المطلوبة (يمكنك رفع أكثر من ملف - أي صيغة)</label>
                     <div class="docs-grid" id="b_docs_grid"></div>
                 </div>
-                
                 <div class="form-row">
                     <div class="form-group"><label>📅 تاريخ التقديم</label><input type="date" id="b_date"></div>
                     <div class="form-group"><label>📝 ملاحظات</label><input type="text" id="b_notes" placeholder="ملاحظات"></div>
@@ -890,6 +422,7 @@
         </div>
     </div>
 
+    <!-- ELEVATION -->
     <div id="tab-elevation" class="tab-content">
         <div class="card">
             <div class="card-header"><h2 id="elevationFormTitle">➕ إضافة رخصة تعلية</h2><span class="company-badge">📐 تعلية</span></div>
@@ -917,12 +450,10 @@
                     <div class="form-group"><label>✅ المبلغ المحصل (ج.م)</label><input type="number" id="e_paid" placeholder="المحصل" value="0"></div>
                 </div>
                 <div class="form-group"><label>📝 المتفق عليه</label><textarea id="e_agreement" rows="2" placeholder="تفاصيل الاتفاق..."></textarea></div>
-                
                 <div class="docs-section">
                     <label class="title">📎 المستندات المطلوبة (يمكنك رفع أكثر من ملف - أي صيغة)</label>
                     <div class="docs-grid" id="e_docs_grid"></div>
                 </div>
-                
                 <div style="display:flex;gap:8px;">
                     <button type="submit" class="btn btn-primary" style="flex:1;">💾 حفظ</button>
                     <button type="button" class="btn btn-warning" onclick="resetElevationForm()" style="display:none;" id="btnCancelElevation">❌ إلغاء</button>
@@ -932,6 +463,7 @@
         <div class="card"><div class="card-header"><h2>📋 قائمة الرخص</h2></div><div id="elevationList"><div style="text-align:center;padding:20px;color:#a0aec0;">⏳ جاري التحميل...</div></div></div>
     </div>
 
+    <!-- RECONCILIATION -->
     <div id="tab-reconciliation" class="tab-content">
         <div class="card">
             <div class="card-header"><h2 id="reconciliationFormTitle">➕ إضافة طلب تصالح</h2><span class="company-badge">⚖️ تصالح</span></div>
@@ -961,12 +493,10 @@
                     <div class="form-group"><label>✅ المبلغ المحصل (ج.م)</label><input type="number" id="r_paid" placeholder="المحصل" value="0"></div>
                 </div>
                 <div class="form-group"><label>📝 المتفق عليه</label><textarea id="r_agreement" rows="2" placeholder="تفاصيل الاتفاق..."></textarea></div>
-                
                 <div class="docs-section">
                     <label class="title">📎 المستندات المطلوبة (يمكنك رفع أكثر من ملف - أي صيغة)</label>
                     <div class="docs-grid" id="r_docs_grid"></div>
                 </div>
-                
                 <div style="display:flex;gap:8px;">
                     <button type="submit" class="btn btn-primary" style="flex:1;">💾 حفظ</button>
                     <button type="button" class="btn btn-warning" onclick="resetReconciliationForm()" style="display:none;" id="btnCancelReconciliation">❌ إلغاء</button>
@@ -976,6 +506,7 @@
         <div class="card"><div class="card-header"><h2>📋 قائمة الطلبات</h2></div><div id="reconciliationList"><div style="text-align:center;padding:20px;color:#a0aec0;">⏳ جاري التحميل...</div></div></div>
     </div>
 
+    <!-- ENGINEERS -->
     <div id="tab-engineers" class="tab-content">
         <div class="card">
             <div class="card-header"><h2 id="engineerFormTitle">➕ إضافة مهندس</h2><span class="company-badge">👷 مهندسين</span></div>
@@ -1005,6 +536,7 @@
         <div class="card"><div class="card-header"><h2>📋 قائمة المهندسين</h2></div><div id="engineersList"><div style="text-align:center;padding:20px;color:#a0aec0;">⏳ جاري التحميل...</div></div></div>
     </div>
 
+    <!-- COMMUNICATIONS -->
     <div id="tab-communications" class="tab-content">
         <div class="card">
             <div class="card-header"><h2>💬 التواصل</h2><span class="company-badge">📨 تواصل</span></div>
@@ -1025,6 +557,68 @@
         </div>
     </div>
 
+    <!-- APPOINTMENTS -->
+    <div id="tab-appointments" class="tab-content">
+        <div class="card">
+            <div class="card-header"><h2 id="appointmentFormTitle">➕ إضافة موعد</h2><span class="company-badge">📅 مواعيد</span></div>
+            <form id="appointmentForm">
+                <input type="hidden" id="app_edit_id" value="">
+                <div class="form-group"><label>📌 عنوان الموعد <span class="required">*</span></label><input type="text" id="app_title" placeholder="مثال: مراجعة المخططات مع المهندس" required></div>
+                <div class="form-row">
+                    <div class="form-group"><label>📅 التاريخ <span class="required">*</span></label><input type="date" id="app_date" required></div>
+                    <div class="form-group"><label>⏰ الوقت</label><input type="time" id="app_time" value="09:00"></div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group"><label>📊 نوع المشروع</label><select id="app_project_type" onchange="updateAppointmentProjects()">
+                        <option value="general">عام (بدون مشروع)</option>
+                        <option value="building">رخصة بناء</option>
+                        <option value="elevation">رخصة تعلية</option>
+                        <option value="reconciliation">تصالح</option>
+                    </select></div>
+                    <div class="form-group"><label>📁 المشروع</label><select id="app_project"><option value="">بدون</option></select></div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group"><label>👷 المهندس</label><select id="app_engineer"><option value="">بدون</option></select></div>
+                    <div class="form-group"><label>🔔 التنبيه قبل (بالأيام)</label><select id="app_reminder">
+                        <option value="0">في نفس اليوم</option>
+                        <option value="1" selected>قبل يوم</option>
+                        <option value="2">قبل يومين</option>
+                        <option value="3">قبل 3 أيام</option>
+                        <option value="7">قبل أسبوع</option>
+                    </select></div>
+                </div>
+                <div class="form-group"><label>📝 ملاحظات</label><textarea id="app_notes" rows="2" placeholder="تفاصيل إضافية..."></textarea></div>
+                <div style="display:flex;gap:8px;">
+                    <button type="submit" class="btn btn-primary" style="flex:1;">💾 حفظ الموعد</button>
+                    <button type="button" class="btn btn-warning" onclick="resetAppointmentForm()" style="display:none;" id="btnCancelAppointment">❌ إلغاء</button>
+                </div>
+            </form>
+        </div>
+        <div class="card">
+            <div class="card-header"><h2>📋 قائمة المواعيد</h2><span class="badge-count" id="appointmentsCount">0</span></div>
+            <div id="appointmentsList"><div style="text-align:center;padding:20px;color:#a0aec0;">⏳ جاري التحميل...</div></div>
+        </div>
+    </div>
+
+    <!-- ARCHIVE -->
+    <div id="tab-archive" class="tab-content">
+        <div class="card">
+            <div class="card-header"><h2>📁 أرشيف الملفات</h2><span class="badge-count" id="archiveCount">0</span></div>
+            <div class="archive-stats" id="archiveStats"></div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;">
+                <select id="archive_filter_type" style="flex:1;padding:8px 12px;border:2px solid #e2e8f0;border-radius:8px;">
+                    <option value="all">كل الأنواع</option>
+                    <option value="building">🏗️ رخص بناء</option>
+                    <option value="elevation">📐 رخص تعلية</option>
+                    <option value="reconciliation">⚖️ تصالح</option>
+                </select>
+                <input type="text" id="archive_search" placeholder="🔍 بحث بالاسم..." style="flex:1;padding:8px 12px;border:2px solid #e2e8f0;border-radius:8px;">
+            </div>
+            <div id="archiveList"><div style="text-align:center;padding:20px;color:#a0aec0;">⏳ جاري التحميل...</div></div>
+        </div>
+    </div>
+
+    <!-- ALERTS -->
     <div id="tab-alerts" class="tab-content">
         <div class="card">
             <div class="card-header"><h2>🔔 جميع التنبيهات</h2><span class="badge-count" id="alertsCount">0</span></div>
@@ -1032,6 +626,7 @@
         </div>
     </div>
 
+    <!-- REPORTS -->
     <div id="tab-reports" class="tab-content">
         <div class="card">
             <div class="card-header"><h2>📄 إنشاء تقرير</h2><span class="company-badge">📊 تقرير</span></div>
@@ -1095,7 +690,6 @@
     };
     window.firebaseReady = true;
     window.dispatchEvent(new Event('firebase-ready'));
-    
     console.log('✅ Firebase initialized!');
 </script>
 
@@ -1109,9 +703,9 @@
     var engineers = [];
     var communications = [];
     var allAlerts = [];
+    var appointments = [];
     var db, storage, collection, addDoc, getDocs, doc, updateDoc, deleteDoc, onSnapshot, query, orderBy, serverTimestamp;
     var ref, uploadBytes, getDownloadURL, deleteObject;
-    
     var uploadedFiles = { b: {}, e: {}, r: {} };
     
     var BUILDING_STEPS = [
@@ -1130,6 +724,27 @@
         { num: 13, name: 'وثيقة التأمين', dept: 'المجمعة العشرية', duration: 1 },
         { num: 14, name: 'تقديم طلب رخصة البناء', dept: 'الحي', duration: 15 },
         { num: 15, name: 'إصدار رخصة البناء', dept: 'الحي', duration: 1 }
+    ];
+
+    var ELEVATION_STEPS = [
+        { num: 1, name: 'استلام المستندات', dept: 'الحي', duration: 1 },
+        { num: 2, name: 'مراجعة رخصة البناء الأصلية', dept: 'التنظيم', duration: 2 },
+        { num: 3, name: 'الرفع المساحي', dept: 'المساحة', duration: 3 },
+        { num: 4, name: 'تقديم طلب التعلية', dept: 'الحي', duration: 1 },
+        { num: 5, name: 'تأشيرة مدير التنظيم', dept: 'مدير التنظيم', duration: 1 },
+        { num: 6, name: 'تأشيرة التخطيط', dept: 'إدارة التخطيط', duration: 2 },
+        { num: 7, name: 'إصدار قرار التعلية', dept: 'الحي', duration: 5 },
+        { num: 8, name: 'إصدار رخصة التعلية', dept: 'الحي', duration: 1 }
+    ];
+
+    var RECONCILIATION_STEPS = [
+        { num: 1, name: 'استلام المستندات', dept: 'الحي', duration: 1 },
+        { num: 2, name: 'المعاينة الهندسية', dept: 'الهندسة', duration: 3 },
+        { num: 3, name: 'تقدير قيمة التصالح', dept: 'التقييم', duration: 5 },
+        { num: 4, name: 'سداد قيمة التصالح', dept: 'المالية', duration: 1 },
+        { num: 5, name: 'تقديم طلب التصالح', dept: 'الحي', duration: 2 },
+        { num: 6, name: 'مراجعة اللجنة', dept: 'لجنة التصالح', duration: 7 },
+        { num: 7, name: 'إصدار قرار التصالح', dept: 'الحي', duration: 3 }
     ];
 
     var DOCS_BUILDING = [
@@ -1180,6 +795,17 @@
         else if (type === 'reconciliation') p = reconciliations.find(function(x) { return x.id === id; });
         return p ? p.client + ' - ' + (p.address || '').substring(0, 20) : 'غير معروف';
     }
+    function getStepsForType(type) {
+        if (type === 'building') return BUILDING_STEPS;
+        if (type === 'elevation') return ELEVATION_STEPS;
+        if (type === 'reconciliation') return RECONCILIATION_STEPS;
+        return [];
+    }
+    function getDocsForType(type) {
+        if (type === 'building') return DOCS_BUILDING;
+        if (type === 'elevation') return DOCS_ELEVATION;
+        return DOCS_RECONCILIATION;
+    }
 
     function setConnectionStatus(status, text) {
         var el = document.getElementById('connectionStatus');
@@ -1199,13 +825,9 @@
         else window.addEventListener('firebase-ready', callback, { once: true });
     }
 
-    // ============================================================
-    //                    الحصول على أيقونة الملف
-    // ============================================================
     function getFileIcon(fileName, fileType) {
         var ext = (fileName || '').split('.').pop().toLowerCase();
         var type = (fileType || '').toLowerCase();
-        
         if (type.startsWith('image/') || ['jpg','jpeg','png','gif','bmp','webp','svg'].includes(ext)) return '🖼️';
         if (ext === 'pdf' || type === 'application/pdf') return '📄';
         if (['doc','docx'].includes(ext)) return '📝';
@@ -1225,53 +847,30 @@
         return (bytes / (1024 * 1024)).toFixed(2) + ' MB';
     }
 
-    // ============================================================
-    //                    فتح معاينة الملف
-    // ============================================================
     function openPreview(url, fileName, fileType) {
         var modal = document.getElementById('previewModal');
         var content = document.getElementById('previewContent');
         var title = document.getElementById('previewTitle');
         var downloadLink = document.getElementById('previewDownload');
-        
         title.textContent = fileName || 'معاينة الملف';
         downloadLink.href = url;
         downloadLink.download = fileName || 'file';
-        
         var ext = (fileName || '').split('.').pop().toLowerCase();
         var type = (fileType || '').toLowerCase();
         var contentHtml = '';
-        
-        // صور
         if (type.startsWith('image/') || ['jpg','jpeg','png','gif','bmp','webp','svg'].includes(ext)) {
-            contentHtml = '<img src="' + url + '" alt="' + fileName + '" onclick="window.open(\'' + url + '\',\'_blank\')" style="cursor:zoom-in;">';
+            contentHtml = '<img src="' + url + '" alt="' + fileName + '">';
+        } else if (ext === 'pdf' || type === 'application/pdf') {
+            contentHtml = '<iframe src="' + url + '#toolbar=1"></iframe>';
+        } else if (['mp4','webm','ogg'].includes(ext) || type.startsWith('video/')) {
+            contentHtml = '<video controls style="max-width:100%;max-height:85vh;"><source src="' + url + '" type="' + type + '"></video>';
+        } else if (['mp3','wav','ogg'].includes(ext) || type.startsWith('audio/')) {
+            contentHtml = '<audio controls style="width:80%;"><source src="' + url + '" type="' + type + '"></audio>';
+        } else if (['txt','csv','json','xml','html'].includes(ext) || type.startsWith('text/')) {
+            contentHtml = '<iframe src="' + url + '"></iframe>';
+        } else {
+            contentHtml = '<div class="no-preview"><span class="big-icon">📎</span><h3>لا يمكن معاينة هذا النوع</h3><p>يمكنك تحميله لعرضه على جهازك</p><a href="' + url + '" download class="download-link">📥 تحميل الملف</a></div>';
         }
-        // PDF
-        else if (ext === 'pdf' || type === 'application/pdf') {
-            contentHtml = '<iframe src="' + url + '#toolbar=1" title="' + fileName + '"></iframe>';
-        }
-        // فيديو
-        else if (['mp4','webm','ogg'].includes(ext) || type.startsWith('video/')) {
-            contentHtml = '<video controls style="max-width:100%;max-height:85vh;"><source src="' + url + '" type="' + type + '">متصفحك لا يدعم الفيديو.</video>';
-        }
-        // صوت
-        else if (['mp3','wav','ogg'].includes(ext) || type.startsWith('audio/')) {
-            contentHtml = '<audio controls style="width:80%;"><source src="' + url + '" type="' + type + '">متصفحك لا يدعم الصوت.</audio>';
-        }
-        // نصوص
-        else if (['txt','csv','json','xml','html'].includes(ext) || type.startsWith('text/')) {
-            contentHtml = '<iframe src="' + url + '" title="' + fileName + '"></iframe>';
-        }
-        // نوع غير مدعوم
-        else {
-            contentHtml = '<div class="no-preview">' +
-                         '<span class="big-icon">📎</span>' +
-                         '<h3>لا يمكن معاينة هذا النوع من الملفات</h3>' +
-                         '<p>يمكنك تحميله لعرضه على جهازك</p>' +
-                         '<a href="' + url + '" download class="download-link">📥 تحميل الملف</a>' +
-                         '</div>';
-        }
-        
         content.innerHTML = contentHtml;
         modal.classList.add('active');
         document.body.style.overflow = 'hidden';
@@ -1285,36 +884,24 @@
         document.body.style.overflow = '';
     }
 
-    // إغلاق عند الضغط على ESC
-    document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape') closePreview();
-    });
+    document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closePreview(); });
 
-    // ============================================================
-    //                    التبديل بين التبويبات
-    // ============================================================
     function switchTab(tabName) {
         document.querySelectorAll('.tab-btn').forEach(function(b) { b.classList.remove('active'); });
         document.querySelectorAll('.tab-content').forEach(function(t) { t.classList.remove('active'); });
-        
         var btn = document.querySelector('[data-tab="' + tabName + '"]');
         if (btn) btn.classList.add('active');
-        
         var tab = document.getElementById('tab-' + tabName);
         if (tab) tab.classList.add('active');
-        
         if (tabName === 'reports') { updateReportTable(); updateReportProjects(); }
-        
+        if (tabName === 'archive') { renderArchive(); }
+        if (tabName === 'appointments') { renderAppointments(); }
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    // ============================================================
-    //                    بناء شبكة المستندات
-    // ============================================================
     function buildDocsGrid(prefix, docsList, containerId) {
         var container = document.getElementById(containerId);
         if (!container) return;
-        
         var html = '';
         docsList.forEach(function(doc) {
             html += '<div class="doc-item" id="doc-item-' + prefix + '-' + doc.key + '">';
@@ -1326,41 +913,25 @@
             html += '<input type="file" id="' + prefix + '_doc_' + doc.key + '_file" accept="*/*" multiple>';
             html += '<label for="' + prefix + '_doc_' + doc.key + '_file" class="upload-btn">📤 رفع ملف/ملفات</label>';
             html += '<div class="files-list" id="' + prefix + '_doc_' + doc.key + '_list"></div>';
-            html += '</div>';
-            html += '</div>';
+            html += '</div></div>';
         });
         container.innerHTML = html;
-        
-        docsList.forEach(function(doc) {
-            bindFileUpload(prefix, doc.key);
-        });
+        docsList.forEach(function(doc) { bindFileUpload(prefix, doc.key); });
     }
 
     function bindFileUpload(prefix, docKey) {
         var input = document.getElementById(prefix + '_doc_' + docKey + '_file');
         var docItem = document.getElementById('doc-item-' + prefix + '-' + docKey);
-        
         if (!input) return;
-        
-        if (!uploadedFiles[prefix][docKey]) {
-            uploadedFiles[prefix][docKey] = [];
-        }
-        
+        if (!uploadedFiles[prefix][docKey]) uploadedFiles[prefix][docKey] = [];
         input.addEventListener('change', function(e) {
             var files = Array.from(e.target.files);
             if (files.length === 0) return;
-            
-            files.forEach(function(file) {
-                uploadedFiles[prefix][docKey].push(file);
-            });
-            
+            files.forEach(function(file) { uploadedFiles[prefix][docKey].push(file); });
             renderFilesList(prefix, docKey);
-            
             if (docItem) docItem.classList.add('uploaded');
-            
             var check = document.getElementById(prefix + '_doc_' + docKey + '_check');
             if (check) check.checked = true;
-            
             input.value = '';
         });
     }
@@ -1368,25 +939,15 @@
     function renderFilesList(prefix, docKey) {
         var listContainer = document.getElementById(prefix + '_doc_' + docKey + '_list');
         if (!listContainer) return;
-        
         var files = uploadedFiles[prefix][docKey] || [];
-        
-        if (files.length === 0) {
-            listContainer.innerHTML = '';
-            return;
-        }
-        
+        if (files.length === 0) { listContainer.innerHTML = ''; return; }
         var html = '';
         files.forEach(function(file, index) {
             html += '<div class="file-item">';
-            html += '<div class="file-info">';
-            html += '<div class="file-name">📎 ' + file.name + '</div>';
-            html += '<div class="file-size">' + formatFileSize(file.size) + '</div>';
-            html += '</div>';
+            html += '<div class="file-info"><div class="file-name">📎 ' + file.name + '</div><div class="file-size">' + formatFileSize(file.size) + '</div></div>';
             html += '<button type="button" class="remove-file-btn" onclick="removeFile(\'' + prefix + '\',\'' + docKey + '\',' + index + ')">🗑️</button>';
             html += '</div>';
         });
-        
         listContainer.innerHTML = html;
     }
 
@@ -1394,7 +955,6 @@
         if (!uploadedFiles[prefix][docKey]) return;
         uploadedFiles[prefix][docKey].splice(index, 1);
         renderFilesList(prefix, docKey);
-        
         var files = uploadedFiles[prefix][docKey];
         if (files.length === 0) {
             var docItem = document.getElementById('doc-item-' + prefix + '-' + docKey);
@@ -1404,111 +964,107 @@
         }
     }
 
-    // ============================================================
-    //                    رفع الملفات إلى Firebase Storage
-    // ============================================================
     async function uploadAllFiles(prefix, projectId) {
         var uploadedData = {};
-        var docsList = prefix === 'b' ? DOCS_BUILDING : prefix === 'e' ? DOCS_ELEVATION : DOCS_RECONCILIATION;
-        
+        var docsList = getDocsForType(prefix === 'b' ? 'building' : prefix === 'e' ? 'elevation' : 'reconciliation');
         for (var i = 0; i < docsList.length; i++) {
             var docKey = docsList[i].key;
             var files = uploadedFiles[prefix][docKey] || [];
-            
             if (files.length === 0) continue;
-            
             var folder = prefix === 'b' ? 'building' : prefix === 'e' ? 'elevation' : 'reconciliation';
             uploadedData[docKey] = [];
-            
             for (var j = 0; j < files.length; j++) {
                 var file = files[j];
                 setConnectionStatus('syncing', '⏳ رفع: ' + file.name);
-                
                 try {
                     var timestamp = Date.now() + '_' + j;
                     var fileName = timestamp + '_' + file.name;
                     var path = folder + '/' + projectId + '/' + docKey + '/' + fileName;
                     var storageRef = ref(storage, path);
-                    
                     await uploadBytes(storageRef, file);
                     var downloadURL = await getDownloadURL(storageRef);
-                    
                     uploadedData[docKey].push({
-                        name: file.name,
-                        url: downloadURL,
-                        path: path,
-                        size: file.size,
-                        type: file.type,
+                        name: file.name, url: downloadURL, path: path,
+                        size: file.size, type: file.type,
                         uploadedAt: new Date().toISOString()
                     });
                 } catch (error) {
                     console.error('❌ خطأ في رفع: ' + file.name, error);
-                    Swal.fire({
-                        icon: 'error',
-                        title: '⚠️ خطأ في رفع ملف',
-                        html: '<div style="text-align:right">' +
-                              '<p><strong>الملف:</strong> ' + file.name + '</p>' +
-                              '<p><strong>الخطأ:</strong> ' + error.message + '</p>' +
-                              '<p style="color:#e53e3e;font-size:12px;margin-top:10px;">' +
-                              '💡 تأكد من تفعيل Firebase Storage<br>' +
-                              'وتعديل قواعده إلى Test Mode</p>' +
-                              '</div>',
-                        confirmButtonColor: '#e53e3e'
-                    });
+                    Swal.fire({ icon: 'error', title: '⚠️ خطأ في رفع ملف', html: '<p><strong>الملف:</strong> ' + file.name + '</p><p><strong>الخطأ:</strong> ' + error.message + '</p>' });
                     throw error;
                 }
             }
         }
-        
         setConnectionStatus('online', 'متصل - ' + new Date().toLocaleTimeString('ar-EG'));
         return uploadedData;
     }
 
-    // ============================================================
-    //                    عرض المستندات في بطاقة المشروع
-    // ============================================================
     function renderDocsForCard(docs, projectType) {
         if (!docs || Object.keys(docs).length === 0) return '';
-        
-        var docList = projectType === 'building' ? DOCS_BUILDING : projectType === 'elevation' ? DOCS_ELEVATION : DOCS_RECONCILIATION;
+        var docList = getDocsForType(projectType);
         var html = '<div class="docs-view">';
         html += '<div class="docs-title">📎 المستندات المرفوعة (' + countTotalFiles(docs) + ' ملف)</div>';
-        
         var hasAny = false;
         docList.forEach(function(doc) {
             var files = docs[doc.key];
             if (!files) return;
-            
-            // دعم النظام القديم (ملف واحد)
-            if (files.url) {
-                files = [{ name: files.name || 'ملف', url: files.url, size: files.size, type: files.type }];
-            }
-            
+            if (files.url) files = [{ name: files.name || 'ملف', url: files.url, size: files.size, type: files.type }];
             if (!Array.isArray(files) || files.length === 0) return;
-            
             hasAny = true;
-            html += '<div class="doc-group">';
-            html += '<div class="doc-group-title">' + doc.label + ' (' + files.length + ')</div>';
-            
+            html += '<div class="doc-group"><div class="doc-group-title">' + doc.label + ' (' + files.length + ')</div>';
             files.forEach(function(f) {
                 var icon = getFileIcon(f.name, f.type);
                 html += '<div class="file-card">';
                 html += '<div class="file-icon">' + icon + '</div>';
-                html += '<div class="file-details">';
-                html += '<div class="name">' + f.name + '</div>';
-                html += '<div class="meta">' + formatFileSize(f.size) + '</div>';
-                html += '</div>';
+                html += '<div class="file-details"><div class="name">' + f.name + '</div><div class="meta">' + formatFileSize(f.size) + '</div></div>';
                 html += '<div class="file-actions">';
                 html += '<button class="btn-view" title="معاينة" onclick="openPreview(\'' + escapeUrl(f.url) + '\', \'' + escapeStr(f.name) + '\', \'' + escapeStr(f.type || '') + '\')">👁️</button>';
-                html += '<a class="btn-download" href="' + f.url + '" download="' + escapeStr(f.name) + '" title="تحميل" target="_blank">📥</a>';
-                html += '</div>';
-                html += '</div>';
+                html += '<a class="btn-download" href="' + f.url + '" download="' + escapeStr(f.name) + '" target="_blank">📥</a>';
+                html += '</div></div>';
             });
-            
             html += '</div>';
         });
-        
         if (!hasAny) return '';
+        html += '</div>';
+        return html;
+    }
+
+    // ========== STEPS RENDERING ==========
+    function renderStepsForCard(project, projectType) {
+        var steps = getStepsForType(projectType);
+        if (!steps || steps.length === 0) return '';
+        var currentStep = project.current_step || 0;
+        var total = steps.length;
+        var completed = currentStep;
+        var remaining = total - currentStep;
+        
+        var html = '<div class="steps-view">';
+        html += '<div class="steps-title"><span>📋 خطوات المشروع</span>';
+        html += '<span class="steps-progress-info">' + completed + '/' + total + ' منجز • ' + remaining + ' متبقي</span></div>';
+        html += '<div class="steps-list">';
+        
+        steps.forEach(function(s) {
+            var cls = 'pending', icon = '⭕';
+            if (s.num <= currentStep) { cls = 'completed'; icon = '✅'; }
+            else if (s.num === currentStep + 1) { cls = 'current'; icon = '⏳'; }
+            html += '<div class="step-row ' + cls + '">';
+            html += '<div class="step-num">' + s.num + '</div>';
+            html += '<div class="step-name">' + s.name + '</div>';
+            html += '<div class="step-dept">' + s.dept + '</div>';
+            html += '<div class="step-status">' + icon + '</div>';
+            html += '</div>';
+        });
+        html += '</div>';
+        
+        if (currentStep < total) {
+            html += '<div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap;">';
+            html += '<button onclick="completeStep(\'' + projectType + '\',\'' + project.id + '\',' + (currentStep + 1) + ')" class="btn btn-info btn-sm" style="font-size:11px;padding:5px 12px;">➡️ إنجاز الخطوة ' + (currentStep + 1) + ': ' + steps[currentStep].name + '</button>';
+            html += '<button onclick="rollbackStep(\'' + projectType + '\',\'' + project.id + '\',' + currentStep + ')" class="btn btn-warning btn-sm" style="font-size:11px;padding:5px 12px;">↩️ تراجع</button>';
+            html += '</div>';
+        } else {
+            html += '<div style="margin-top:8px;text-align:center;color:var(--success);font-weight:700;">🎉 تم إنجاز جميع الخطوات</div>';
+        }
+        
         html += '</div>';
         return html;
     }
@@ -1528,55 +1084,34 @@
     function escapeStr(str) {
         return String(str || '').replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/"/g, '&quot;');
     }
-
     function escapeUrl(url) {
         return String(url || '').replace(/'/g, "\\'");
     }
 
-    // ============================================================
-    //                    تسجيل الدخول
-    // ============================================================
+    // ========== LOGIN ==========
     function doLogin() {
         var input = document.getElementById('passwordInput');
         var errorMsg = document.getElementById('errorMsg');
         var password = input.value.trim();
-        
         errorMsg.style.display = 'none';
-        
-        if (!password) {
-            errorMsg.textContent = '⚠️ الرجاء إدخال كلمة المرور';
-            errorMsg.style.display = 'block';
-            return;
-        }
-        
+        if (!password) { errorMsg.textContent = '⚠️ الرجاء إدخال كلمة المرور'; errorMsg.style.display = 'block'; return; }
         if (password === SECRET_PASSWORD) {
             document.getElementById('loginScreen').classList.add('hidden');
             document.getElementById('appContainer').classList.add('active');
             input.value = '';
-            
             waitForFirebase(function() {
                 db = window.firebaseDB;
                 storage = window.firebaseStorage;
                 var api = window.fsAPI;
-                collection = api.collection;
-                addDoc = api.addDoc;
-                getDocs = api.getDocs;
-                doc = api.doc;
-                updateDoc = api.updateDoc;
-                deleteDoc = api.deleteDoc;
-                onSnapshot = api.onSnapshot;
-                query = api.query;
-                orderBy = api.orderBy;
-                serverTimestamp = api.serverTimestamp;
-                ref = api.ref;
-                uploadBytes = api.uploadBytes;
-                getDownloadURL = api.getDownloadURL;
+                collection = api.collection; addDoc = api.addDoc; getDocs = api.getDocs;
+                doc = api.doc; updateDoc = api.updateDoc; deleteDoc = api.deleteDoc;
+                onSnapshot = api.onSnapshot; query = api.query; orderBy = api.orderBy;
+                serverTimestamp = api.serverTimestamp; ref = api.ref;
+                uploadBytes = api.uploadBytes; getDownloadURL = api.getDownloadURL;
                 deleteObject = api.deleteObject;
-                
                 buildDocsGrid('b', DOCS_BUILDING, 'b_docs_grid');
                 buildDocsGrid('e', DOCS_ELEVATION, 'e_docs_grid');
                 buildDocsGrid('r', DOCS_RECONCILIATION, 'r_docs_grid');
-                
                 loadAllDataFromFirebase();
                 setupRealtimeSync();
                 initTabsAndEvents();
@@ -1591,13 +1126,9 @@
 
     function doLogout() {
         Swal.fire({
-            title: 'تسجيل الخروج؟',
-            icon: 'question',
-            showCancelButton: true,
-            confirmButtonColor: '#e53e3e',
-            cancelButtonColor: '#a0aec0',
-            confirmButtonText: 'نعم، خروج',
-            cancelButtonText: 'إلغاء'
+            title: 'تسجيل الخروج؟', icon: 'question', showCancelButton: true,
+            confirmButtonColor: '#e53e3e', cancelButtonColor: '#a0aec0',
+            confirmButtonText: 'نعم، خروج', cancelButtonText: 'إلغاء'
         }).then(function(result) {
             if (result.isConfirmed) {
                 document.getElementById('loginScreen').classList.remove('hidden');
@@ -1611,7 +1142,6 @@
     async function loadAllDataFromFirebase() {
         try {
             setConnectionStatus('syncing', 'جاري المزامنة...');
-            
             var engSnap = await getDocs(collection(db, 'engineers'));
             engineers = [];
             engSnap.forEach(function(d) { engineers.push({ id: d.id, ...d.data() }); });
@@ -1637,9 +1167,14 @@
             alertSnap.forEach(function(d) { allAlerts.push({ id: d.id, ...d.data() }); });
             allAlerts.sort(function(a, b) { return (b.createdAt || '').localeCompare(a.createdAt || ''); });
             
+            var appSnap = await getDocs(collection(db, 'appointments'));
+            appointments = [];
+            appSnap.forEach(function(d) { appointments.push({ id: d.id, ...d.data() }); });
+            
             setConnectionStatus('online', 'متصل - ' + new Date().toLocaleTimeString('ar-EG'));
             updateUI();
             renderAll();
+            checkAppointmentsForReminders();
         } catch (error) {
             console.error('❌ خطأ:', error);
             setConnectionStatus('offline', 'خطأ في الاتصال');
@@ -1650,44 +1185,38 @@
         onSnapshot(collection(db, 'buildingPermits'), function(snapshot) {
             buildingPermits = [];
             snapshot.forEach(function(d) { buildingPermits.push({ id: d.id, ...d.data() }); });
-            renderBuildingPermits();
-            updateUI();
+            renderBuildingPermits(); updateUI();
         });
-        
         onSnapshot(collection(db, 'elevationPermits'), function(snapshot) {
             elevationPermits = [];
             snapshot.forEach(function(d) { elevationPermits.push({ id: d.id, ...d.data() }); });
-            renderElevationPermits();
-            updateUI();
+            renderElevationPermits(); updateUI();
         });
-        
         onSnapshot(collection(db, 'reconciliations'), function(snapshot) {
             reconciliations = [];
             snapshot.forEach(function(d) { reconciliations.push({ id: d.id, ...d.data() }); });
-            renderReconciliations();
-            updateUI();
+            renderReconciliations(); updateUI();
         });
-        
         onSnapshot(collection(db, 'engineers'), function(snapshot) {
             engineers = [];
             snapshot.forEach(function(d) { engineers.push({ id: d.id, ...d.data() }); });
-            renderEngineers();
-            updateSelects();
-            updateUI();
+            renderEngineers(); updateSelects(); updateUI();
         });
-        
         onSnapshot(collection(db, 'alerts'), function(snapshot) {
             allAlerts = [];
             snapshot.forEach(function(d) { allAlerts.push({ id: d.id, ...d.data() }); });
             allAlerts.sort(function(a, b) { return (b.createdAt || '').localeCompare(a.createdAt || ''); });
-            renderAlerts();
-            updateUI();
+            renderAlerts(); updateUI();
         });
-        
         onSnapshot(collection(db, 'communications'), function(snapshot) {
             communications = [];
             snapshot.forEach(function(d) { communications.push({ id: d.id, ...d.data() }); });
             renderCommunications();
+        });
+        onSnapshot(collection(db, 'appointments'), function(snapshot) {
+            appointments = [];
+            snapshot.forEach(function(d) { appointments.push({ id: d.id, ...d.data() }); });
+            renderAppointments(); updateUI();
         });
     }
 
@@ -1699,16 +1228,7 @@
                 date: new Date().toLocaleString('ar-EG'),
                 createdAt: serverTimestamp()
             });
-            sendAlertToWhatsApp(message, type, projectId);
         } catch (e) { console.error('خطأ:', e); }
-    }
-
-    function sendAlertToWhatsApp(message, type, projectId) {
-        if (!WHATSAPP_NUMBER) return;
-        var typeText = type === 'building' ? 'رخصة بناء' : type === 'elevation' ? 'رخصة تعلية' : type === 'reconciliation' ? 'تصالح' : 'عام';
-        var projectInfo = projectId && projectId !== 'new' ? '\n📋 المشروع: ' + getProjectName(type, projectId) : '';
-        var fullMessage = '🇪🇬 AL BRAZILLI TECHNOLOGIES\n\n🔔 تنبيه جديد\n\n📁 النوع: ' + typeText + projectInfo + '\n\n💬 ' + message + '\n\n📅 ' + new Date().toLocaleString('ar-EG');
-        sendWhatsApp(WHATSAPP_NUMBER, fullMessage);
     }
 
     function sendWhatsApp(phone, msg) {
@@ -1719,20 +1239,199 @@
         return true;
     }
 
+    // ========== APPOINTMENTS ==========
+    function updateAppointmentProjects() {
+        var type = document.getElementById('app_project_type').value;
+        var sel = document.getElementById('app_project');
+        sel.innerHTML = '<option value="">بدون</option>';
+        if (type === 'general') return;
+        var list = type === 'building' ? buildingPermits : type === 'elevation' ? elevationPermits : reconciliations;
+        list.forEach(function(p) {
+            sel.innerHTML += '<option value="' + p.id + '">' + p.client + '</option>';
+        });
+    }
+
+    document.getElementById('appointmentForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        var editId = document.getElementById('app_edit_id').value;
+        var data = {
+            title: document.getElementById('app_title').value,
+            date: document.getElementById('app_date').value,
+            time: document.getElementById('app_time').value || '09:00',
+            projectType: document.getElementById('app_project_type').value,
+            projectId: document.getElementById('app_project').value || null,
+            engineerId: document.getElementById('app_engineer').value || null,
+            reminderDays: parseInt(document.getElementById('app_reminder').value) || 0,
+            notes: document.getElementById('app_notes').value || '',
+            status: 'pending',
+            updatedAt: serverTimestamp()
+        };
+        
+        try {
+            if (editId) {
+                await updateDoc(doc(db, 'appointments', editId), data);
+                Swal.fire({ icon: 'success', title: '✅ تم التعديل', timer: 1500, showConfirmButton: false });
+            } else {
+                data.createdAt = serverTimestamp();
+                await addDoc(collection(db, 'appointments'), data);
+                await addAlert('appointment', data.projectId || 'general', '📅 موعد جديد: ' + data.title + ' بتاريخ ' + data.date, 'appointment');
+                Swal.fire({ icon: 'success', title: '✅ تم حفظ الموعد', timer: 1500, showConfirmButton: false });
+            }
+            resetAppointmentForm();
+        } catch (err) {
+            Swal.fire({ icon: 'error', title: 'خطأ', text: err.message });
+        }
+    });
+
+    function resetAppointmentForm() {
+        document.getElementById('appointmentForm').reset();
+        document.getElementById('app_edit_id').value = '';
+        document.getElementById('appointmentFormTitle').innerHTML = '➕ إضافة موعد';
+        document.getElementById('btnCancelAppointment').style.display = 'none';
+        updateAppointmentProjects();
+    }
+
+    function editAppointment(id) {
+        var a = appointments.find(function(x) { return x.id === id; });
+        if (!a) return;
+        document.getElementById('app_edit_id').value = a.id;
+        document.getElementById('app_title').value = a.title || '';
+        document.getElementById('app_date').value = a.date || '';
+        document.getElementById('app_time').value = a.time || '09:00';
+        document.getElementById('app_project_type').value = a.projectType || 'general';
+        updateAppointmentProjects();
+        document.getElementById('app_project').value = a.projectId || '';
+        document.getElementById('app_engineer').value = a.engineerId || '';
+        document.getElementById('app_reminder').value = a.reminderDays != null ? a.reminderDays : 1;
+        document.getElementById('app_notes').value = a.notes || '';
+        document.getElementById('appointmentFormTitle').innerHTML = '✏️ تعديل موعد';
+        document.getElementById('btnCancelAppointment').style.display = 'inline-flex';
+        switchTab('appointments');
+    }
+
+    function getAppointmentStatus(a) {
+        if (a.status === 'completed') return 'completed';
+        var now = new Date();
+        var appDate = new Date(a.date + 'T' + (a.time || '09:00'));
+        var diffDays = Math.floor((appDate - now) / (1000 * 60 * 60 * 24));
+        if (appDate < now && diffDays < 0) return 'overdue';
+        if (a.date === new Date().toISOString().split('T')[0]) return 'today';
+        return 'upcoming';
+    }
+
+    function renderAppointments() {
+        var c = document.getElementById('appointmentsList');
+        var countEl = document.getElementById('appointmentsCount');
+        if (countEl) countEl.textContent = appointments.length;
+        if (appointments.length === 0) {
+            c.innerHTML = '<div style="text-align:center;padding:20px;color:#a0aec0;">📅 لا توجد مواعيد</div>';
+            return;
+        }
+        var sorted = appointments.slice().sort(function(a, b) {
+            return (a.date + ' ' + (a.time || '')) .localeCompare(b.date + ' ' + (b.time || ''));
+        });
+        var html = '';
+        sorted.forEach(function(a) {
+            var status = getAppointmentStatus(a);
+            var statusText = status === 'overdue' ? 'متأخر' : status === 'today' ? 'اليوم' : status === 'completed' ? 'مكتمل' : 'قادم';
+            var projName = a.projectId ? getProjectName(a.projectType, a.projectId) : 'عام';
+            html += '<div class="appointment-card ' + status + '">';
+            html += '<div class="app-header">';
+            html += '<div class="app-title">📌 ' + a.title + '</div>';
+            html += '<span class="app-badge ' + status + '">' + statusText + '</span>';
+            html += '</div>';
+            html += '<div class="app-details">';
+            html += '<div class="item"><div class="label">📅 التاريخ</div><div class="value">' + a.date + '</div></div>';
+            html += '<div class="item"><div class="label">⏰ الوقت</div><div class="value">' + (a.time || '-') + '</div></div>';
+            html += '<div class="item"><div class="label">📁 المشروع</div><div class="value">' + projName + '</div></div>';
+            html += '<div class="item"><div class="label">👷 المهندس</div><div class="value">' + (a.engineerId ? getEngineerName(a.engineerId) : 'بدون') + '</div></div>';
+            html += '<div class="item"><div class="label">🔔 التنبيه</div><div class="value">' + (a.reminderDays || 0) + ' يوم</div></div>';
+            html += '</div>';
+            if (a.notes) html += '<div class="agreement-box" style="font-size:12px;margin-top:8px;">📝 ' + a.notes + '</div>';
+            html += '<div class="app-actions">';
+            html += '<button onclick="editAppointment(\'' + a.id + '\')" class="btn btn-gold btn-sm" style="font-size:10px;padding:3px 10px;">✏️ تعديل</button>';
+            if (a.status !== 'completed') {
+                html += '<button onclick="completeAppointment(\'' + a.id + '\')" class="btn btn-success btn-sm" style="font-size:10px;padding:3px 10px;">✅ تم</button>';
+            }
+            html += '<button onclick="sendAppointmentWhatsApp(\'' + a.id + '\')" class="btn btn-whatsapp btn-sm" style="font-size:10px;padding:3px 10px;">💬 تذكير</button>';
+            html += '<button onclick="deleteAppointment(\'' + a.id + '\')" class="btn btn-danger btn-sm" style="font-size:10px;padding:3px 10px;">🗑️</button>';
+            html += '</div></div>';
+        });
+        c.innerHTML = html;
+    }
+
+    async function completeAppointment(id) {
+        try {
+            await updateDoc(doc(db, 'appointments', id), { status: 'completed' });
+            Swal.fire({ icon: 'success', title: '✅ تم إنجاز الموعد', timer: 1500, showConfirmButton: false });
+        } catch (e) { Swal.fire({ icon: 'error', title: 'خطأ', text: e.message }); }
+    }
+
+    async function deleteAppointment(id) {
+        var result = await Swal.fire({
+            title: 'حذف الموعد؟', icon: 'warning', showCancelButton: true,
+            confirmButtonColor: '#e53e3e', confirmButtonText: 'نعم، احذف', cancelButtonText: 'إلغاء'
+        });
+        if (!result.isConfirmed) return;
+        try {
+            await deleteDoc(doc(db, 'appointments', id));
+            Swal.fire({ icon: 'success', title: '✅ تم الحذف', timer: 1500, showConfirmButton: false });
+        } catch (e) { Swal.fire({ icon: 'error', title: 'خطأ', text: e.message }); }
+    }
+
+    function sendAppointmentWhatsApp(id) {
+        var a = appointments.find(function(x) { return x.id === id; });
+        if (!a) return;
+        var eng = a.engineerId ? engineers.find(function(e) { return e.id === a.engineerId; }) : null;
+        var phone = eng ? eng.phone : WHATSAPP_NUMBER;
+        var projName = a.projectId ? getProjectName(a.projectType, a.projectId) : 'عام';
+        var msg = '🇪🇬 AL BRAZILLI TECHNOLOGIES\n\n📅 تذكير بموعد\n\n📌 ' + a.title + '\n📅 التاريخ: ' + a.date + '\n⏰ الوقت: ' + (a.time || '-') + '\n📁 المشروع: ' + projName;
+        if (a.notes) msg += '\n📝 ' + a.notes;
+        sendWhatsApp(phone, msg);
+    }
+
+    function checkAppointmentsForReminders() {
+        if (!appointments || appointments.length === 0) return;
+        var today = new Date();
+        today.setHours(0, 0, 0, 0);
+        var todayStr = today.toISOString().split('T')[0];
+        
+        appointments.forEach(function(a) {
+            if (a.status === 'completed') return;
+            if (a.reminderDays == null) return;
+            var reminderDate = new Date(a.date);
+            reminderDate.setDate(reminderDate.getDate() - (a.reminderDays || 0));
+            var reminderStr = reminderDate.toISOString().split('T')[0];
+            
+            if (reminderStr === todayStr || a.date === todayStr) {
+                var key = 'alerted_' + a.id + '_' + todayStr;
+                if (!sessionStorage.getItem(key)) {
+                    sessionStorage.setItem(key, '1');
+                    addAlert('appointment', a.projectId || 'general', '🔔 تذكير بموعد: ' + a.title + ' في ' + a.date + ' الساعة ' + a.time, 'appointment');
+                }
+            }
+        });
+    }
+
+    // Set interval to check appointments every hour
+    setInterval(function() {
+        if (typeof appointments !== 'undefined' && appointments.length > 0) {
+            checkAppointmentsForReminders();
+        }
+    }, 60 * 60 * 1000);
+
+    // ========== COMMUNICATIONS ==========
     async function sendComm() {
         var type = document.getElementById('comm_type').value;
         var projectId = document.getElementById('comm_project').value;
         var engineerId = document.getElementById('comm_engineer').value;
         if (!projectId) { Swal.fire({ icon: 'warning', title: 'تنبيه', text: 'الرجاء اختيار مشروع' }); return; }
         if (!engineerId) { Swal.fire({ icon: 'warning', title: 'تنبيه', text: 'الرجاء اختيار مهندس' }); return; }
-        
         var eng = engineers.find(function(e) { return e.id === engineerId; });
         if (!eng || !eng.phone) { Swal.fire({ icon: 'warning', title: 'تنبيه', text: 'المهندس ليس لديه رقم هاتف' }); return; }
-        
         try {
             var subj = document.getElementById('comm_subject').value || 'تواصل';
             var msgBody = document.getElementById('comm_message').value;
-            
             await addDoc(collection(db, 'communications'), {
                 type: type, projectId: projectId, engineerId: engineerId,
                 subject: subj, message: msgBody,
@@ -1741,64 +1440,39 @@
                 date: new Date().toLocaleString('ar-EG'),
                 createdAt: serverTimestamp()
             });
-            
             var project = getProjectName(type, projectId);
             var msg = '🇪🇬 AL BRAZILLI TECHNOLOGIES\n\n📌 ' + subj + '\n\n📋 المشروع: ' + project + '\n\n💬 ' + msgBody + '\n\n📅 ' + new Date().toLocaleString('ar-EG');
             sendWhatsApp(eng.phone, msg);
-            
             document.getElementById('comm_subject').value = '';
             document.getElementById('comm_message').value = '';
             document.getElementById('comm_next').value = '';
             document.getElementById('comm_progress').value = '';
-            
             Swal.fire({ icon: 'success', title: '✅ تم الإرسال', timer: 1500, showConfirmButton: false });
-        } catch (e) {
-            Swal.fire({ icon: 'error', title: 'خطأ', text: e.message });
-        }
+        } catch (e) { Swal.fire({ icon: 'error', title: 'خطأ', text: e.message }); }
     }
 
-    // ============================================================
-    //                    رخصة بناء
-    // ============================================================
+    // ========== BUILDING ==========
     document.getElementById('buildingForm').addEventListener('submit', async function(e) {
         e.preventDefault();
         var editId = document.getElementById('b_edit_id').value;
-        
         var docs = ['contract', 'id', 'signature', 'power'];
-        var allChecked = docs.every(function(k) { 
+        var allChecked = docs.every(function(k) {
             var el = document.getElementById('b_doc_' + k + '_check');
-            return el && el.checked; 
+            return el && el.checked;
         });
-        if (!allChecked) { 
-            Swal.fire({ icon: 'warning', title: 'تنبيه', text: 'يرجى تأكيد استلام جميع المستندات' }); 
-            return; 
-        }
-        
+        if (!allChecked) { Swal.fire({ icon: 'warning', title: 'تنبيه', text: 'يرجى تأكيد استلام جميع المستندات' }); return; }
         var total = parseFloat(document.getElementById('b_total').value) || 0;
         var paid = parseFloat(document.getElementById('b_paid').value) || 0;
-        
         var hasFiles = false;
         Object.keys(uploadedFiles.b).forEach(function(k) {
             if (uploadedFiles.b[k] && uploadedFiles.b[k].length > 0) hasFiles = true;
         });
-        
-        Swal.fire({ 
-            title: hasFiles ? 'جاري رفع الملفات والحفظ...' : 'جاري الحفظ...', 
-            html: '<div style="font-size:13px;color:#718096;margin-top:10px;">يرجى الانتظار</div>',
-            allowOutsideClick: false, 
-            didOpen: function() { Swal.showLoading(); } 
-        });
-        
+        Swal.fire({ title: hasFiles ? 'جاري رفع الملفات والحفظ...' : 'جاري الحفظ...', allowOutsideClick: false, didOpen: function() { Swal.showLoading(); } });
         try {
             var projectId = editId || 'new_' + Date.now();
             var docsData = {};
-            try {
-                docsData = await uploadAllFiles('b', projectId);
-            } catch (uploadErr) {
-                Swal.close();
-                return;
-            }
-            
+            try { docsData = await uploadAllFiles('b', projectId); }
+            catch (uploadErr) { Swal.close(); return; }
             var data = {
                 client: document.getElementById('b_client').value,
                 phone: document.getElementById('b_phone').value,
@@ -1814,8 +1488,11 @@
                 documents: docsData,
                 updatedAt: serverTimestamp()
             };
-            
             if (editId) {
+                if (Object.keys(docsData).length > 0) {
+                    var oldP = buildingPermits.find(function(x) { return x.id === editId; });
+                    data.documents = Object.assign({}, oldP.documents || {}, docsData);
+                }
                 await updateDoc(doc(db, 'buildingPermits', editId), data);
                 Swal.close();
                 Swal.fire({ icon: 'success', title: '✅ تم التعديل', timer: 1500, showConfirmButton: false });
@@ -1865,13 +1542,11 @@
         document.getElementById('b_agreement').value = p.agreement || '';
         document.getElementById('b_date').value = p.date || '';
         document.getElementById('b_notes').value = p.notes || '';
-        
         uploadedFiles.b = {};
         DOCS_BUILDING.forEach(function(doc) {
             var check = document.getElementById('b_doc_' + doc.key + '_check');
             if (check) check.checked = true;
         });
-        
         document.getElementById('buildingFormTitle').innerHTML = '✏️ تعديل رخصة بناء';
         document.getElementById('btnCancelBuilding').style.display = 'inline-flex';
         switchTab('building');
@@ -1884,18 +1559,17 @@
         var search = document.getElementById('b_search').value.toLowerCase();
         var list = buildingPermits;
         if (filter !== 'all') list = list.filter(function(p) { return p.status === filter; });
-        if (search) list = list.filter(function(p) { return (p.client || '').toLowerCase().includes(search) || (p.address || '').toLowerCase().includes(search); });
+        if (search) list = list.filter(function(p) {
+            return (p.client || '').toLowerCase().includes(search) || (p.address || '').toLowerCase().includes(search);
+        });
         document.getElementById('buildingCount').textContent = list.length;
-        if (list.length === 0) { container.innerHTML = '<div style="text-align:center;padding:30px;color:#a0aec0;">🏗️ لا توجد رخص - ابدأ بإضافة رخصة جديدة</div>'; return; }
-        
+        if (list.length === 0) { container.innerHTML = '<div style="text-align:center;padding:30px;color:#a0aec0;">🏗️ لا توجد رخص</div>'; return; }
         var html = '';
-        for (var i = 0; i < list.length; i++) {
-            var p = list[i];
+        list.forEach(function(p) {
             var steps = BUILDING_STEPS;
             var currentStep = p.current_step || 0;
             var progress = steps.length > 0 ? (currentStep / steps.length) * 100 : 0;
             var remaining = p.total - p.paid;
-            
             html += '<div class="project-card">';
             html += '<div class="header-row">';
             html += '<div><div class="title">🏗️ ' + p.client + '</div>';
@@ -1907,15 +1581,10 @@
             html += '<button onclick="editBuilding(\'' + p.id + '\')" class="btn btn-gold btn-sm" style="font-size:10px;padding:3px 10px;">✏️</button>';
             html += '<button onclick="updateBuildingStatus(\'' + p.id + '\',\'under_review\')" class="btn btn-warning btn-sm" style="font-size:10px;padding:3px 10px;">🔍</button>';
             html += '<button onclick="updateBuildingStatus(\'' + p.id + '\',\'approved\')" class="btn btn-success btn-sm" style="font-size:10px;padding:3px 10px;">✅</button>';
-            if (currentStep < steps.length) {
-                html += '<button onclick="completeStep(\'' + p.id + '\',' + (currentStep + 1) + ')" class="btn btn-info btn-sm" style="font-size:10px;padding:3px 10px;">➡️</button>';
-            }
             html += '<button onclick="addPayment(\'building\',\'' + p.id + '\')" class="btn btn-success btn-sm" style="font-size:10px;padding:3px 10px;">💰</button>';
             html += '</div></div></div>';
-            
             if (p.transaction) html += '<div class="transaction-box">📋 رقم المعاملة: ' + p.transaction + '</div>';
             if (p.next_step) html += '<div class="next-step-box">➡️ الخطوة القادمة: ' + p.next_step + '</div>';
-            
             html += '<div class="details-grid">';
             html += '<div class="item"><div class="label">📐 المساحة</div><div class="value">' + p.area + ' م²</div></div>';
             html += '<div class="item"><div class="label">📌 الخطوة</div><div class="value">' + currentStep + '/' + steps.length + '</div></div>';
@@ -1924,39 +1593,29 @@
             html += '<div class="item"><div class="label">⏳ المتبقي</div><div class="value" style="color:' + (remaining > 0 ? 'var(--danger)' : 'var(--success)') + ';">' + formatCurrency(remaining) + '</div></div>';
             html += '</div>';
             if (p.agreement) html += '<div class="agreement-box">📝 ' + p.agreement + '</div>';
-            
+            html += renderStepsForCard(p, 'building');
             html += renderDocsForCard(p.documents, 'building');
-            
-            html += '<div class="progress-section"><div style="display:flex;justify-content:space-between;font-size:11px;"><span>📊 التقدم</span><span>' + progress.toFixed(0) + '%</span></div><div class="progress-bar"><div class="fill" style="width:' + progress + '%;"></div></div></div>';
+            html += '<div style="margin-top:10px;"><div style="display:flex;justify-content:space-between;font-size:11px;"><span>📊 التقدم</span><span>' + progress.toFixed(0) + '%</span></div><div class="progress-bar"><div class="fill" style="width:' + progress + '%;"></div></div></div>';
             html += '<div style="margin-top:8px;display:flex;gap:6px;"><button onclick="deleteProject(\'building\',\'' + p.id + '\')" class="btn btn-danger btn-sm" style="font-size:10px;padding:3px 10px;">🗑️ حذف</button></div>';
             html += '</div>';
-        }
+        });
         container.innerHTML = html;
     }
 
     async function addPayment(type, id) {
         var result = await Swal.fire({
-            title: '💰 إضافة دفعة',
-            input: 'number',
-            inputLabel: 'المبلغ (ج.م)',
-            inputPlaceholder: 'أدخل المبلغ',
-            showCancelButton: true,
-            confirmButtonText: 'إضافة',
-            cancelButtonText: 'إلغاء',
-            inputValidator: function(value) {
-                if (!value || parseFloat(value) <= 0) return 'أدخل مبلغ صحيح';
-            }
+            title: '💰 إضافة دفعة', input: 'number',
+            inputLabel: 'المبلغ (ج.م)', inputPlaceholder: 'أدخل المبلغ',
+            showCancelButton: true, confirmButtonText: 'إضافة', cancelButtonText: 'إلغاء',
+            inputValidator: function(value) { if (!value || parseFloat(value) <= 0) return 'أدخل مبلغ صحيح'; }
         });
-        
         if (!result.isConfirmed) return;
-        
         var val = parseFloat(result.value);
         var project, collName;
         if (type === 'building') { project = buildingPermits.find(function(p) { return p.id === id; }); collName = 'buildingPermits'; }
         else if (type === 'elevation') { project = elevationPermits.find(function(p) { return p.id === id; }); collName = 'elevationPermits'; }
         else if (type === 'reconciliation') { project = reconciliations.find(function(p) { return p.id === id; }); collName = 'reconciliations'; }
         if (!project) return;
-        
         try {
             await updateDoc(doc(db, collName, id), {
                 paid: (project.paid || 0) + val,
@@ -1964,9 +1623,7 @@
             });
             await addAlert(type, id, '💰 دفعة بقيمة ' + formatCurrency(val), 'payment');
             Swal.fire({ icon: 'success', title: '✅ تمت الإضافة', timer: 1500, showConfirmButton: false });
-        } catch (e) {
-            Swal.fire({ icon: 'error', title: 'خطأ', text: e.message });
-        }
+        } catch (e) { Swal.fire({ icon: 'error', title: 'خطأ', text: e.message }); }
     }
 
     async function updateBuildingStatus(id, status) {
@@ -1974,72 +1631,72 @@
             await updateDoc(doc(db, 'buildingPermits', id), { status: status });
             await addAlert('building', id, '📋 تحديث الحالة: ' + getStatusText(status), 'status');
             Swal.fire({ icon: 'success', title: '✅ تم التحديث', timer: 1500, showConfirmButton: false });
-        } catch (e) {
-            Swal.fire({ icon: 'error', title: 'خطأ', text: e.message });
-        }
+        } catch (e) { Swal.fire({ icon: 'error', title: 'خطأ', text: e.message }); }
     }
 
-    async function completeStep(id, stepNum) {
-        var p = buildingPermits.find(function(x) { return x.id === id; });
-        if (!p) return;
-        if (stepNum !== (p.current_step || 0) + 1) { Swal.fire({ icon: 'warning', title: 'تنبيه', text: 'الرجاء إنجاز الخطوات بالترتيب' }); return; }
+    async function completeStep(type, id, stepNum) {
+        var steps = getStepsForType(type);
+        var collName = type === 'building' ? 'buildingPermits' : type === 'elevation' ? 'elevationPermits' : 'reconciliations';
+        var project;
+        if (type === 'building') project = buildingPermits.find(function(x) { return x.id === id; });
+        else if (type === 'elevation') project = elevationPermits.find(function(x) { return x.id === id; });
+        else if (type === 'reconciliation') project = reconciliations.find(function(x) { return x.id === id; });
+        if (!project) return;
+        if (stepNum !== (project.current_step || 0) + 1) { Swal.fire({ icon: 'warning', title: 'تنبيه', text: 'الرجاء إنجاز الخطوات بالترتيب' }); return; }
         try {
             var updateData = { current_step: stepNum };
-            var steps = BUILDING_STEPS;
             if (stepNum >= steps.length) updateData.status = 'completed';
-            await updateDoc(doc(db, 'buildingPermits', id), updateData);
+            await updateDoc(doc(db, collName, id), updateData);
             if (stepNum < steps.length) {
-                await addAlert('building', id, '📌 الخطوة القادمة: ' + steps[stepNum].name, 'deadline');
+                await addAlert(type, id, '📌 الخطوة القادمة: ' + steps[stepNum].name, 'deadline');
             } else {
-                await addAlert('building', id, '🎉 تم اكتمال الرخصة!', 'status');
+                await addAlert(type, id, '🎉 تم اكتمال المشروع!', 'status');
             }
             Swal.fire({ icon: 'success', title: '✅ تم إنجاز الخطوة ' + stepNum, timer: 1500, showConfirmButton: false });
-        } catch (e) {
-            Swal.fire({ icon: 'error', title: 'خطأ', text: e.message });
-        }
+        } catch (e) { Swal.fire({ icon: 'error', title: 'خطأ', text: e.message }); }
+    }
+
+    async function rollbackStep(type, id, currentStep) {
+        if (currentStep <= 0) { Swal.fire({ icon: 'warning', title: 'تنبيه', text: 'لا يمكن التراجع أكثر' }); return; }
+        var result = await Swal.fire({
+            title: 'التراجع عن خطوة؟', icon: 'question',
+            showCancelButton: true, confirmButtonText: 'نعم', cancelButtonText: 'إلغاء',
+            confirmButtonColor: '#f39c12'
+        });
+        if (!result.isConfirmed) return;
+        var collName = type === 'building' ? 'buildingPermits' : type === 'elevation' ? 'elevationPermits' : 'reconciliations';
+        try {
+            await updateDoc(doc(db, collName, id), { current_step: currentStep - 1, status: 'under_review' });
+            Swal.fire({ icon: 'success', title: '✅ تم التراجع', timer: 1500, showConfirmButton: false });
+        } catch (e) { Swal.fire({ icon: 'error', title: 'خطأ', text: e.message }); }
     }
 
     async function deleteProject(type, id) {
         var result = await Swal.fire({
-            title: 'حذف المشروع؟',
-            text: 'لا يمكن التراجع عن هذا الإجراء',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#e53e3e',
-            confirmButtonText: 'نعم، احذف',
-            cancelButtonText: 'إلغاء'
+            title: 'حذف المشروع؟', text: 'لا يمكن التراجع عن هذا الإجراء', icon: 'warning',
+            showCancelButton: true, confirmButtonColor: '#e53e3e',
+            confirmButtonText: 'نعم، احذف', cancelButtonText: 'إلغاء'
         });
         if (!result.isConfirmed) return;
         var collName = type === 'building' ? 'buildingPermits' : type === 'elevation' ? 'elevationPermits' : 'reconciliations';
         try {
             await deleteDoc(doc(db, collName, id));
             Swal.fire({ icon: 'success', title: '✅ تم الحذف', timer: 1500, showConfirmButton: false });
-        } catch (e) {
-            Swal.fire({ icon: 'error', title: 'خطأ', text: e.message });
-        }
+        } catch (e) { Swal.fire({ icon: 'error', title: 'خطأ', text: e.message }); }
     }
 
-    // ============================================================
-    //                    رخصة تعلية
-    // ============================================================
+    // ========== ELEVATION ==========
     document.getElementById('elevationForm').addEventListener('submit', async function(e) {
         e.preventDefault();
         var editId = document.getElementById('e_edit_id').value;
         var total = parseFloat(document.getElementById('e_total').value) || 0;
         var paid = parseFloat(document.getElementById('e_paid').value) || 0;
-        
         Swal.fire({ title: 'جاري الحفظ...', allowOutsideClick: false, didOpen: function() { Swal.showLoading(); } });
-        
         try {
             var projectId = editId || 'new_' + Date.now();
             var docsData = {};
-            try {
-                docsData = await uploadAllFiles('e', projectId);
-            } catch (uploadErr) {
-                Swal.close();
-                return;
-            }
-            
+            try { docsData = await uploadAllFiles('e', projectId); }
+            catch (uploadErr) { Swal.close(); return; }
             var data = {
                 client: document.getElementById('e_client').value,
                 phone: document.getElementById('e_phone').value,
@@ -2055,8 +1712,11 @@
                 documents: docsData,
                 updatedAt: serverTimestamp()
             };
-            
             if (editId) {
+                if (Object.keys(docsData).length > 0) {
+                    var oldP = elevationPermits.find(function(x) { return x.id === editId; });
+                    data.documents = Object.assign({}, oldP.documents || {}, docsData);
+                }
                 await updateDoc(doc(db, 'elevationPermits', editId), data);
                 Swal.close();
                 Swal.fire({ icon: 'success', title: '✅ تم التعديل', timer: 1500, showConfirmButton: false });
@@ -2106,13 +1766,11 @@
         document.getElementById('e_total').value = p.total || 0;
         document.getElementById('e_paid').value = p.paid || 0;
         document.getElementById('e_agreement').value = p.agreement || '';
-        
         uploadedFiles.e = {};
         DOCS_ELEVATION.forEach(function(doc) {
             var check = document.getElementById('e_doc_' + doc.key + '_check');
             if (check) check.checked = true;
         });
-        
         document.getElementById('elevationFormTitle').innerHTML = '✏️ تعديل رخصة تعلية';
         document.getElementById('btnCancelElevation').style.display = 'inline-flex';
         switchTab('elevation');
@@ -2122,16 +1780,14 @@
         var c = document.getElementById('elevationList');
         if (elevationPermits.length === 0) { c.innerHTML = '<div style="text-align:center;padding:20px;color:#a0aec0;">📐 لا توجد رخص</div>'; return; }
         var html = '';
-        for (var i = 0; i < elevationPermits.length; i++) {
-            var p = elevationPermits[i];
+        elevationPermits.forEach(function(p) {
             var rem = p.total - p.paid;
+            var progress = (p.current_step || 0) / ELEVATION_STEPS.length * 100;
             html += '<div class="project-card" style="border-right-color:var(--gold);">';
             html += '<div class="header-row"><div><div class="title" style="font-size:15px;">📐 ' + p.client + '</div><div class="subtitle" style="font-size:12px;">📍 ' + (p.address || '').substring(0, 25) + '</div></div>';
             html += '<div><span class="status-badge ' + getStatusClass(p.status) + '" style="font-size:10px;">' + getStatusText(p.status) + '</span></div></div>';
-            
             if (p.transaction) html += '<div class="transaction-box">📋 رقم المعاملة: ' + p.transaction + '</div>';
             if (p.next_step) html += '<div class="next-step-box">➡️ الخطوة القادمة: ' + p.next_step + '</div>';
-            
             html += '<div class="details-grid">';
             html += '<div class="item"><div class="label">الأدوار</div><div class="value">' + (p.existing || 0) + '</div></div>';
             html += '<div class="item"><div class="label">المضافة</div><div class="value">' + (p.newFloors || 0) + '</div></div>';
@@ -2140,39 +1796,30 @@
             html += '<div class="item"><div class="label">⏳ المتبقي</div><div class="value" style="color:' + (rem > 0 ? 'var(--danger)' : 'var(--success)') + ';">' + formatCurrency(rem) + '</div></div>';
             html += '</div>';
             if (p.agreement) html += '<div class="agreement-box" style="font-size:12px;">📝 ' + p.agreement + '</div>';
-            
+            html += renderStepsForCard(p, 'elevation');
             html += renderDocsForCard(p.documents, 'elevation');
-            
+            html += '<div style="margin-top:10px;"><div style="display:flex;justify-content:space-between;font-size:11px;"><span>📊 التقدم</span><span>' + progress.toFixed(0) + '%</span></div><div class="progress-bar"><div class="fill" style="width:' + progress + '%;"></div></div></div>';
             html += '<div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap;">';
             html += '<button onclick="editElevation(\'' + p.id + '\')" class="btn btn-gold btn-sm" style="font-size:10px;padding:3px 10px;">✏️ تعديل</button>';
             html += '<button onclick="addPayment(\'elevation\',\'' + p.id + '\')" class="btn btn-success btn-sm" style="font-size:10px;padding:3px 10px;">💰</button>';
             html += '<button onclick="deleteProject(\'elevation\',\'' + p.id + '\')" class="btn btn-danger btn-sm" style="font-size:10px;padding:3px 10px;">🗑️</button>';
             html += '</div></div>';
-        }
+        });
         c.innerHTML = html;
     }
 
-    // ============================================================
-    //                    تصالح
-    // ============================================================
+    // ========== RECONCILIATION ==========
     document.getElementById('reconciliationForm').addEventListener('submit', async function(e) {
         e.preventDefault();
         var editId = document.getElementById('r_edit_id').value;
         var total = parseFloat(document.getElementById('r_total').value) || 0;
         var paid = parseFloat(document.getElementById('r_paid').value) || 0;
-        
         Swal.fire({ title: 'جاري الحفظ...', allowOutsideClick: false, didOpen: function() { Swal.showLoading(); } });
-        
         try {
             var projectId = editId || 'new_' + Date.now();
             var docsData = {};
-            try {
-                docsData = await uploadAllFiles('r', projectId);
-            } catch (uploadErr) {
-                Swal.close();
-                return;
-            }
-            
+            try { docsData = await uploadAllFiles('r', projectId); }
+            catch (uploadErr) { Swal.close(); return; }
             var data = {
                 client: document.getElementById('r_client').value,
                 phone: document.getElementById('r_phone').value,
@@ -2186,8 +1833,11 @@
                 documents: docsData,
                 updatedAt: serverTimestamp()
             };
-            
             if (editId) {
+                if (Object.keys(docsData).length > 0) {
+                    var oldP = reconciliations.find(function(x) { return x.id === editId; });
+                    data.documents = Object.assign({}, oldP.documents || {}, docsData);
+                }
                 await updateDoc(doc(db, 'reconciliations', editId), data);
                 Swal.close();
                 Swal.fire({ icon: 'success', title: '✅ تم التعديل', timer: 1500, showConfirmButton: false });
@@ -2235,13 +1885,11 @@
         document.getElementById('r_total').value = p.total || 0;
         document.getElementById('r_paid').value = p.paid || 0;
         document.getElementById('r_agreement').value = p.agreement || '';
-        
         uploadedFiles.r = {};
         DOCS_RECONCILIATION.forEach(function(doc) {
             var check = document.getElementById('r_doc_' + doc.key + '_check');
             if (check) check.checked = true;
         });
-        
         document.getElementById('reconciliationFormTitle').innerHTML = '✏️ تعديل طلب تصالح';
         document.getElementById('btnCancelReconciliation').style.display = 'inline-flex';
         switchTab('reconciliation');
@@ -2251,16 +1899,14 @@
         var c = document.getElementById('reconciliationList');
         if (reconciliations.length === 0) { c.innerHTML = '<div style="text-align:center;padding:20px;color:#a0aec0;">⚖️ لا توجد طلبات</div>'; return; }
         var html = '';
-        for (var i = 0; i < reconciliations.length; i++) {
-            var p = reconciliations[i];
+        reconciliations.forEach(function(p) {
             var rem = p.total - p.paid;
+            var progress = (p.current_step || 0) / RECONCILIATION_STEPS.length * 100;
             html += '<div class="project-card" style="border-right-color:var(--danger);">';
             html += '<div class="header-row"><div><div class="title" style="font-size:15px;">⚖️ ' + p.client + '</div><div class="subtitle" style="font-size:12px;">📍 ' + (p.address || '').substring(0, 25) + '</div></div>';
             html += '<div><span class="status-badge ' + getStatusClass(p.status) + '" style="font-size:10px;">' + getStatusText(p.status) + '</span></div></div>';
-            
             if (p.transaction) html += '<div class="transaction-box">📋 رقم المعاملة: ' + p.transaction + '</div>';
             if (p.next_step) html += '<div class="next-step-box">➡️ الخطوة القادمة: ' + p.next_step + '</div>';
-            
             html += '<div class="details-grid">';
             html += '<div class="item"><div class="label">المخالفة</div><div class="value" style="font-size:13px;">' + getViolationText(p.violation) + '</div></div>';
             html += '<div class="item"><div class="label">💰 الإجمالي</div><div class="value">' + formatCurrency(p.total) + '</div></div>';
@@ -2268,25 +1914,22 @@
             html += '<div class="item"><div class="label">⏳ المتبقي</div><div class="value" style="color:' + (rem > 0 ? 'var(--danger)' : 'var(--success)') + ';">' + formatCurrency(rem) + '</div></div>';
             html += '</div>';
             if (p.agreement) html += '<div class="agreement-box" style="font-size:12px;">📝 ' + p.agreement + '</div>';
-            
+            html += renderStepsForCard(p, 'reconciliation');
             html += renderDocsForCard(p.documents, 'reconciliation');
-            
+            html += '<div style="margin-top:10px;"><div style="display:flex;justify-content:space-between;font-size:11px;"><span>📊 التقدم</span><span>' + progress.toFixed(0) + '%</span></div><div class="progress-bar"><div class="fill" style="width:' + progress + '%;"></div></div></div>';
             html += '<div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap;">';
             html += '<button onclick="editReconciliation(\'' + p.id + '\')" class="btn btn-gold btn-sm" style="font-size:10px;padding:3px 10px;">✏️ تعديل</button>';
             html += '<button onclick="addPayment(\'reconciliation\',\'' + p.id + '\')" class="btn btn-success btn-sm" style="font-size:10px;padding:3px 10px;">💰</button>';
             html += '<button onclick="deleteProject(\'reconciliation\',\'' + p.id + '\')" class="btn btn-danger btn-sm" style="font-size:10px;padding:3px 10px;">🗑️</button>';
             html += '</div></div>';
-        }
+        });
         c.innerHTML = html;
     }
 
-    // ============================================================
-    //                    مهندسين
-    // ============================================================
+    // ========== ENGINEERS ==========
     document.getElementById('engineerForm').addEventListener('submit', async function(e) {
         e.preventDefault();
         var editId = document.getElementById('eng_edit_id').value;
-        
         var data = {
             name: document.getElementById('eng_name').value,
             phone: document.getElementById('eng_phone').value,
@@ -2296,7 +1939,6 @@
             whatsapp: parseInt(document.getElementById('eng_whatsapp').value),
             updatedAt: serverTimestamp()
         };
-        
         try {
             if (editId) {
                 await updateDoc(doc(db, 'engineers', editId), data);
@@ -2307,9 +1949,7 @@
                 Swal.fire({ icon: 'success', title: '✅ تم الحفظ', timer: 1500, showConfirmButton: false });
             }
             resetEngineerForm();
-        } catch (err) {
-            Swal.fire({ icon: 'error', title: 'خطأ', text: err.message });
-        }
+        } catch (err) { Swal.fire({ icon: 'error', title: 'خطأ', text: err.message }); }
     });
 
     function resetEngineerForm() {
@@ -2338,8 +1978,7 @@
         var c = document.getElementById('engineersList');
         if (engineers.length === 0) { c.innerHTML = '<div style="text-align:center;padding:20px;color:#a0aec0;">👷 لا يوجد مهندسون</div>'; return; }
         var html = '';
-        for (var i = 0; i < engineers.length; i++) {
-            var e = engineers[i];
+        engineers.forEach(function(e) {
             html += '<div class="project-card" style="border-right-color:#9f7aea;">';
             html += '<div class="header-row"><div><div class="title" style="font-size:15px;">👷 ' + e.name + '</div><div class="subtitle" style="font-size:12px;">📱 ' + (e.phone || '') + '</div></div>';
             html += '<div><span style="padding:2px 12px;border-radius:15px;background:#e9d8fd;color:#6b46c1;font-size:10px;font-weight:600;">';
@@ -2350,7 +1989,7 @@
             html += '<button onclick="sendWhatsAppToEngineer(\'' + e.id + '\')" class="btn btn-whatsapp btn-sm" style="font-size:10px;padding:3px 10px;">💬 واتساب</button>';
             html += '<button onclick="deleteEngineer(\'' + e.id + '\')" class="btn btn-danger btn-sm" style="font-size:10px;padding:3px 10px;">🗑️</button>';
             html += '</div></div>';
-        }
+        });
         c.innerHTML = html;
     }
 
@@ -2363,20 +2002,14 @@
 
     async function deleteEngineer(id) {
         var result = await Swal.fire({
-            title: 'حذف المهندس؟',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#e53e3e',
-            confirmButtonText: 'نعم، احذف',
-            cancelButtonText: 'إلغاء'
+            title: 'حذف المهندس؟', icon: 'warning', showCancelButton: true,
+            confirmButtonColor: '#e53e3e', confirmButtonText: 'نعم، احذف', cancelButtonText: 'إلغاء'
         });
         if (!result.isConfirmed) return;
         try {
             await deleteDoc(doc(db, 'engineers', id));
             Swal.fire({ icon: 'success', title: '✅ تم الحذف', timer: 1500, showConfirmButton: false });
-        } catch (e) {
-            Swal.fire({ icon: 'error', title: 'خطأ', text: e.message });
-        }
+        } catch (e) { Swal.fire({ icon: 'error', title: 'خطأ', text: e.message }); }
     }
 
     function renderCommunications() {
@@ -2384,15 +2017,14 @@
         if (communications.length === 0) { c.innerHTML = '<div style="text-align:center;padding:15px;color:#a0aec0;">لا يوجد سجل تواصل</div>'; return; }
         var html = '';
         var list = communications.slice().reverse().slice(0, 15);
-        for (var i = 0; i < list.length; i++) {
-            var cm = list[i];
+        list.forEach(function(cm) {
             html += '<div class="communication-item">';
             html += '<div class="msg-subject">📌 ' + cm.subject + '</div>';
             html += '<div class="msg-body">' + (cm.message || '') + '</div>';
             if (cm.next) html += '<div style="font-size:11px;color:var(--red);margin-top:3px;">➡️ ' + cm.next + '</div>';
             html += '<div class="msg-meta"><span>👷 ' + getEngineerName(cm.engineerId) + '</span><span>📅 ' + cm.date + '</span></div>';
             html += '</div>';
-        }
+        });
         c.innerHTML = html;
     }
 
@@ -2401,22 +2033,96 @@
         if (allAlerts.length === 0) { c.innerHTML = '<div style="text-align:center;padding:20px;color:#a0aec0;">🔕 لا توجد تنبيهات</div>'; return; }
         var html = '';
         var list = allAlerts.slice(0, 30);
-        for (var i = 0; i < list.length; i++) {
-            var a = list[i];
-            html += '<div class="alert-item alert-' + (a.cat === 'payment' ? 'payment' : a.cat === 'deadline' ? 'deadline' : a.cat === 'document' ? 'document' : a.cat === 'engineer' ? 'engineer' : 'status') + '">';
+        list.forEach(function(a) {
+            html += '<div class="alert-item alert-' + (a.cat === 'payment' ? 'payment' : a.cat === 'deadline' ? 'deadline' : a.cat === 'document' ? 'document' : a.cat === 'engineer' ? 'engineer' : a.cat === 'appointment' ? 'appointment' : 'status') + '">';
             html += '<div><strong>' + a.message + '</strong></div>';
             html += '<div class="time">' + (a.date || '') + '</div></div>';
-        }
+        });
         c.innerHTML = html;
     }
 
+    // ========== ARCHIVE ==========
+    function renderArchive() {
+        var c = document.getElementById('archiveList');
+        var filterType = document.getElementById('archive_filter_type').value;
+        var search = document.getElementById('archive_search').value.toLowerCase();
+        
+        var allFiles = [];
+        var types = filterType === 'all' ? ['building', 'elevation', 'reconciliation'] : [filterType];
+        
+        types.forEach(function(type) {
+            var list = type === 'building' ? buildingPermits : type === 'elevation' ? elevationPermits : reconciliations;
+            var docsList = getDocsForType(type);
+            list.forEach(function(p) {
+                if (!p.documents) return;
+                if (search && !(p.client || '').toLowerCase().includes(search)) return;
+                docsList.forEach(function(docDef) {
+                    var files = p.documents[docDef.key];
+                    if (!files) return;
+                    if (files.url) files = [{ name: files.name || 'ملف', url: files.url, size: files.size, type: files.type }];
+                    if (!Array.isArray(files)) return;
+                    files.forEach(function(f) {
+                        allFiles.push({
+                            projectType: type,
+                            projectId: p.id,
+                            client: p.client,
+                            docLabel: docDef.label,
+                            fileName: f.name,
+                            fileUrl: f.url,
+                            fileSize: f.size,
+                            fileType: f.type,
+                            uploadedAt: f.uploadedAt
+                        });
+                    });
+                });
+            });
+        });
+        
+        // stats
+        var bCount = 0, eCount = 0, rCount = 0;
+        allFiles.forEach(function(f) {
+            if (f.projectType === 'building') bCount++;
+            else if (f.projectType === 'elevation') eCount++;
+            else rCount++;
+        });
+        var statsEl = document.getElementById('archiveStats');
+        if (statsEl) {
+            statsEl.innerHTML = '<div class="archive-stat"><div class="num">' + bCount + '</div><div class="lbl">🏗️ بناء</div></div>' +
+                                '<div class="archive-stat"><div class="num">' + eCount + '</div><div class="lbl">📐 تعلية</div></div>' +
+                                '<div class="archive-stat"><div class="num">' + rCount + '</div><div class="lbl">⚖️ تصالح</div></div>';
+        }
+        document.getElementById('archiveCount').textContent = allFiles.length;
+        
+        if (allFiles.length === 0) {
+            c.innerHTML = '<div style="text-align:center;padding:30px;color:#a0aec0;">📁 لا توجد ملفات في الأرشيف</div>';
+            return;
+        }
+        
+        var html = '';
+        allFiles.forEach(function(f) {
+            var icon = getFileIcon(f.fileName, f.fileType);
+            var typeLabel = f.projectType === 'building' ? '🏗️ بناء' : f.projectType === 'elevation' ? '📐 تعلية' : '⚖️ تصالح';
+            html += '<div class="file-card">';
+            html += '<div class="file-icon">' + icon + '</div>';
+            html += '<div class="file-details">';
+            html += '<div class="name">' + f.fileName + '</div>';
+            html += '<div class="meta">' + typeLabel + ' • 👤 ' + f.client + ' • ' + f.docLabel + ' • ' + formatFileSize(f.fileSize) + '</div>';
+            html += '</div>';
+            html += '<div class="file-actions">';
+            html += '<button class="btn-view" title="معاينة" onclick="openPreview(\'' + escapeUrl(f.fileUrl) + '\', \'' + escapeStr(f.fileName) + '\', \'' + escapeStr(f.fileType || '') + '\')">👁️</button>';
+            html += '<a class="btn-download" href="' + f.fileUrl + '" download="' + escapeStr(f.fileName) + '" target="_blank">📥</a>';
+            html += '</div></div>';
+        });
+        c.innerHTML = html;
+    }
+
+    // ========== REPORTING ==========
     function updateReportTable() {
         var tbody = document.getElementById('reportTable');
         var all = [];
         buildingPermits.forEach(function(p) { all.push({ client: p.client, type: 'بناء', status: p.status, step: p.current_step || 0, total: p.total, paid: p.paid }); });
         elevationPermits.forEach(function(p) { all.push({ client: p.client, type: 'تعلية', status: p.status, step: p.current_step || 0, total: p.total, paid: p.paid }); });
         reconciliations.forEach(function(p) { all.push({ client: p.client, type: 'تصالح', status: p.status, step: p.current_step || 0, total: p.total, paid: p.paid }); });
-        
         if (all.length === 0) { tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;padding:20px;color:#a0aec0;">لا توجد مشاريع</td></tr>'; return; }
         var html = '';
         for (var i = 0; i < all.length && i < 50; i++) {
@@ -2436,7 +2142,7 @@
     }
 
     function updateSelects() {
-        ['b_engineer', 'e_engineer', 'r_engineer', 'comm_engineer'].forEach(function(selId) {
+        ['b_engineer', 'e_engineer', 'r_engineer', 'comm_engineer', 'app_engineer'].forEach(function(selId) {
             var sel = document.getElementById(selId);
             if (!sel) return;
             var old = sel.value;
@@ -2446,7 +2152,6 @@
             });
             if (old && engineers.some(function(e) { return e.id == old; })) sel.value = old;
         });
-        
         var sel5 = document.getElementById('e_building');
         if (sel5) {
             sel5.innerHTML = '<option value="">بدون</option>';
@@ -2461,9 +2166,7 @@
         var sel = document.getElementById('comm_project');
         sel.innerHTML = '';
         var list = type === 'building' ? buildingPermits : type === 'elevation' ? elevationPermits : reconciliations;
-        list.forEach(function(p) {
-            sel.innerHTML += '<option value="' + p.id + '">' + p.client + '</option>';
-        });
+        list.forEach(function(p) { sel.innerHTML += '<option value="' + p.id + '">' + p.client + '</option>'; });
     }
 
     function updateReportProjects() {
@@ -2471,9 +2174,7 @@
         var sel = document.getElementById('report_project');
         sel.innerHTML = '';
         var list = type === 'building' ? buildingPermits : type === 'elevation' ? elevationPermits : reconciliations;
-        list.forEach(function(p) {
-            sel.innerHTML += '<option value="' + p.id + '">' + p.client + '</option>';
-        });
+        list.forEach(function(p) { sel.innerHTML += '<option value="' + p.id + '">' + p.client + '</option>'; });
     }
 
     function genReport() {
@@ -2482,7 +2183,8 @@
         if (!id) { Swal.fire({ icon: 'warning', title: 'تنبيه', text: 'الرجاء اختيار مشروع' }); return; }
         var project, steps, name;
         if (type === 'building') { project = buildingPermits.find(function(p) { return p.id === id; }); steps = BUILDING_STEPS; name = 'رخصة بناء'; }
-        else { Swal.fire({ icon: 'info', title: 'قيد التطوير', text: 'قريباً' }); return; }
+        else if (type === 'elevation') { project = elevationPermits.find(function(p) { return p.id === id; }); steps = ELEVATION_STEPS; name = 'رخصة تعلية'; }
+        else { project = reconciliations.find(function(p) { return p.id === id; }); steps = RECONCILIATION_STEPS; name = 'طلب تصالح'; }
         if (!project) return;
         
         var currentStep = project.current_step || 0;
@@ -2497,7 +2199,7 @@
         if (project.agreement) html += '<div style="background:#fef8f0;padding:12px;border-radius:8px;margin-bottom:15px;"><h3>📝 المتفق عليه</h3><p>' + project.agreement + '</p></div>';
         html += '<h3>📋 الخطوات</h3><table style="width:100%;border-collapse:collapse;font-size:12px;"><thead><tr style="background:#CE1126;color:white;"><th style="padding:5px;">#</th><th style="padding:5px;">الخطوة</th><th style="padding:5px;">الجهة</th><th style="padding:5px;">الحالة</th></tr></thead><tbody>';
         steps.forEach(function(s) {
-            var st = (s.num < currentStep) ? '✅' : (s.num === currentStep) ? '⏳' : '⭕';
+            var st = (s.num <= currentStep) ? '✅' : (s.num === currentStep + 1) ? '⏳' : '⭕';
             html += '<tr style="border-bottom:1px solid #edf2f7;"><td style="padding:4px;">' + s.num + '</td><td style="padding:4px;">' + s.name + '</td><td style="padding:4px;">' + s.dept + '</td><td style="padding:4px;">' + st + '</td></tr>';
         });
         html += '</tbody></table></div>';
@@ -2519,7 +2221,6 @@
         if (all.length === 0) { Swal.fire({ icon: 'info', title: 'لا توجد مشاريع' }); return; }
         var totalAll = 0, paidAll = 0;
         all.forEach(function(p) { totalAll += (p.total || 0); paidAll += (p.paid || 0); });
-        
         var html = '<div style="font-family:Tahoma;padding:25px;background:white;direction:rtl;">';
         html += '<div style="text-align:center;border-bottom:3px solid #CE1126;padding-bottom:15px;"><h1 style="color:#CE1126;">AL BRAZILLI TECHNOLOGIES</h1><h2>تقرير ملخص</h2></div>';
         html += '<table style="width:100%;border-collapse:collapse;font-size:12px;margin-top:15px;"><thead><tr style="background:#CE1126;color:white;"><th style="padding:5px;">#</th><th style="padding:5px;">العميل</th><th style="padding:5px;">النوع</th><th style="padding:5px;">الإجمالي</th><th style="padding:5px;">المحصل</th><th style="padding:5px;">المتبقي</th></tr></thead><tbody>';
@@ -2528,7 +2229,6 @@
         });
         html += '</tbody></table>';
         html += '<div style="margin-top:15px;"><p><strong>الإجمالي:</strong> ' + formatCurrency(totalAll) + '</p><p><strong>المحصل:</strong> ' + formatCurrency(paidAll) + '</p><p><strong>المتبقي:</strong> ' + formatCurrency(totalAll - paidAll) + '</p></div></div>';
-        
         var el = document.createElement('div');
         el.innerHTML = html;
         document.body.appendChild(el);
@@ -2545,37 +2245,55 @@
         renderEngineers();
         renderCommunications();
         renderAlerts();
+        renderAppointments();
+        renderArchive();
         updateReportTable();
     }
 
     function updateUI() {
         var all = buildingPermits.concat(elevationPermits).concat(reconciliations);
         document.getElementById('totalRequests').textContent = all.length;
-        var under = 0, app = 0, del = 0;
+        var under = 0, app = 0;
         all.forEach(function(p) {
             if (p.status === 'under_review') under++;
             if (p.status === 'approved' || p.status === 'issued' || p.status === 'completed') app++;
-            if (p.status === 'expired' || p.status === 'rejected') del++;
         });
         document.getElementById('underReview').textContent = under;
         document.getElementById('approvedCount').textContent = app;
-        document.getElementById('delayedCount').textContent = del;
         document.getElementById('alertsCount').textContent = allAlerts.length;
+        var appCountHeader = document.getElementById('appointmentsCountHeader');
+        if (appCountHeader) appCountHeader.textContent = appointments.length;
         
         document.getElementById('dash_building').textContent = buildingPermits.length;
         document.getElementById('dash_elevation').textContent = elevationPermits.length;
         document.getElementById('dash_reconciliation').textContent = reconciliations.length;
-        document.getElementById('dash_engineers').textContent = engineers.length;
+        var dashApp = document.getElementById('dash_appointments');
+        if (dashApp) dashApp.textContent = appointments.length;
         
-        var urgent = allAlerts.filter(function(a) { return a.cat === 'deadline'; }).slice(0, 5);
+        var urgent = allAlerts.filter(function(a) { return a.cat === 'deadline' || a.cat === 'appointment'; }).slice(0, 5);
         var uc = document.getElementById('dash_urgent_tasks');
         if (urgent.length === 0) uc.innerHTML = '<div style="color:#a0aec0;text-align:center;padding:10px;">✅ لا توجد مهام</div>';
         else {
             var h = '';
-            urgent.forEach(function(a) {
-                h += '<div style="padding:6px 0;border-bottom:1px solid #edf2f7;font-size:13px;">⚠️ ' + a.message + '</div>';
-            });
+            urgent.forEach(function(a) { h += '<div style="padding:6px 0;border-bottom:1px solid #edf2f7;font-size:13px;">⚠️ ' + a.message + '</div>'; });
             uc.innerHTML = h;
+        }
+        
+        var upcomingApps = appointments.filter(function(a) {
+            if (a.status === 'completed') return false;
+            var st = getAppointmentStatus(a);
+            return st === 'today' || st === 'upcoming' || st === 'overdue';
+        }).slice(0, 5);
+        var dl = document.getElementById('dash_upcoming_deadlines');
+        if (upcomingApps.length === 0) dl.innerHTML = '<div style="color:#a0aec0;text-align:center;padding:10px;">📅 لا توجد مواعيد</div>';
+        else {
+            var h = '';
+            upcomingApps.forEach(function(a) {
+                var st = getAppointmentStatus(a);
+                var icon = st === 'overdue' ? '🔴' : st === 'today' ? '🟡' : '🔵';
+                h += '<div style="padding:6px 0;border-bottom:1px solid #edf2f7;font-size:13px;">' + icon + ' ' + a.title + ' - ' + a.date + ' ' + (a.time || '') + '</div>';
+            });
+            dl.innerHTML = h;
         }
         
         var ac = document.getElementById('dash_recent_alerts');
@@ -2583,28 +2301,28 @@
         if (recent.length === 0) ac.innerHTML = '<div style="color:#a0aec0;text-align:center;padding:10px;">🔕 لا توجد تنبيهات</div>';
         else {
             var h = '';
-            recent.forEach(function(a) {
-                h += '<div style="padding:6px 0;border-bottom:1px solid #edf2f7;font-size:13px;">' + a.message + '</div>';
-            });
+            recent.forEach(function(a) { h += '<div style="padding:6px 0;border-bottom:1px solid #edf2f7;font-size:13px;">' + a.message + '</div>'; });
             ac.innerHTML = h;
         }
         
         updateSelects();
         updateCommProjects();
         updateReportProjects();
+        updateAppointmentProjects();
     }
 
     function initTabsAndEvents() {
         document.querySelectorAll('.tab-btn').forEach(function(btn) {
-            btn.addEventListener('click', function() {
-                switchTab(this.dataset.tab);
-            });
+            btn.addEventListener('click', function() { switchTab(this.dataset.tab); });
         });
-        
         var bf = document.getElementById('b_filter');
         var bs = document.getElementById('b_search');
         if (bf) bf.onchange = renderBuildingPermits;
         if (bs) bs.oninput = renderBuildingPermits;
+        var af = document.getElementById('archive_filter_type');
+        var as = document.getElementById('archive_search');
+        if (af) af.onchange = renderArchive;
+        if (as) as.oninput = renderArchive;
     }
 
     document.addEventListener('DOMContentLoaded', function() {
@@ -2612,21 +2330,12 @@
             db = window.firebaseDB;
             storage = window.firebaseStorage;
             var api = window.fsAPI;
-            collection = api.collection;
-            addDoc = api.addDoc;
-            getDocs = api.getDocs;
-            doc = api.doc;
-            updateDoc = api.updateDoc;
-            deleteDoc = api.deleteDoc;
-            onSnapshot = api.onSnapshot;
-            query = api.query;
-            orderBy = api.orderBy;
-            serverTimestamp = api.serverTimestamp;
-            ref = api.ref;
-            uploadBytes = api.uploadBytes;
-            getDownloadURL = api.getDownloadURL;
+            collection = api.collection; addDoc = api.addDoc; getDocs = api.getDocs;
+            doc = api.doc; updateDoc = api.updateDoc; deleteDoc = api.deleteDoc;
+            onSnapshot = api.onSnapshot; query = api.query; orderBy = api.orderBy;
+            serverTimestamp = api.serverTimestamp; ref = api.ref;
+            uploadBytes = api.uploadBytes; getDownloadURL = api.getDownloadURL;
             deleteObject = api.deleteObject;
-            
             setTimeout(function() {
                 document.getElementById('loadingScreen').classList.add('hidden');
                 document.getElementById('loginScreen').classList.remove('hidden');
@@ -2634,7 +2343,6 @@
                 setConnectionStatus('online', 'متصل بـ Firebase');
             }, 1000);
         });
-        
         document.getElementById('passwordInput').addEventListener('keydown', function(e) {
             if (e.key === 'Enter') doLogin();
         });
