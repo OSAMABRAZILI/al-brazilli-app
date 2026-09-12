@@ -111,7 +111,6 @@
         .btn-purple { background:var(--purple); color:white; }
         .btn-sm { padding:4px 12px; font-size:11px; border-radius:6px; }
         
-        /* ====== نموذج قابل للطي ====== */
         .form-collapse { display:none; animation:slideDown 0.3s ease; }
         .form-collapse.show { display:block; }
         @keyframes slideDown { from{opacity:0;transform:translateY(-10px);} to{opacity:1;transform:translateY(0);} }
@@ -164,7 +163,6 @@
         .file-card .file-actions .btn-view { background:#ebf8ff; color:var(--info); }
         .file-card .file-actions .btn-download { background:#f0fdf4; color:var(--success); }
         
-        /* STEPS */
         .steps-view { background:#f8fafc; padding:12px; border-radius:10px; margin-top:10px; border-right:3px solid var(--info); }
         .steps-view .steps-title { font-weight:700; color:#2c5282; margin-bottom:10px; font-size:13px; display:flex; justify-content:space-between; align-items:center; }
         .steps-view .steps-progress-info { font-size:11px; background:var(--info); color:white; padding:2px 10px; border-radius:12px; }
@@ -180,7 +178,6 @@
         .step-row .step-dept { font-size:10px; color:#718096; }
         .step-row .step-status { font-size:14px; flex-shrink:0; }
         
-        /* APPOINTMENTS */
         .appointment-card { background:white; border-radius:10px; padding:12px; margin-bottom:10px; border-right:4px solid var(--purple); box-shadow:0 2px 8px rgba(0,0,0,0.04); }
         .appointment-card.overdue { border-right-color:var(--danger); background:#fff5f5; }
         .appointment-card.today { border-right-color:var(--warning); background:#fffbeb; }
@@ -255,11 +252,7 @@
         .footer { text-align:center; padding:15px; color:#a0aec0; font-size:11px; border-top:1px solid #edf2f7; margin-top:20px; }
         .footer .company { font-weight:700; color:var(--red); }
         
-        .storage-warning {
-            background:#fff5f5; border:2px solid var(--danger); color:#742a2a;
-            padding:12px 16px; border-radius:10px; margin-bottom:15px;
-            font-size:13px; display:flex; align-items:start; gap:10px;
-        }
+        .storage-warning { background:#fff5f5; border:2px solid var(--danger); color:#742a2a; padding:12px 16px; border-radius:10px; margin-bottom:15px; font-size:13px; display:flex; align-items:start; gap:10px; }
         .storage-warning .icon { font-size:24px; flex-shrink:0; }
         .storage-warning strong { display:block; margin-bottom:4px; }
         
@@ -444,7 +437,7 @@
                 </div>
             </form>
         </div>
-        </div><!-- نهاية form-collapse -->
+        </div>
         
         <div class="card">
             <div class="card-header"><h2>📋 قائمة الرخص</h2><span class="badge-count" id="buildingCount">0</span></div>
@@ -518,7 +511,7 @@
                 </div>
             </form>
         </div>
-        </div><!-- نهاية form-collapse -->
+        </div>
         
         <div class="card"><div class="card-header"><h2>📋 قائمة الرخص</h2></div><div id="elevationList"><div style="text-align:center;padding:20px;color:#a0aec0;">⏳ جاري التحميل...</div></div></div>
     </div>
@@ -579,7 +572,7 @@
                 </div>
             </form>
         </div>
-        </div><!-- نهاية form-collapse -->
+        </div>
         
         <div class="card"><div class="card-header"><h2>📋 قائمة الطلبات</h2></div><div id="reconciliationList"><div style="text-align:center;padding:20px;color:#a0aec0;">⏳ جاري التحميل...</div></div></div>
     </div>
@@ -619,7 +612,7 @@
                 </div>
             </form>
         </div>
-        </div><!-- نهاية form-collapse -->
+        </div>
         
         <div class="card"><div class="card-header"><h2>📋 قائمة المهندسين</h2></div><div id="engineersList"><div style="text-align:center;padding:20px;color:#a0aec0;">⏳ جاري التحميل...</div></div></div>
     </div>
@@ -690,7 +683,7 @@
                 </div>
             </form>
         </div>
-        </div><!-- نهاية form-collapse -->
+        </div>
         
         <div class="card">
             <div class="card-header"><h2>📋 قائمة المواعيد</h2><span class="badge-count" id="appointmentsCount">0</span></div>
@@ -783,7 +776,7 @@
         storage = getStorage(app);
         console.log('✅ Storage initialized');
     } catch (e) {
-        console.warn('⚠️ Storage غير متاح (خطة Spark) - رفع الملفات معطل');
+        console.warn('⚠️ Storage غير متاح - رفع الملفات معطل');
     }
 
     window.firebaseDB = db;
@@ -814,6 +807,7 @@
     var uploadedFiles = { b: {}, e: {}, r: {} };
     var storageAvailable = false;
     
+    // ====== خطوات رخصة البناء ======
     var BUILDING_STEPS = [
         { num: 1, name: 'استلام المستندات', dept: 'الحي', duration: 1 },
         { num: 2, name: 'الرفع المساحي', dept: 'المساحة', duration: 4 },
@@ -832,25 +826,44 @@
         { num: 15, name: 'إصدار رخصة البناء', dept: 'الحي', duration: 1 }
     ];
 
+    // ====== خطوات رخصة التعلية = نفس خطوات البناء + نموذج 8 في النهاية ======
     var ELEVATION_STEPS = [
         { num: 1, name: 'استلام المستندات', dept: 'الحي', duration: 1 },
-        { num: 2, name: 'مراجعة رخصة البناء الأصلية', dept: 'التنظيم', duration: 2 },
-        { num: 3, name: 'الرفع المساحي', dept: 'المساحة', duration: 3 },
-        { num: 4, name: 'تقديم طلب التعلية', dept: 'الحي', duration: 1 },
-        { num: 5, name: 'تأشيرة مدير التنظيم', dept: 'مدير التنظيم', duration: 1 },
-        { num: 6, name: 'تأشيرة التخطيط', dept: 'إدارة التخطيط', duration: 2 },
-        { num: 7, name: 'إصدار قرار التعلية', dept: 'الحي', duration: 5 },
-        { num: 8, name: 'إصدار رخصة التعلية', dept: 'الحي', duration: 1 }
+        { num: 2, name: 'الرفع المساحي', dept: 'المساحة', duration: 4 },
+        { num: 3, name: 'التقديم على بيان صلاحية موقع', dept: 'الحي - التنظيم', duration: 1 },
+        { num: 4, name: 'تأشيرة مدير التنظيم', dept: 'مدير التنظيم', duration: 1 },
+        { num: 5, name: 'إرسال الملف إلى مدينة الجيزة', dept: 'مدينة الجيزة', duration: 1 },
+        { num: 6, name: 'رسوم التصوير', dept: 'المالية', duration: 1 },
+        { num: 7, name: 'تأشيرة التخطيط', dept: 'إدارة التخطيط', duration: 2 },
+        { num: 8, name: 'تأشيرة الأملاك', dept: 'إدارة الأملاك', duration: 2 },
+        { num: 9, name: 'تأشيرة التقسيم', dept: 'التقسيم', duration: 2 },
+        { num: 10, name: 'تأشيرة التحسين', dept: 'إدارة التحسين', duration: 2 },
+        { num: 11, name: 'كتابة بيان الصلاحية', dept: 'مدينة الجيزة', duration: 1 },
+        { num: 12, name: 'إصدار بيان الصلاحية', dept: 'الحي', duration: 2 },
+        { num: 13, name: 'وثيقة التأمين', dept: 'المجمعة العشرية', duration: 1 },
+        { num: 14, name: 'تقديم طلب رخصة التعلية', dept: 'الحي', duration: 15 },
+        { num: 15, name: 'إصدار رخصة التعلية', dept: 'الحي', duration: 1 },
+        { num: 16, name: 'إصدار نموذج 8', dept: 'الحي', duration: 2 }
     ];
 
+    // ====== خطوات التصالح الجديدة (16 خطوة) ======
     var RECONCILIATION_STEPS = [
-        { num: 1, name: 'استلام المستندات', dept: 'الحي', duration: 1 },
-        { num: 2, name: 'المعاينة الهندسية', dept: 'الهندسة', duration: 3 },
-        { num: 3, name: 'تقدير قيمة التصالح', dept: 'التقييم', duration: 5 },
-        { num: 4, name: 'سداد قيمة التصالح', dept: 'المالية', duration: 1 },
-        { num: 5, name: 'تقديم طلب التصالح', dept: 'الحي', duration: 2 },
-        { num: 6, name: 'مراجعة اللجنة', dept: 'لجنة التصالح', duration: 7 },
-        { num: 7, name: 'إصدار قرار التصالح', dept: 'الحي', duration: 3 }
+        { num: 1, name: 'تجهيز المستندات الخاصة بالتصالح', dept: 'المكتب', duration: 2 },
+        { num: 2, name: 'تقديم المستندات إلى الحي', dept: 'الحي', duration: 1 },
+        { num: 3, name: 'تحديد رسوم جدية التصالح', dept: 'الحي', duration: 2 },
+        { num: 4, name: 'تحديد رسوم معاينة الهيئة الهندسية للقوات المسلحة', dept: 'الهيئة الهندسية', duration: 2 },
+        { num: 5, name: 'سداد رسوم جدية التصالح + رسوم المعاينة', dept: 'المالية', duration: 1 },
+        { num: 6, name: 'انتقال الملف إلى بيانات العقار', dept: 'بيانات العقار', duration: 3 },
+        { num: 7, name: 'انتقال الملف إلى جهة الولاية', dept: 'جهة الولاية', duration: 3 },
+        { num: 8, name: 'اللجنة الفنية وإصدار نموذج 6 واحتساب قيمة التصالح', dept: 'اللجنة الفنية', duration: 7 },
+        { num: 9, name: 'سداد رسوم التصالح', dept: 'المالية', duration: 1 },
+        { num: 10, name: 'إصدار نموذج 7 مؤقت', dept: 'الحي', duration: 2 },
+        { num: 11, name: 'تحويل الملف إلى الهيئة الهندسية للقوات المسلحة', dept: 'الهيئة الهندسية', duration: 3 },
+        { num: 12, name: 'تواصل الهيئة مع صاحب التصالح للمعاينة', dept: 'الهيئة الهندسية', duration: 5 },
+        { num: 13, name: 'إصدار المطابقة الأولى (المساحة وعدد الوحدات)', dept: 'الهيئة الهندسية', duration: 3 },
+        { num: 14, name: 'إصدار المطابقة الثانية (المرافق)', dept: 'الهيئة الهندسية', duration: 3 },
+        { num: 15, name: 'سداد الرسوم الإضافية (مخالفة جراج / فرق مساحة)', dept: 'المالية', duration: 1 },
+        { num: 16, name: 'إصدار نموذج 8 النهائي', dept: 'الحي', duration: 2 }
     ];
 
     var DOCS_BUILDING = [
@@ -1005,7 +1018,6 @@
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    // ===== دوال فتح/إغلاق النماذج =====
     function toggleBuildingForm() {
         var el = document.getElementById('buildingFormCollapse');
         var btn = document.getElementById('btnAddBuilding');
@@ -1151,23 +1163,18 @@
         }
     }
 
-    // ✅ رفع الملفات - يتحقق من توفر Storage أولاً
     async function uploadAllFiles(prefix, projectId) {
         var uploadedData = {};
         var docsList = getDocsForType(prefix === 'b' ? 'building' : prefix === 'e' ? 'elevation' : 'reconciliation');
         
-        // تحقق من وجود ملفات
         var hasAnyFiles = false;
         for (var i = 0; i < docsList.length; i++) {
             var files = uploadedFiles[prefix][docsList[i].key] || [];
             if (files.length > 0) { hasAnyFiles = true; break; }
         }
         
-        if (!hasAnyFiles) {
-            return uploadedData; // لا توجد ملفات - احفظ بدون رفع
-        }
+        if (!hasAnyFiles) return uploadedData;
         
-        // تحقق من توفر Storage
         if (!storage) {
             console.warn('⚠️ Storage غير متاح - تخطي رفع الملفات');
             Swal.fire({
@@ -1176,7 +1183,6 @@
                 html: '<div style="text-align:right;font-size:13px;">' +
                       '<p>رفع الملفات يحتاج <strong>Firebase Storage</strong> (خطة Blaze).</p>' +
                       '<p style="margin-top:10px;">✅ سيتم حفظ المعاملة <strong>بدون الملفات</strong>.</p>' +
-                      '<p style="margin-top:10px;color:#e53e3e;">💡 لتشغيل رفع الملفات: رقّي مشروعك إلى خطة Blaze من Firebase Console.</p>' +
                       '</div>',
                 confirmButtonColor: '#f39c12',
                 confirmButtonText: 'متابعة الحفظ'
@@ -1192,17 +1198,10 @@
             uploadedData[docKey] = [];
             for (var j = 0; j < files.length; j++) {
                 var file = files[j];
-                
-                // تحقق من حجم الملف
                 if (file.size > 5 * 1024 * 1024) {
-                    Swal.fire({
-                        icon: 'error',
-                        title: '⚠️ الملف كبير',
-                        text: 'الملف "' + file.name + '" أكبر من 5 MB. الرجاء ضغطه.'
-                    });
+                    Swal.fire({ icon: 'error', title: '⚠️ الملف كبير', text: 'الملف "' + file.name + '" أكبر من 5 MB.' });
                     throw new Error('الملف كبير');
                 }
-                
                 setConnectionStatus('syncing', '⏳ رفع: ' + file.name);
                 try {
                     var safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
@@ -1219,13 +1218,6 @@
                     });
                 } catch (error) {
                     console.error('❌ خطأ في رفع:', error);
-                    Swal.fire({
-                        icon: 'error',
-                        title: '⚠️ خطأ في رفع الملف',
-                        html: '<p><strong>الملف:</strong> ' + file.name + '</p>' +
-                              '<p><strong>السبب:</strong> ' + (error.message || 'خطأ غير معروف') + '</p>' +
-                              '<p style="color:#e53e3e;font-size:12px;margin-top:10px;">💡 قد يكون Storage غير مفعّل في Firebase</p>'
-                    });
                     throw error;
                 }
             }
@@ -1322,7 +1314,6 @@
         return String(url || '').replace(/'/g, "\\'");
     }
 
-    // ===== LOGIN =====
     function doLogin() {
         var input = document.getElementById('passwordInput');
         var errorMsg = document.getElementById('errorMsg');
@@ -1345,7 +1336,6 @@
                 uploadBytes = api.uploadBytes; getDownloadURL = api.getDownloadURL;
                 deleteObject = api.deleteObject;
                 
-                // عرض تحذير Storage إذا غير متاح
                 if (!storageAvailable) {
                     ['storageWarningB', 'storageWarningE', 'storageWarningR'].forEach(function(id) {
                         var el = document.getElementById(id);
@@ -1470,24 +1460,18 @@
         }, function(err) { console.error('appointments err:', err); });
     }
 
-    // ✅ addAlert محسّنة - تعمل حتى لو فشل Firebase
     async function addAlert(type, projectId, message, cat) {
         if (!cat) cat = 'status';
         
-        // إضافة محلية فورية (حتى لو فشل Firebase)
         var tempAlert = {
             id: 'temp_' + Date.now(),
-            type: type,
-            projectId: projectId,
-            message: message,
-            cat: cat,
+            type: type, projectId: projectId, message: message, cat: cat,
             date: new Date().toLocaleString('ar-EG')
         };
         allAlerts.unshift(tempAlert);
         renderAlerts();
         updateUI();
         
-        // إظهار تنبيه Toast
         Swal.fire({
             icon: cat === 'payment' ? 'success' : cat === 'deadline' ? 'warning' : 'info',
             title: '🔔 تنبيه جديد',
@@ -1499,22 +1483,16 @@
             position: 'top-start'
         });
         
-        // محاولة الحفظ في Firebase
         try {
             if (db && collection) {
                 await addDoc(collection(db, 'alerts'), {
-                    type: type,
-                    projectId: projectId,
-                    message: message,
-                    cat: cat,
+                    type: type, projectId: projectId, message: message, cat: cat,
                     date: new Date().toLocaleString('ar-EG'),
                     createdAt: serverTimestamp()
                 });
-                console.log('✅ تم حفظ التنبيه في Firebase');
             }
         } catch (e) {
-            console.error('⚠️ فشل حفظ التنبيه في Firebase:', e.message);
-            // التنبيه يظهر محلياً حتى لو فشل الحفظ
+            console.error('⚠️ فشل حفظ التنبيه:', e.message);
         }
     }
 
@@ -1526,7 +1504,6 @@
         return true;
     }
 
-    // ===== APPOINTMENTS =====
     function updateAppointmentProjects() {
         var type = document.getElementById('app_project_type').value;
         var sel = document.getElementById('app_project');
@@ -1579,13 +1556,11 @@
     function editAppointment(id) {
         var a = appointments.find(function(x) { return x.id === id; });
         if (!a) return;
-        
         var collapse = document.getElementById('appointmentFormCollapse');
         var btn = document.getElementById('btnAddAppointment');
         collapse.classList.add('show');
         btn.classList.add('active');
         btn.innerHTML = '✕ إغلاق النموذج';
-        
         document.getElementById('app_edit_id').value = a.id;
         document.getElementById('app_title').value = a.title || '';
         document.getElementById('app_date').value = a.date || '';
@@ -1709,7 +1684,6 @@
         }
     }, 60 * 60 * 1000);
 
-    // ===== COMMUNICATIONS =====
     async function sendComm() {
         var type = document.getElementById('comm_type').value;
         var projectId = document.getElementById('comm_project').value;
@@ -1740,7 +1714,6 @@
         } catch (e) { Swal.fire({ icon: 'error', title: 'خطأ', text: e.message }); }
     }
 
-    // ===== BUILDING =====
     document.getElementById('buildingForm').addEventListener('submit', async function(e) {
         e.preventDefault();
         var editId = document.getElementById('b_edit_id').value;
@@ -1815,13 +1788,11 @@
     function editBuilding(id) {
         var p = buildingPermits.find(function(x) { return x.id === id; });
         if (!p) return;
-        
         var collapse = document.getElementById('buildingFormCollapse');
         var btn = document.getElementById('btnAddBuilding');
         collapse.classList.add('show');
         btn.classList.add('active');
         btn.innerHTML = '✕ إغلاق النموذج';
-        
         document.getElementById('b_edit_id').value = p.id;
         document.getElementById('b_client').value = p.client || '';
         document.getElementById('b_phone').value = p.phone || '';
@@ -1978,7 +1949,6 @@
         } catch (e) { Swal.fire({ icon: 'error', title: 'خطأ', text: e.message }); }
     }
 
-    // ===== ELEVATION =====
     document.getElementById('elevationForm').addEventListener('submit', async function(e) {
         e.preventDefault();
         var editId = document.getElementById('e_edit_id').value;
@@ -2049,13 +2019,11 @@
     function editElevation(id) {
         var p = elevationPermits.find(function(x) { return x.id === id; });
         if (!p) return;
-        
         var collapse = document.getElementById('elevationFormCollapse');
         var btn = document.getElementById('btnAddElevation');
         collapse.classList.add('show');
         btn.classList.add('active');
         btn.innerHTML = '✕ إغلاق النموذج';
-        
         document.getElementById('e_edit_id').value = p.id;
         document.getElementById('e_client').value = p.client || '';
         document.getElementById('e_phone').value = p.phone || '';
@@ -2112,7 +2080,6 @@
         c.innerHTML = html;
     }
 
-    // ===== RECONCILIATION =====
     document.getElementById('reconciliationForm').addEventListener('submit', async function(e) {
         e.preventDefault();
         var editId = document.getElementById('r_edit_id').value;
@@ -2181,13 +2148,11 @@
     function editReconciliation(id) {
         var p = reconciliations.find(function(x) { return x.id === id; });
         if (!p) return;
-        
         var collapse = document.getElementById('reconciliationFormCollapse');
         var btn = document.getElementById('btnAddReconciliation');
         collapse.classList.add('show');
         btn.classList.add('active');
         btn.innerHTML = '✕ إغلاق النموذج';
-        
         document.getElementById('r_edit_id').value = p.id;
         document.getElementById('r_client').value = p.client || '';
         document.getElementById('r_phone').value = p.phone || '';
@@ -2241,7 +2206,6 @@
         c.innerHTML = html;
     }
 
-    // ===== ENGINEERS =====
     document.getElementById('engineerForm').addEventListener('submit', async function(e) {
         e.preventDefault();
         var editId = document.getElementById('eng_edit_id').value;
@@ -2278,13 +2242,11 @@
     function editEngineer(id) {
         var e = engineers.find(function(x) { return x.id === id; });
         if (!e) return;
-        
         var collapse = document.getElementById('engineerFormCollapse');
         var btn = document.getElementById('btnAddEngineer');
         collapse.classList.add('show');
         btn.classList.add('active');
         btn.innerHTML = '✕ إغلاق النموذج';
-        
         document.getElementById('eng_edit_id').value = e.id;
         document.getElementById('eng_name').value = e.name || '';
         document.getElementById('eng_phone').value = e.phone || '';
@@ -2367,7 +2329,6 @@
         c.innerHTML = html;
     }
 
-    // ===== ARCHIVE =====
     function renderArchive() {
         var c = document.getElementById('archiveList');
         if (!c) return;
@@ -2431,7 +2392,6 @@
         c.innerHTML = html;
     }
 
-    // ===== REPORTING =====
     function updateReportTable() {
         var tbody = document.getElementById('reportTable');
         var all = [];
