@@ -2127,8 +2127,8 @@
     var appointments = [];
     var db, collection, addDoc, getDocs, doc, updateDoc, deleteDoc, onSnapshot, query, orderBy, serverTimestamp;
     var uploadedFiles = { b: {}, e: {}, r: {} };
-    var MAX_FILE_SIZE = 2 * 1024 * 1024;
-    var MAX_TOTAL_SIZE = 900 * 1024;
+    var MAX_FILE_SIZE = 800 * 1024;   // 800 KB لكل ملف
+    var MAX_TOTAL_SIZE = 950 * 1024;  // 950 KB إجمالي
     var currentOpenProject = null;
 
     // ==================== BUILDING STEPS (15 خطوة) ====================
@@ -2281,11 +2281,18 @@
         if (el) el.className = 'connection-status ' + status;
         if (txt) txt.textContent = text;
         if (badge) {
-            var icon = status === 'online' ? 'check-circle' : status === 'offline' ? 'x-circle' : 'rotate';
-            var label = status === 'online' ? 'متصل' : status === 'offline' ? 'غير متصل' : 'مزامنة...';
-            badge.innerHTML = '<svg class="icon-svg icon-svg-sm"><use href="#i-' + icon + '"/></svg> ' + label;
+        if (status === 'online') {
+            badge.innerHTML = '<svg class="icon-svg icon-svg-sm"><use href="#i-check-circle"/></svg> متصل';
+            badge.style.background = 'rgba(16,185,129,0.2)';
+        } else if (status === 'offline') {
+            badge.innerHTML = '<svg class="icon-svg icon-svg-sm"><use href="#i-x-circle"/></svg> غير متصل';
+            badge.style.background = 'rgba(239,68,68,0.2)';
+        } else {
+            badge.innerHTML = '<svg class="icon-svg icon-svg-sm"><use href="#i-rotate"/></svg> مزامنة...';
+            badge.style.background = 'rgba(245,158,11,0.2)';
         }
     }
+}
     
     function waitForFirebase(callback) {
         if (window.firebaseReady) callback();
@@ -2748,32 +2755,51 @@
     }
 
     function compressImage(file, maxWidth, quality) {
-        return new Promise(function(resolve, reject) {
-            var reader = new FileReader();
-            reader.onload = function(e) {
-                var img = new Image();
-                img.onload = function() {
-                    var canvas = document.createElement('canvas');
-                    var width = img.width;
-                    var height = img.height;
-                    if (width > maxWidth) {
-                        height = (height * maxWidth) / width;
-                        width = maxWidth;
-                    }
-                    canvas.width = width;
-                    canvas.height = height;
-                    var ctx = canvas.getContext('2d');
-                    ctx.drawImage(img, 0, 0, width, height);
-                    var compressed = canvas.toDataURL('image/jpeg', quality);
-                    resolve(compressed);
-                };
-                img.onerror = reject;
-                img.src = e.target.result;
+    return new Promise(function(resolve, reject) {
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            var img = new Image();
+            img.onload = function() {
+                var canvas = document.createElement('canvas');
+                var width = img.width;
+                var height = img.height;
+                
+                // تصغير أكثر للصور الكبيرة
+                var finalMaxWidth = maxWidth;
+                if (file.size > 500 * 1024) finalMaxWidth = 600;
+                if (file.size > 1 * 1024 * 1024) finalMaxWidth = 500;
+                if (file.size > 1.5 * 1024 * 1024) finalMaxWidth = 400;
+                
+                if (width > finalMaxWidth) {
+                    height = (height * finalMaxWidth) / width;
+                    width = finalMaxWidth;
+                }
+                
+                canvas.width = width;
+                canvas.height = height;
+                var ctx = canvas.getContext('2d');
+                
+                // خلفية بيضاء للصور الشفافة
+                ctx.fillStyle = 'white';
+                ctx.fillRect(0, 0, width, height);
+                
+                ctx.drawImage(img, 0, 0, width, height);
+                
+                // جودة أقل للملفات الكبيرة
+                var finalQuality = quality;
+                if (file.size > 500 * 1024) finalQuality = 0.55;
+                if (file.size > 1 * 1024 * 1024) finalQuality = 0.45;
+                
+                var compressed = canvas.toDataURL('image/jpeg', finalQuality);
+                resolve(compressed);
             };
-            reader.onerror = reject;
-            reader.readAsDataURL(file);
-        });
-    }
+            img.onerror = reject;
+            img.src = e.target.result;
+        };
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+    });
+}
 
     function fileToBase64(file) {
         return new Promise(function(resolve, reject) {
@@ -2789,143 +2815,189 @@
     }
 
     async function uploadAllFiles(prefix) {
-        var uploadedData = {};
-        var docsList = getDocsForType(prefix === 'b' ? 'building' : prefix === 'e' ? 'elevation' : 'reconciliation');
-        var hasAnyFiles = false;
-        for (var i = 0; i < docsList.length; i++) {
-            var files = uploadedFiles[prefix][docsList[i].key] || [];
-            if (files.length > 0) { hasAnyFiles = true; break; }
-        }
-        if (!hasAnyFiles) return uploadedData;
+    var uploadedData = {};
+    var docsList = getDocsForType(prefix === 'b' ? 'building' : prefix === 'e' ? 'elevation' : 'reconciliation');
+    var hasAnyFiles = false;
+    for (var i = 0; i < docsList.length; i++) {
+        var files = uploadedFiles[prefix][docsList[i].key] || [];
+        if (files.length > 0) { hasAnyFiles = true; break; }
+    }
+    if (!hasAnyFiles) return uploadedData;
+    
+    var totalFiles = 0;
+    docsList.forEach(function(d) { totalFiles += (uploadedFiles[prefix][d.key] || []).length; });
+    var processed = 0;
+    var totalSize = 0;
+    
+    Swal.fire({
+        title: '⏳ جاري معالجة الملفات...',
+        html: '<div style="text-align:right;font-size:13px;"><div style="background:#E5E7EB;border-radius:10px;height:10px;overflow:hidden;margin:15px 0;"><div id="uploadProgress" style="background:linear-gradient(90deg,#6B21A8,#D4AF37);height:100%;width:0%;transition:width 0.3s;"></div></div><p id="uploadStatus" style="text-align:center;font-weight:700;color:#6B21A8;">جاري البدء...</p></div>',
+        allowOutsideClick: false, showConfirmButton: false,
+        didOpen: function() { Swal.showLoading(); }
+    });
+    
+    for (var i = 0; i < docsList.length; i++) {
+        var docKey = docsList[i].key;
+        var files = uploadedFiles[prefix][docKey] || [];
+        if (files.length === 0) continue;
+        uploadedData[docKey] = [];
         
-        var totalFiles = 0;
-        docsList.forEach(function(d) { totalFiles += (uploadedFiles[prefix][d.key] || []).length; });
-        var processed = 0;
-        var totalSize = 0;
-        
-        Swal.fire({
-            title: 'جاري معالجة الملفات',
-            html: '<div style="text-align:right;font-size:13px;"><div style="background:#E5E7EB;border-radius:10px;height:10px;overflow:hidden;margin:15px 0;"><div id="uploadProgress" style="background:linear-gradient(90deg,#6B21A8,#D4AF37);height:100%;width:0%;transition:width 0.3s;"></div></div><p id="uploadStatus" style="text-align:center;font-weight:700;">جاري البدء...</p></div>',
-            allowOutsideClick: false, showConfirmButton: false,
-            didOpen: function() { Swal.showLoading(); }
-        });
-        
-        for (var i = 0; i < docsList.length; i++) {
-            var docKey = docsList[i].key;
-            var files = uploadedFiles[prefix][docKey] || [];
-            if (files.length === 0) continue;
-            uploadedData[docKey] = [];
+        for (var j = 0; j < files.length; j++) {
+            var file = files[j];
+            processed++;
+            var progressPct = (processed / totalFiles) * 100;
+            var progressEl = document.getElementById('uploadProgress');
+            var statusEl = document.getElementById('uploadStatus');
+            if (progressEl) progressEl.style.width = progressPct + '%';
+            if (statusEl) statusEl.textContent = 'معالجة ' + processed + '/' + totalFiles + ': ' + file.name;
             
-            for (var j = 0; j < files.length; j++) {
-                var file = files[j];
-                processed++;
-                var progressPct = (processed / totalFiles) * 100;
-                var progressEl = document.getElementById('uploadProgress');
-                var statusEl = document.getElementById('uploadStatus');
-                if (progressEl) progressEl.style.width = progressPct + '%';
-                if (statusEl) statusEl.textContent = 'معالجة ' + processed + '/' + totalFiles + ': ' + file.name;
+            try {
+                var base64 = await fileToBase64(file);
+                var base64Size = Math.round((base64.length * 3) / 4);
+                totalSize += base64Size;
                 
-                try {
-                    var base64 = await fileToBase64(file);
-                    var base64Size = Math.round((base64.length * 3) / 4);
-                    totalSize += base64Size;
-                    if (totalSize > MAX_TOTAL_SIZE) throw new Error('الحجم الإجمالي تجاوز الحد');
-                    uploadedData[docKey].push({
-                        name: file.name, data: base64, size: file.size,
-                        finalSize: base64Size,
-                        type: file.type || 'application/octet-stream',
-                        uploadedAt: new Date().toISOString()
-                    });
-                } catch (error) {
-                    Swal.close();
-                    Swal.fire({ icon: 'error', title: 'خطأ', text: error.message });
-                    throw error;
+                if (totalSize > MAX_TOTAL_SIZE) {
+                    throw new Error('حجم الملفات (' + formatFileSize(totalSize) + ') تجاوز الحد (' + formatFileSize(MAX_TOTAL_SIZE) + '). جرب ملفات أقل أو أصغر.');
                 }
+                
+                uploadedData[docKey].push({
+                    name: file.name, data: base64, size: file.size,
+                    finalSize: base64Size,
+                    type: file.type || 'application/octet-stream',
+                    uploadedAt: new Date().toISOString()
+                });
+            } catch (error) {
+                Swal.close();
+                Swal.fire({ 
+                    icon: 'error', 
+                    title: '⚠️ خطأ في الملف',
+                    html: '<div style="text-align:right;font-size:13px;"><p><strong>الملف:</strong> ' + file.name + '</p><p><strong>السبب:</strong> ' + error.message + '</p></div>'
+                });
+                throw error;
             }
         }
-        Swal.close();
-        setConnectionStatus('online', 'متصل - ' + new Date().toLocaleTimeString('ar-EG'));
-        return uploadedData;
     }
+    
+    Swal.close();
+    Swal.fire({ 
+        icon: 'success', 
+        title: '✅ تمت معالجة ' + processed + ' ملف',
+        text: 'الحجم النهائي: ' + formatFileSize(totalSize),
+        timer: 2000, 
+        showConfirmButton: false 
+    });
+    
+    setConnectionStatus('online', 'متصل - ' + new Date().toLocaleTimeString('ar-EG'));
+    return uploadedData;
+}
 
     // ==================== WHATSAPP PROFESSIONAL ====================
     function buildWhatsAppMessage(type, data) {
-        var header = 
-            '╔══════════════════════════╗\n' +
-            '║  🏛️  *AL BRAZILI*  🏛️  ║\n' +
-            '║  ━━━━━━━━━━━━━━━━━  ║\n' +
-            '║  ✨ نظام إدارة الأعمال ✨ ║\n' +
-            '╚══════════════════════════╝';
-        
-        var footer = 
-            '\n\n━━━━━━━━━━━━━━━━━━━━━━\n' +
-            '🇪🇬 *Al Brazili Technologies*\n' +
-            '📞 للتواصل: ' + WHATSAPP_NUMBER + '\n' +
-            '🕐 ' + new Date().toLocaleString('ar-EG');
-        
-        if (type === 'step') {
-            return header + '\n\n' +
-                '🔔 *تذكير بمهمة جديدة*\n\n' +
-                '━━━━━━━━━━━━━━━━━━━━━━\n' +
-                '👤 *العميل:* ' + data.client + '\n' +
-                '📁 *نوع المعاملة:* ' + data.typeLabel + '\n' +
-                '📋 *رقم المعاملة:* ' + (data.transaction || '-') + '\n' +
-                '📍 *العنوان:* ' + (data.address || '-') + '\n' +
-                '━━━━━━━━━━━━━━━━━━━━━━\n\n' +
-                '📌 *الخطوة المطلوبة:*\n' +
-                '┌──────────────────────┐\n' +
-                '│  ▶️ ' + data.stepName + '\n' +
-                '│  🏢 الجهة: ' + data.dept + '\n' +
-                '│  ⏱️ المدة: ' + data.duration + ' يوم\n' +
-                '└──────────────────────┘\n\n' +
-                '━━━━━━━━━━━━━━━━━━━━━━\n' +
-                '💼 *مع تحيات*\n' +
-                '*Al Brazili Technologies*' +
-                footer;
-        }
-        
-        if (type === 'communication') {
-            return header + '\n\n' +
-                '📨 *رسالة تواصل*\n\n' +
-                '━━━━━━━━━━━━━━━━━━━━━━\n' +
-                '📌 *الموضوع:* ' + data.subject + '\n' +
-                '📁 *المشروع:* ' + data.project + '\n' +
-                '━━━━━━━━━━━━━━━━━━━━━━\n\n' +
-                '💬 *نص الرسالة:*\n' +
-                '```\n' + data.message + '\n```\n\n' +
-                (data.next ? '➡️ *الخطوة القادمة:* ' + data.next + '\n\n' : '') +
-                (data.progress ? '✅ *ما تم إنجازه:* ' + data.progress + '\n' : '') +
-                footer;
-        }
-        
-        if (type === 'appointment') {
-            return header + '\n\n' +
-                '📅 *تذكير بموعد*\n\n' +
-                '━━━━━━━━━━━━━━━━━━━━━━\n' +
-                '📌 *الموعد:* ' + data.title + '\n' +
-                '📁 *المشروع:* ' + data.project + '\n' +
-                '📅 *التاريخ:* ' + data.date + '\n' +
-                '⏰ *الوقت:* ' + data.time + '\n' +
-                (data.notes ? '📝 *ملاحظات:* ' + data.notes + '\n' : '') +
-                '━━━━━━━━━━━━━━━━━━━━━━\n\n' +
-                '⚠️ *يرجى الحضور في الموعد المحدد*' +
-                footer;
-        }
-        
-        if (type === 'greeting') {
-            return header + '\n\n' +
-                '🌟 *تحية طيبة* 🌟\n\n' +
-                'السلام عليكم ورحمة الله وبركاته\n' +
-                '*أ. ' + data.name + '*\n\n' +
-                '━━━━━━━━━━━━━━━━━━━━━━\n' +
-                '✨ نتمنى لكم يوماً سعيداً مليئاً بالنجاح والتوفيق ✨\n' +
-                '━━━━━━━━━━━━━━━━━━━━━━\n\n' +
-                '🤝 *نحن هنا لخدمتكم دائماً*' +
-                footer;
-        }
-        
-        return '';
+    var line = '━━━━━━━━━━━━━━━━━';
+    var lineThin = '───────────────';
+    
+    var header = 
+        '🏛️ *AL BRAZILI TECHNOLOGIES* 🏛️\n' +
+        '✨ نظام إدارة الأعمال المتكامل ✨\n' +
+        line;
+    
+    var footer = 
+        line + '\n' +
+        '🇪🇬 *Al Brazili Technologies*\n' +
+        '📞 ' + WHATSAPP_NUMBER + '\n' +
+        '🕐 ' + new Date().toLocaleString('ar-EG', { 
+            weekday: 'long', 
+            year: 'numeric', 
+            month: 'long', 
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+        });
+    
+    if (type === 'step') {
+        return header + '\n\n' +
+            '🔔 *تذكير بمهمة جديدة*\n\n' +
+            '👤 *العميل*\n' +
+            '   ' + data.client + '\n\n' +
+            '📁 *نوع المعاملة*\n' +
+            '   ' + data.typeLabel + '\n\n' +
+            '📋 *رقم المعاملة*\n' +
+            '   ' + (data.transaction || 'غير محدد') + '\n\n' +
+            '📍 *العنوان*\n' +
+            '   ' + (data.address || 'غير محدد') + '\n\n' +
+            lineThin + '\n' +
+            '📌 *الخطوة المطلوبة* 📌\n' +
+            lineThin + '\n\n' +
+            '▶️ *' + data.stepName + '*\n\n' +
+            '🏢 الجهة: ' + data.dept + '\n' +
+            '⏱️ المدة: ' + data.duration + ' يوم\n\n' +
+            lineThin + '\n\n' +
+            '💼 *مع تحيات*\n' +
+            '*Al Brazili Technologies* 🏛️\n\n' +
+            footer;
     }
+    
+    if (type === 'communication') {
+        return header + '\n\n' +
+            '📨 *رسالة تواصل رسمية*\n\n' +
+            lineThin + '\n' +
+            '📌 *الموضوع:* ' + data.subject + '\n' +
+            '📁 *المشروع:* ' + data.project + '\n' +
+            lineThin + '\n\n' +
+            '💬 *نص الرسالة:*\n\n' +
+            '┌─────────────────────┐\n' +
+            '│\n' +
+            '│  ' + data.message + '\n' +
+            '│\n' +
+            '└─────────────────────┘\n\n' +
+            (data.next ? '➡️ *الخطوة القادمة*\n   ' + data.next + '\n\n' : '') +
+            (data.progress ? '✅ *ما تم إنجازه*\n   ' + data.progress + '\n\n' : '') +
+            footer;
+    }
+    
+    if (type === 'appointment') {
+        return header + '\n\n' +
+            '📅 *تذكير بموعد مهم*\n\n' +
+            lineThin + '\n\n' +
+            '📌 *' + data.title + '*\n\n' +
+            '📁 *المشروع:* ' + data.project + '\n' +
+            '📅 *التاريخ:* ' + data.date + '\n' +
+            '⏰ *الوقت:* ' + data.time + '\n' +
+            (data.notes ? '\n📝 *ملاحظات:*\n   ' + data.notes + '\n' : '') +
+            '\n' + lineThin + '\n\n' +
+            '⚠️ *يرجى الحضور في الموعد المحدد*\n' +
+            '🤝 *شكراً لتعاونكم*\n\n' +
+            footer;
+    }
+    
+    if (type === 'greeting') {
+        return header + '\n\n' +
+            '🌟 *تحية طيبة* 🌟\n\n' +
+            'السلام عليكم ورحمة الله وبركاته\n\n' +
+            'أ. *' + data.name + '*\n\n' +
+            lineThin + '\n\n' +
+            '✨ نتمنى لكم يوماً سعيداً\n' +
+            'مليئاً بالنجاح والتوفيق ✨\n\n' +
+            lineThin + '\n\n' +
+            '🤝 *نحن هنا لخدمتكم دائماً*\n' +
+            '📞 للتواصل: ' + WHATSAPP_NUMBER + '\n\n' +
+            footer;
+    }
+    
+    if (type === 'newProject') {
+        return header + '\n\n' +
+            '🎉 *مشروع جديد* 🎉\n\n' +
+            '👤 *العميل:* ' + data.client + '\n' +
+            '📁 *النوع:* ' + data.typeLabel + '\n' +
+            '📍 *العنوان:* ' + data.address + '\n' +
+            '💰 *المبلغ:* ' + data.total + '\n\n' +
+            lineThin + '\n\n' +
+            '📌 *الخطوة الأولى:*\n   ' + data.firstStep + '\n\n' +
+            footer;
+    }
+    
+    return header + '\n\n' + (data.message || '') + '\n\n' + footer;
+}
 
     function sendWhatsApp(phone, msg) {
         if (!phone) return false;
@@ -3080,46 +3152,69 @@
 
     // ==================== LOAD DATA ====================
     async function loadAllDataFromFirebase() {
-        try {
-            setConnectionStatus('syncing', 'جاري المزامنة...');
-            var engSnap = await getDocs(collection(db, 'engineers'));
-            engineers = [];
-            engSnap.forEach(function(d) { engineers.push({ id: d.id, ...d.data() }); });
-            
-            var bpSnap = await getDocs(collection(db, 'buildingPermits'));
-            buildingPermits = [];
-            bpSnap.forEach(function(d) { buildingPermits.push({ id: d.id, ...d.data() }); });
-            
-            var epSnap = await getDocs(collection(db, 'elevationPermits'));
-            elevationPermits = [];
-            epSnap.forEach(function(d) { elevationPermits.push({ id: d.id, ...d.data() }); });
-            
-            var recSnap = await getDocs(collection(db, 'reconciliations'));
-            reconciliations = [];
-            recSnap.forEach(function(d) { reconciliations.push({ id: d.id, ...d.data() }); });
-            
-            var commSnap = await getDocs(collection(db, 'communications'));
-            communications = [];
-            commSnap.forEach(function(d) { communications.push({ id: d.id, ...d.data() }); });
-            
-            var alertSnap = await getDocs(collection(db, 'alerts'));
-            allAlerts = [];
-            alertSnap.forEach(function(d) { allAlerts.push({ id: d.id, ...d.data() }); });
-            allAlerts.sort(function(a, b) { return (b.createdAt || '').localeCompare(a.createdAt || ''); });
-            
-            var appSnap = await getDocs(collection(db, 'appointments'));
-            appointments = [];
-            appSnap.forEach(function(d) { appointments.push({ id: d.id, ...d.data() }); });
-            
-            setConnectionStatus('online', 'متصل - ' + new Date().toLocaleTimeString('ar-EG'));
-            updateUI();
-            renderAll();
-            checkAppointmentsForReminders();
-        } catch (error) {
-            console.error('خطأ:', error);
-            setConnectionStatus('offline', 'خطأ في الاتصال');
-        }
+    try {
+        setConnectionStatus('syncing', 'جاري المزامنة...');
+        console.log('🔄 بدء تحميل البيانات...');
+        
+        var engSnap = await getDocs(collection(db, 'engineers'));
+        engineers = [];
+        engSnap.forEach(function(d) { engineers.push({ id: d.id, ...d.data() }); });
+        console.log('✅ مهندسين:', engineers.length);
+        
+        var bpSnap = await getDocs(collection(db, 'buildingPermits'));
+        buildingPermits = [];
+        bpSnap.forEach(function(d) { buildingPermits.push({ id: d.id, ...d.data() }); });
+        console.log('✅ رخص بناء:', buildingPermits.length);
+        
+        var epSnap = await getDocs(collection(db, 'elevationPermits'));
+        elevationPermits = [];
+        epSnap.forEach(function(d) { elevationPermits.push({ id: d.id, ...d.data() }); });
+        console.log('✅ رخص تعلية:', elevationPermits.length);
+        
+        var recSnap = await getDocs(collection(db, 'reconciliations'));
+        reconciliations = [];
+        recSnap.forEach(function(d) { reconciliations.push({ id: d.id, ...d.data() }); });
+        console.log('✅ تصالح:', reconciliations.length);
+        
+        var commSnap = await getDocs(collection(db, 'communications'));
+        communications = [];
+        commSnap.forEach(function(d) { communications.push({ id: d.id, ...d.data() }); });
+        
+        var alertSnap = await getDocs(collection(db, 'alerts'));
+        allAlerts = [];
+        alertSnap.forEach(function(d) { allAlerts.push({ id: d.id, ...d.data() }); });
+        allAlerts.sort(function(a, b) { return (b.createdAt || '').localeCompare(a.createdAt || ''); });
+        
+        var appSnap = await getDocs(collection(db, 'appointments'));
+        appointments = [];
+        appSnap.forEach(function(d) { appointments.push({ id: d.id, ...d.data() }); });
+        
+        console.log('✅ تم تحميل كل البيانات');
+        setConnectionStatus('online', 'متصل - ' + new Date().toLocaleTimeString('ar-EG'));
+        updateUI();
+        renderAll();
+        checkAppointmentsForReminders();
+    } catch (error) {
+        console.error('❌ خطأ في التحميل:', error);
+        setConnectionStatus('offline', 'خطأ: ' + error.message);
+        
+        Swal.fire({
+            icon: 'error',
+            title: '⚠️ خطأ في الاتصال بـ Firebase',
+            html: '<div style="text-align:right;font-size:13px;">' +
+                  '<p><strong>السبب:</strong> ' + error.message + '</p>' +
+                  '<p style="margin-top:10px;color:#DC2626;"><strong>💡 الحل:</strong></p>' +
+                  '<ol style="padding-right:20px;margin-top:6px;">' +
+                  '<li>افتح <a href="https://console.firebase.google.com/" target="_blank" style="color:#6B21A8;">Firebase Console</a></li>' +
+                  '<li>Firestore Database → Rules</li>' +
+                  '<li>تأكد من أن القواعد تسمح بالقراءة والكتابة</li>' +
+                  '</ol>' +
+                  '</div>',
+            confirmButtonText: 'فهمت',
+            confirmButtonColor: '#6B21A8'
+        });
     }
+}
 
     function setupRealtimeSync() {
         onSnapshot(collection(db, 'buildingPermits'), function(snapshot) {
