@@ -10,6 +10,7 @@
     
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
+        
         :root {
             --primary: #6B21A8;
             --primary-light: #A855F7;
@@ -40,6 +41,18 @@
             --gray-500: #6B7280;
             --gray-700: #374151;
             --gray-900: #111827;
+            
+            /* متغيرات السطح */
+            --bg-main: linear-gradient(135deg, #F5F3FF 0%, #EDE9FE 50%, #F3E8FF 100%);
+            --bg-radial-1: rgba(107,33,168,0.15);
+            --bg-radial-2: rgba(212,175,55,0.1);
+            --surface: #FFFFFF;
+            --surface-alt: #F9FAFB;
+            --text-main: #111827;
+            --text-muted: #6B7280;
+            --border-color: rgba(107,33,168,0.08);
+            --border-light: #E5E7EB;
+            
             --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
             --shadow-md: 0 4px 12px rgba(107,33,168,0.15);
             --shadow-lg: 0 10px 25px rgba(107,33,168,0.2);
@@ -48,20 +61,92 @@
             --shadow-primary: 0 8px 25px rgba(107,33,168,0.4);
         }
         
+        /* 🌙 الوضع الليلي */
+        body.dark-mode {
+            --gray-50: #1A1A2E;
+            --gray-100: #252540;
+            --gray-200: #2D2D48;
+            --gray-300: #3D3D5C;
+            --gray-400: #6B6B8A;
+            --gray-500: #9CA3AF;
+            --gray-700: #D1D5DB;
+            --gray-900: #F9FAFB;
+            
+            --bg-main: linear-gradient(135deg, #0A0A1A 0%, #0F0F1E 50%, #1A1A2E 100%);
+            --bg-radial-1: rgba(107,33,168,0.25);
+            --bg-radial-2: rgba(212,175,55,0.1);
+            --surface: #1A1A2E;
+            --surface-alt: #252540;
+            --text-main: #F9FAFB;
+            --text-muted: #9CA3AF;
+            --border-color: rgba(168,85,247,0.15);
+            --border-light: #2D2D48;
+            
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.4);
+            --shadow-lg: 0 10px 25px rgba(0,0,0,0.5);
+            --shadow-xl: 0 20px 40px rgba(0,0,0,0.6);
+            --shadow-3d: 0 20px 60px rgba(0,0,0,0.7), 0 0 100px rgba(168,85,247,0.2);
+        }
+        
         body {
             font-family: 'Segoe UI', 'Tahoma', Arial, sans-serif;
             background: 
-                radial-gradient(circle at 20% 20%, rgba(107,33,168,0.15), transparent 40%),
-                radial-gradient(circle at 80% 80%, rgba(212,175,55,0.1), transparent 40%),
-                linear-gradient(135deg, #F5F3FF 0%, #EDE9FE 50%, #F3E8FF 100%);
+                radial-gradient(circle at 20% 20%, var(--bg-radial-1), transparent 40%),
+                radial-gradient(circle at 80% 80%, var(--bg-radial-2), transparent 40%),
+                var(--bg-main);
             background-attachment: fixed;
-            color: var(--gray-900);
+            color: var(--text-main);
             direction: rtl;
             min-height: 100vh;
+            transition: background 0.5s ease, color 0.3s ease;
         }
         
         .icon-svg { width: 20px; height: 20px; stroke-width: 2; stroke: currentColor; fill: none; display: inline-block; vertical-align: middle; }
         .icon-svg-sm { width: 16px; height: 16px; }
+        
+        /* 🌙 زر الوضع الليلي */
+        .dark-mode-toggle {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--black));
+            border: 3px solid var(--gold);
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9997;
+            box-shadow: var(--shadow-lg);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            font-size: 24px;
+        }
+        .dark-mode-toggle:hover {
+            transform: scale(1.15) rotate(20deg);
+            box-shadow: 0 10px 30px rgba(212,175,55,0.5);
+        }
+        .dark-mode-toggle .sun-icon,
+        .dark-mode-toggle .moon-icon {
+            position: absolute;
+            transition: all 0.5s ease;
+        }
+        .dark-mode-toggle .sun-icon { opacity: 1; transform: rotate(0deg) scale(1); }
+        .dark-mode-toggle .moon-icon { opacity: 0; transform: rotate(180deg) scale(0.5); }
+        body.dark-mode .dark-mode-toggle .sun-icon { opacity: 0; transform: rotate(-180deg) scale(0.5); }
+        body.dark-mode .dark-mode-toggle .moon-icon { opacity: 1; transform: rotate(0deg) scale(1); }
+        
+        @media (max-width: 600px) {
+            .dark-mode-toggle {
+                width: 46px;
+                height: 46px;
+                top: 12px;
+                left: 12px;
+                font-size: 20px;
+            }
+        }
         
         /* LOADING */
         .loading-screen {
@@ -100,10 +185,12 @@
         /* CONNECTION */
         .connection-status {
             position: fixed; bottom: 12px; left: 12px;
-            background: white; padding: 8px 18px; border-radius: 30px;
-            font-size: 12px; box-shadow: var(--shadow-lg);
-            z-index: 9998; display: flex; align-items: center; gap: 8px;
+            background: var(--surface); padding: 8px 18px;
+            border-radius: 30px; font-size: 12px;
+            box-shadow: var(--shadow-lg);
+            z-index: 9996; display: flex; align-items: center; gap: 8px;
             font-weight: 700; border: 2px solid transparent;
+            color: var(--text-main);
         }
         .connection-status.online { border-color: var(--success); }
         .connection-status.offline { border-color: var(--danger); }
@@ -133,7 +220,7 @@
         .login-screen.hidden { opacity: 0; pointer-events: none; transform: scale(1.1); }
         
         .login-box {
-            background: rgba(255,255,255,0.98);
+            background: var(--surface);
             padding: 40px 35px; border-radius: 32px;
             text-align: center; max-width: 460px; width: 100%;
             border: 2px solid var(--gold);
@@ -164,7 +251,7 @@
             width: 100%; height: 100%;
             border-radius: 50%; object-fit: cover;
             position: relative; z-index: 2;
-            border: 5px solid white;
+            border: 5px solid var(--surface);
             box-shadow: 0 15px 40px rgba(107,33,168,0.5);
             display: block;
         }
@@ -176,14 +263,14 @@
             width: 36px; height: 36px;
             border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
-            z-index: 3; border: 3px solid white;
+            z-index: 3; border: 3px solid var(--surface);
             box-shadow: 0 4px 12px rgba(0,0,0,0.2);
         }
         .login-box .photo-badge .icon-svg { width: 18px; height: 18px; }
         
         .login-box .brand-name {
             font-size: 32px; font-weight: 900;
-            background: linear-gradient(135deg, var(--primary), var(--black));
+            background: linear-gradient(135deg, var(--primary-light), var(--gold));
             -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
         }
         .login-box .brand-name .gold {
@@ -191,7 +278,7 @@
             -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
         }
         .login-box .brand-sub {
-            font-size: 14px; color: var(--gray-500);
+            font-size: 14px; color: var(--text-muted);
             display: block; margin-top: 6px; font-weight: 600;
         }
         .login-box .country-badge {
@@ -208,13 +295,14 @@
         }
         .login-box .input-group input {
             width: 100%; padding: 16px 55px 16px 20px;
-            border: 2px solid var(--gray-200); border-radius: 14px;
+            border: 2px solid var(--border-light); border-radius: 14px;
             font-size: 16px; transition: all 0.3s ease;
-            background: var(--gray-50); font-weight: 600;
+            background: var(--surface-alt); font-weight: 600;
+            color: var(--text-main);
         }
         .login-box .input-group input:focus {
             border-color: var(--primary); outline: none;
-            background: white; box-shadow: 0 0 0 4px rgba(107,33,168,0.1);
+            background: var(--surface); box-shadow: 0 0 0 4px rgba(107,33,168,0.1);
         }
         .login-box .btn-login {
             width: 100%; padding: 16px;
@@ -295,10 +383,10 @@
         
         /* TABS */
         .tabs {
-            display: flex; gap: 6px; background: white; padding: 8px;
+            display: flex; gap: 6px; background: var(--surface); padding: 8px;
             border-radius: 18px; box-shadow: var(--shadow-lg);
             overflow-x: auto; margin-bottom: 14px; flex-wrap: nowrap;
-            border: 1px solid var(--gray-100);
+            border: 1px solid var(--border-color);
             position: sticky; top: 100px; z-index: 99;
         }
         .tabs::-webkit-scrollbar { display: none; }
@@ -308,10 +396,10 @@
             cursor: pointer; flex: 1 0 auto; min-width: 70px;
             white-space: nowrap; display: flex; align-items: center;
             gap: 6px; justify-content: center;
-            transition: all 0.3s ease; color: var(--gray-500);
+            transition: all 0.3s ease; color: var(--text-muted);
         }
         .tab-btn .icon-svg { width: 15px; height: 15px; }
-        .tab-btn:hover { background: var(--gray-100); color: var(--gray-900); }
+        .tab-btn:hover { background: var(--gray-100); color: var(--text-main); }
         .tab-btn.active {
             background: linear-gradient(135deg, var(--primary), var(--black));
             color: white; box-shadow: var(--shadow-primary);
@@ -325,9 +413,10 @@
         
         /* CARDS */
         .card {
-            background: white; border-radius: 20px; padding: 20px;
+            background: var(--surface); border-radius: 20px; padding: 20px;
             box-shadow: var(--shadow-md); margin-bottom: 14px;
-            border: 1px solid rgba(107,33,168,0.08);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
         }
         .card-header {
             display: flex; justify-content: space-between;
@@ -337,9 +426,9 @@
         }
         .card-header h2 {
             font-size: 17px; display: flex; align-items: center;
-            gap: 8px; color: var(--gray-900); font-weight: 800;
+            gap: 8px; color: var(--text-main); font-weight: 800;
         }
-        .card-header h2 .icon-svg { color: var(--primary); }
+        .card-header h2 .icon-svg { color: var(--primary-light); }
         .card-header .badge-count {
             background: linear-gradient(135deg, var(--primary), var(--black));
             color: white; padding: 4px 14px; border-radius: 20px;
@@ -351,11 +440,11 @@
         @media (min-width: 700px) { .grid-4 { grid-template-columns: repeat(4, 1fr); } }
         
         .stat-card {
-            background: white; padding: 20px; border-radius: 20px;
+            background: var(--surface); padding: 20px; border-radius: 20px;
             box-shadow: var(--shadow-md); text-align: center;
             cursor: pointer; transition: all 0.5s ease;
             position: relative; overflow: hidden;
-            border: 1px solid var(--gray-100);
+            border: 1px solid var(--border-color);
         }
         .stat-card::before {
             content: ''; position: absolute; bottom: 0; right: 0; left: 0;
@@ -376,8 +465,8 @@
         .stat-card.reconciliation .icon-wrap { background: linear-gradient(135deg, #FCE7F3, #FBCFE8); color: var(--secondary); }
         .stat-card.appointments .icon-wrap { background: linear-gradient(135deg, #D1FAE5, #A7F3D0); color: var(--success-dark); }
         .stat-card .icon-wrap .icon-svg { width: 26px; height: 26px; }
-        .stat-card .number { font-size: 32px; font-weight: 900; color: var(--gray-900); line-height: 1.2; }
-        .stat-card .label { font-size: 12px; color: var(--gray-500); font-weight: 700; margin-top: 4px; }
+        .stat-card .number { font-size: 32px; font-weight: 900; color: var(--text-main); line-height: 1.2; }
+        .stat-card .label { font-size: 12px; color: var(--text-muted); font-weight: 700; margin-top: 4px; }
         .stat-card .trend {
             font-size: 10px; padding: 4px 12px; border-radius: 20px;
             display: inline-block; margin-top: 8px; font-weight: 700;
@@ -394,10 +483,10 @@
         @media (max-width: 600px) { .projects-grid { grid-template-columns: 1fr; } }
         
         .project-tile {
-            background: white; border-radius: 20px; padding: 18px;
+            background: var(--surface); border-radius: 20px; padding: 18px;
             box-shadow: var(--shadow-md); cursor: pointer;
             transition: all 0.5s ease;
-            border: 1px solid var(--gray-100);
+            border: 1px solid var(--border-color);
             position: relative; overflow: hidden;
             display: flex; flex-direction: column; gap: 12px;
         }
@@ -421,11 +510,11 @@
         .project-tile .tile-icon .icon-svg { width: 24px; height: 24px; }
         .project-tile .tile-info { flex: 1; min-width: 0; }
         .project-tile .tile-title {
-            font-size: 15px; font-weight: 800; color: var(--gray-900);
+            font-size: 15px; font-weight: 800; color: var(--text-main);
             white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
         }
         .project-tile .tile-sub {
-            font-size: 11px; color: var(--gray-500);
+            font-size: 11px; color: var(--text-muted);
             white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
             margin-top: 2px;
         }
@@ -462,8 +551,8 @@
             padding-top: 10px; border-top: 1px solid var(--gray-100); font-size: 11px;
         }
         .project-tile .tile-money .item { flex: 1; text-align: center; }
-        .project-tile .tile-money .item .label { color: var(--gray-500); font-weight: 600; font-size: 10px; }
-        .project-tile .tile-money .item .value { font-weight: 800; color: var(--gray-900); font-size: 12px; margin-top: 2px; }
+        .project-tile .tile-money .item .label { color: var(--text-muted); font-weight: 600; font-size: 10px; }
+        .project-tile .tile-money .item .value { font-weight: 800; color: var(--text-main); font-size: 12px; margin-top: 2px; }
         
         /* Docs Badge on tile */
         .tile-docs-badge {
@@ -477,7 +566,7 @@
         
         .empty-state {
             text-align: center; padding: 60px 20px;
-            color: var(--gray-400); grid-column: 1/-1;
+            color: var(--text-muted); grid-column: 1/-1;
         }
         .empty-state .icon-wrap {
             width: 100px; height: 100px; border-radius: 30px;
@@ -485,8 +574,8 @@
             display: flex; align-items: center; justify-content: center;
             margin: 0 auto 20px;
         }
-        .empty-state .icon-wrap .icon-svg { width: 50px; height: 50px; color: var(--gray-400); }
-        .empty-state h3 { font-size: 18px; color: var(--gray-700); margin-bottom: 8px; font-weight: 800; }
+        .empty-state .icon-wrap .icon-svg { width: 50px; height: 50px; color: var(--text-muted); }
+        .empty-state h3 { font-size: 18px; color: var(--text-main); margin-bottom: 8px; font-weight: 800; }
         
         /* MODAL */
         .modal-overlay {
@@ -501,7 +590,7 @@
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         
         .modal-content {
-            background: white; border-radius: 28px;
+            background: var(--surface); border-radius: 28px;
             max-width: 950px; width: 100%; margin: 20px auto;
             box-shadow: 0 40px 100px rgba(0,0,0,0.5), 0 0 60px rgba(107,33,168,0.3);
             animation: slideUp 0.5s ease; overflow: hidden;
@@ -539,11 +628,12 @@
         .modal-header .header-info .tile-icon .icon-svg { width: 26px; height: 26px; color: var(--gold); }
         .modal-header .header-info .title-text { flex: 1; min-width: 0; }
         .modal-header .header-info .title-text h3 {
-            font-size: 19px; font-weight: 900;
+            font-size: 19px; font-weight: 900; color: white;
             white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
         }
         .modal-header .header-info .title-text .sub {
             font-size: 12px; opacity: 0.85; margin-top: 3px;
+            color: var(--gold-light);
             white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
         }
         .modal-close-btn {
@@ -570,16 +660,16 @@
             gap: 12px; margin-bottom: 18px;
         }
         .detail-item {
-            background: linear-gradient(135deg, #F5F3FF, white);
+            background: linear-gradient(135deg, var(--surface-alt), var(--surface));
             padding: 14px; border-radius: 14px;
-            border: 1px solid var(--gray-100);
+            border: 1px solid var(--border-color);
         }
         .detail-item .label {
-            font-size: 11px; color: var(--gray-500); font-weight: 700;
+            font-size: 11px; color: var(--text-muted); font-weight: 700;
             display: flex; align-items: center; gap: 4px; margin-bottom: 4px;
         }
         .detail-item .label .icon-svg { width: 12px; height: 12px; }
-        .detail-item .value { font-size: 15px; font-weight: 800; color: var(--gray-900); }
+        .detail-item .value { font-size: 15px; font-weight: 800; color: var(--text-main); }
         
         .info-box {
             padding: 14px 18px; border-radius: 14px;
@@ -606,12 +696,12 @@
         
         /* GEAR STEPS */
         .steps-section {
-            background: linear-gradient(135deg, #F5F3FF, #EDE9FE);
+            background: linear-gradient(135deg, var(--surface-alt), var(--gray-100));
             padding: 20px 16px; border-radius: 20px;
             margin-bottom: 16px; border-right: 4px solid var(--primary);
         }
         .steps-section .section-title {
-            font-weight: 800; color: var(--primary);
+            font-weight: 800; color: var(--primary-light);
             margin-bottom: 20px; font-size: 15px;
             display: flex; justify-content: space-between;
             align-items: center; flex-wrap: wrap; gap: 8px;
@@ -648,11 +738,11 @@
         }
         
         .gear-step.pending .gear-icon-wrap {
-            background: linear-gradient(135deg, #E5E7EB, #D1D5DB);
-            border: 3px solid var(--gray-300);
+            background: linear-gradient(135deg, #4B5563, #374151);
+            border: 3px solid var(--gray-400);
         }
         .gear-step.pending .gear-svg { color: var(--gray-500); opacity: 0.6; }
-        .gear-step.pending .gear-info .gear-name { color: var(--gray-500); font-weight: 600; }
+        .gear-step.pending .gear-info .gear-name { color: var(--text-muted); font-weight: 600; }
         
         .gear-step.current .gear-icon-wrap {
             background: linear-gradient(135deg, var(--warning), var(--warning-dark));
@@ -664,7 +754,7 @@
             color: white; animation: gearSpin 3s linear infinite;
         }
         .gear-step.current .gear-info .gear-name {
-            color: var(--warning-dark); font-weight: 900; font-size: 15px;
+            color: var(--warning); font-weight: 900; font-size: 15px;
         }
         .gear-step.current .gear-info .gear-dept {
             background: linear-gradient(135deg, var(--warning), var(--warning-dark));
@@ -689,7 +779,8 @@
             color: white; animation: gearComplete 1s ease-out;
         }
         .gear-step.completed .gear-info .gear-name {
-            color: var(--success-dark); font-weight: 800;
+            color: var(--success);
+            font-weight: 800;
             text-decoration: line-through;
             text-decoration-color: var(--success);
             text-decoration-thickness: 2px;
@@ -722,19 +813,19 @@
             display: flex; flex-direction: column; gap: 5px;
         }
         .gear-info .gear-name {
-            font-size: 13.5px; font-weight: 700; color: var(--gray-900);
+            font-size: 13.5px; font-weight: 700; color: var(--text-main);
         }
         .gear-info .gear-meta {
             display: flex; gap: 8px;
             align-items: center; flex-wrap: wrap;
         }
         .gear-info .gear-dept {
-            font-size: 10.5px; background: var(--gray-100);
-            color: var(--gray-500); padding: 3px 10px;
+            font-size: 10.5px; background: var(--gray-200);
+            color: var(--text-muted); padding: 3px 10px;
             border-radius: 10px; font-weight: 700;
         }
         .gear-info .gear-duration {
-            font-size: 10.5px; color: var(--gray-500);
+            font-size: 10.5px; color: var(--text-muted);
             font-weight: 600; display: flex;
             align-items: center; gap: 3px;
         }
@@ -742,12 +833,12 @@
         
         .gear-number {
             position: absolute; top: -4px; right: -4px;
-            background: white; color: var(--gray-700);
+            background: var(--surface); color: var(--text-muted);
             width: 22px; height: 22px; border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
             font-size: 11px; font-weight: 900;
             box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-            border: 2px solid var(--gray-200); z-index: 3;
+            border: 2px solid var(--border-light); z-index: 3;
         }
         .gear-step.current .gear-number {
             background: var(--warning); color: white;
@@ -761,7 +852,7 @@
         .gear-connector {
             position: absolute; right: 30px; top: 62px;
             bottom: -10px; width: 3px;
-            background: var(--gray-200); z-index: 1;
+            background: var(--border-light); z-index: 1;
         }
         .gear-step.completed .gear-connector {
             background: linear-gradient(180deg, var(--success), var(--success-dark));
@@ -771,41 +862,44 @@
         .steps-actions {
             display: flex; gap: 8px; flex-wrap: wrap;
             margin-top: 16px; padding-top: 16px;
-            border-top: 1px solid var(--gray-200);
+            border-top: 1px solid var(--border-light);
         }
         
         /* DOCUMENTS داخل Modal */
         .documents-section {
-            background: linear-gradient(135deg, #F0FDF4, #DCFCE7);
+            background: linear-gradient(135deg, rgba(16,185,129,0.1), rgba(5,150,105,0.15));
             padding: 16px; border-radius: 16px;
             margin-bottom: 16px;
             border-right: 4px solid var(--success);
         }
+        body.dark-mode .documents-section {
+            background: linear-gradient(135deg, rgba(16,185,129,0.15), rgba(5,150,105,0.2));
+        }
         .documents-section .section-title {
-            font-weight: 800; color: #166534;
+            font-weight: 800; color: var(--success);
             margin-bottom: 12px; font-size: 14px;
             display: flex; align-items: center; gap: 8px;
         }
         .doc-group {
-            margin-bottom: 12px; padding: 10px 12px;
-            background: white; border-radius: 12px;
+            margin-bottom: 12px; padding: 12px;
+            background: var(--surface); border-radius: 12px;
             border: 1px solid var(--success);
         }
         .doc-group-title {
             font-size: 12px; font-weight: 800;
-            color: #166534; margin-bottom: 10px;
+            color: var(--success); margin-bottom: 10px;
             display: flex; align-items: center; gap: 6px;
         }
         .doc-group-title .icon-svg { width: 14px; height: 14px; }
         .doc-count {
-            background: #166534; color: white;
+            background: var(--success); color: white;
             padding: 2px 8px; border-radius: 10px; font-size: 10px;
         }
         
         .file-card-mini {
             display: flex; align-items: center; gap: 10px;
-            background: white; padding: 10px 12px;
-            border-radius: 12px; border: 1px solid var(--gray-200);
+            background: var(--surface-alt); padding: 10px 12px;
+            border-radius: 12px; border: 1px solid var(--border-light);
             transition: all 0.3s ease;
         }
         .file-card-mini:hover {
@@ -822,12 +916,11 @@
         .file-card-mini .file-icon-mini .icon-svg { width: 18px; height: 18px; }
         .file-card-mini .file-info-mini { flex: 1; min-width: 0; }
         .file-card-mini .file-info-mini .name {
-            font-size: 12px; font-weight: 700;
-            color: var(--gray-900);
+            font-size: 12px; font-weight: 700; color: var(--text-main);
             white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
         }
         .file-card-mini .file-info-mini .meta {
-            font-size: 10px; color: var(--gray-500); margin-top: 2px;
+            font-size: 10px; color: var(--text-muted); margin-top: 2px;
         }
         .file-card-mini .file-actions-mini { display: flex; gap: 4px; flex-shrink: 0; }
         .file-card-mini .file-actions-mini button,
@@ -859,23 +952,24 @@
         .form-group label {
             display: block; font-weight: 700;
             font-size: 12px; margin-bottom: 5px;
-            color: var(--gray-700);
+            color: var(--text-main);
         }
         .form-group label .required { color: var(--danger); }
         .form-group input,
         .form-group select,
         .form-group textarea {
             width: 100%; padding: 11px 14px;
-            border: 2px solid var(--gray-200);
+            border: 2px solid var(--border-light);
             border-radius: 12px; font-size: 13px;
             font-family: inherit; transition: all 0.3s ease;
-            background: var(--gray-50);
+            background: var(--surface-alt);
+            color: var(--text-main);
         }
         .form-group input:focus,
         .form-group select:focus,
         .form-group textarea:focus {
             border-color: var(--primary); outline: none;
-            background: white;
+            background: var(--surface);
             box-shadow: 0 0 0 4px rgba(107,33,168,0.1);
         }
         .form-group textarea { resize: vertical; min-height: 55px; }
@@ -958,23 +1052,30 @@
             border: 2px solid var(--gold-light);
             margin-bottom: 14px;
         }
+        body.dark-mode .docs-section {
+            background: linear-gradient(135deg, rgba(212,175,55,0.15), rgba(184,134,11,0.2));
+            border-color: var(--gold);
+        }
         .docs-section > label.title {
             font-weight: 800; font-size: 13px;
             display: flex; align-items: center; gap: 8px;
             margin-bottom: 12px; color: #92400E;
+        }
+        body.dark-mode .docs-section > label.title {
+            color: var(--gold-light);
         }
         .docs-section > label.title .icon-svg { width: 16px; height: 16px; }
         .docs-grid { display: grid; grid-template-columns: 1fr; gap: 8px; }
         @media (min-width: 550px) { .docs-grid { grid-template-columns: 1fr 1fr; } }
         
         .doc-item {
-            background: white; padding: 12px;
-            border-radius: 12px; border: 2px solid var(--gray-200);
+            background: var(--surface); padding: 12px;
+            border-radius: 12px; border: 2px solid var(--border-light);
             transition: all 0.3s ease;
         }
         .doc-item.uploaded {
             border-color: var(--success);
-            background: linear-gradient(135deg, #F0FDF4, #DCFCE7);
+            background: linear-gradient(135deg, rgba(16,185,129,0.1), rgba(5,150,105,0.15));
         }
         .doc-item .doc-header {
             display: flex; align-items: center;
@@ -988,7 +1089,7 @@
         .doc-item .doc-header label {
             font-weight: 700; font-size: 12px;
             cursor: pointer; flex: 1; margin: 0;
-            color: var(--gray-700);
+            color: var(--text-main);
         }
         .doc-item .file-upload-area {
             display: flex; flex-direction: column; gap: 6px;
@@ -1009,22 +1110,22 @@
         .file-item {
             display: flex; align-items: center; gap: 8px;
             padding: 8px 10px;
-            background: linear-gradient(135deg, #F0FDF4, #DCFCE7);
+            background: linear-gradient(135deg, rgba(16,185,129,0.1), rgba(5,150,105,0.15));
             border: 1px solid var(--success);
             border-radius: 8px; margin-bottom: 5px; font-size: 11px;
         }
         .file-item .file-info { flex: 1; min-width: 0; }
         .file-item .file-info .file-name {
-            font-weight: 700; color: #166534;
+            font-weight: 700; color: var(--success);
             white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
             display: flex; align-items: center; gap: 5px;
         }
         .file-item .file-info .file-name .icon-svg {
             width: 12px; height: 12px;
-            color: var(--success-dark); flex-shrink: 0;
+            color: var(--success); flex-shrink: 0;
         }
         .file-item .file-info .file-size {
-            font-size: 10px; color: var(--gray-500); margin-top: 1px;
+            font-size: 10px; color: var(--text-muted); margin-top: 1px;
         }
         .file-item .remove-file-btn {
             background: linear-gradient(135deg, var(--danger), var(--danger-dark));
@@ -1042,9 +1143,9 @@
             gap: 14px;
         }
         .appointment-tile {
-            background: white; border-radius: 18px;
+            background: var(--surface); border-radius: 18px;
             padding: 18px; box-shadow: var(--shadow-md);
-            border: 1px solid var(--gray-100);
+            border: 1px solid var(--border-color);
             position: relative; overflow: hidden;
         }
         .appointment-tile::before {
@@ -1061,10 +1162,10 @@
             margin-bottom: 10px;
         }
         .appointment-tile .app-title {
-            font-size: 14px; font-weight: 800; color: var(--gray-900);
+            font-size: 14px; font-weight: 800; color: var(--text-main);
             display: flex; align-items: center; gap: 6px;
         }
-        .appointment-tile .app-title .icon-svg { width: 16px; height: 16px; color: var(--primary); }
+        .appointment-tile .app-title .icon-svg { width: 16px; height: 16px; color: var(--primary-light); }
         .appointment-tile .app-badge {
             padding: 4px 12px; border-radius: 20px;
             font-size: 10px; font-weight: 800;
@@ -1079,14 +1180,14 @@
         }
         .appointment-tile .app-info-item {
             display: flex; align-items: center; gap: 6px;
-            color: var(--gray-700);
+            color: var(--text-main);
         }
         .appointment-tile .app-info-item .icon-svg {
-            width: 14px; height: 14px; color: var(--gray-400);
+            width: 14px; height: 14px; color: var(--text-muted);
         }
         .appointment-tile .app-actions {
             display: flex; gap: 6px; flex-wrap: wrap;
-            padding-top: 10px; border-top: 1px solid var(--gray-100);
+            padding-top: 10px; border-top: 1px solid var(--border-light);
         }
         
         /* ALERTS */
@@ -1095,44 +1196,45 @@
             margin-bottom: 8px;
             display: flex; justify-content: space-between;
             align-items: center; border-right: 4px solid;
-            background: white; font-size: 12px;
+            background: var(--surface); font-size: 12px;
             box-shadow: var(--shadow-sm);
+            color: var(--text-main);
         }
-        .alert-payment { border-color: var(--warning); background: linear-gradient(135deg, white, #FFFBEB); }
-        .alert-deadline { border-color: var(--danger); background: linear-gradient(135deg, white, #FEF2F2); }
-        .alert-document { border-color: var(--primary); background: linear-gradient(135deg, white, #F5F3FF); }
-        .alert-status { border-color: var(--success); background: linear-gradient(135deg, white, #F0FDF4); }
-        .alert-engineer { border-color: var(--purple); background: linear-gradient(135deg, white, #FAF5FF); }
-        .alert-appointment { border-color: var(--secondary); background: linear-gradient(135deg, white, #FDF2F8); }
-        .alert-item .time { font-size: 10px; color: var(--gray-500); }
+        .alert-payment { border-color: var(--warning); background: linear-gradient(135deg, var(--surface), rgba(245,158,11,0.08)); }
+        .alert-deadline { border-color: var(--danger); background: linear-gradient(135deg, var(--surface), rgba(239,68,68,0.08)); }
+        .alert-document { border-color: var(--primary); background: linear-gradient(135deg, var(--surface), rgba(107,33,168,0.08)); }
+        .alert-status { border-color: var(--success); background: linear-gradient(135deg, var(--surface), rgba(16,185,129,0.08)); }
+        .alert-engineer { border-color: var(--purple); background: linear-gradient(135deg, var(--surface), rgba(139,92,246,0.08)); }
+        .alert-appointment { border-color: var(--secondary); background: linear-gradient(135deg, var(--surface), rgba(219,39,119,0.08)); }
+        .alert-item .time { font-size: 10px; color: var(--text-muted); }
         
         /* COMMUNICATION */
         .communication-item {
             padding: 14px 16px;
-            background: linear-gradient(135deg, #FAF5FF, #F3E8FF);
+            background: linear-gradient(135deg, rgba(139,92,246,0.1), rgba(124,58,237,0.15));
             border-radius: 12px; margin-bottom: 8px;
             border-right: 4px solid var(--purple); font-size: 12px;
         }
         .communication-item .msg-subject {
-            font-weight: 800; color: var(--primary);
+            font-weight: 800; color: var(--primary-light);
             margin-bottom: 5px;
             display: flex; align-items: center; gap: 5px;
         }
         .communication-item .msg-subject .icon-svg { width: 14px; height: 14px; }
         .communication-item .msg-body {
-            font-size: 12px; color: var(--gray-700); margin-top: 5px;
+            font-size: 12px; color: var(--text-main); margin-top: 5px;
         }
         .communication-item .msg-meta {
-            font-size: 10px; color: var(--gray-500);
+            font-size: 10px; color: var(--text-muted);
             margin-top: 6px; display: flex;
             gap: 12px; flex-wrap: wrap;
         }
         
         /* ENGINEERS */
         .engineer-tile {
-            background: white; border-radius: 18px;
+            background: var(--surface); border-radius: 18px;
             padding: 18px; box-shadow: var(--shadow-md);
-            border: 1px solid var(--gray-100);
+            border: 1px solid var(--border-color);
             border-right: 4px solid var(--purple);
         }
         .engineer-tile .eng-header {
@@ -1148,8 +1250,8 @@
             box-shadow: 0 8px 20px rgba(139,92,246,0.4);
         }
         .engineer-tile .eng-info { flex: 1; min-width: 0; }
-        .engineer-tile .eng-name { font-size: 14px; font-weight: 800; color: var(--gray-900); }
-        .engineer-tile .eng-phone { font-size: 12px; color: var(--gray-500); margin-top: 2px; }
+        .engineer-tile .eng-name { font-size: 14px; font-weight: 800; color: var(--text-main); }
+        .engineer-tile .eng-phone { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
         .engineer-tile .eng-specialty {
             display: inline-block; padding: 3px 12px;
             border-radius: 12px; font-size: 10px; font-weight: 700;
@@ -1159,7 +1261,7 @@
         .engineer-tile .eng-actions {
             display: flex; gap: 6px; flex-wrap: wrap;
             margin-top: 10px; padding-top: 10px;
-            border-top: 1px solid var(--gray-100);
+            border-top: 1px solid var(--border-light);
         }
         
         /* ARCHIVE */
@@ -1194,12 +1296,12 @@
         /* FOOTER */
         .footer {
             text-align: center; padding: 24px 15px;
-            color: var(--gray-500); font-size: 11px;
-            border-top: 1px solid var(--gray-200); margin-top: 24px;
+            color: var(--text-muted); font-size: 11px;
+            border-top: 1px solid var(--border-light); margin-top: 24px;
         }
         .footer .company {
             font-weight: 900;
-            background: linear-gradient(135deg, var(--primary), var(--gold));
+            background: linear-gradient(135deg, var(--primary-light), var(--gold));
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
             background-clip: text; font-size: 15px;
         }
@@ -1263,6 +1365,16 @@
         }
         .preview-modal .preview-content .no-preview .big-icon-wrap .icon-svg {
             width: 60px; height: 60px; color: var(--gold);
+        }
+        
+        /* LIGHT ANIMATIONS */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-5px); }
+        }
+        
+        .card:hover, .project-tile:hover, .stat-card:hover {
+            animation: float 3s ease-in-out infinite;
         }
         
         /* MOBILE */
@@ -1346,7 +1458,20 @@
     <symbol id="i-sparkles" viewBox="0 0 24 24">
         <path d="M12 3l1.09 3.26L16.35 7.35l-3.26 1.09L12 11.7l-1.09-3.26L7.65 7.35l3.26-1.09L12 3zM19 14l.76 2.24L22 17l-2.24.76L19 20l-.76-2.24L16 17l2.24-.76L19 14zM5 14l.76 2.24L8 17l-2.24.76L5 20l-.76-2.24L2 17l2.24-.76L5 14z"/>
     </symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="5"/>
+        <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+    </symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24">
+        <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/>
+    </symbol>
 </svg>
+
+<!-- 🌙 زر الوضع الليلي -->
+<button class="dark-mode-toggle" id="darkModeToggle" onclick="toggleDarkMode()" title="تبديل الوضع الليلي">
+    <span class="sun-icon">☀️</span>
+    <span class="moon-icon">🌙</span>
+</button>
 
 <div class="loading-screen" id="loadingScreen">
     <div class="spinner"></div>
@@ -1461,6 +1586,7 @@
         <button class="tab-btn" data-tab="reports"><svg class="icon-svg"><use href="#i-doc"/></svg>تقارير</button>
     </div>
     
+    <!-- DASHBOARD -->
     <div id="tab-dashboard" class="tab-content active">
         <div class="grid-4">
             <div class="stat-card building" onclick="switchTab('building')">
@@ -1564,7 +1690,7 @@
                 <span class="badge-count" id="buildingCount">0</span>
             </div>
             <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;">
-                <select id="b_filter" style="flex:1;padding:9px 12px;border:2px solid var(--gray-200);border-radius:10px;font-size:13px;">
+                <select id="b_filter" style="flex:1;padding:9px 12px;border:2px solid var(--border-light);border-radius:10px;font-size:13px;background:var(--surface-alt);color:var(--text-main);">
                     <option value="all">الكل</option>
                     <option value="draft">مسودة</option>
                     <option value="under_review">قيد المراجعة</option>
@@ -1573,7 +1699,7 @@
                     <option value="issued">صادرة</option>
                     <option value="completed">مكتملة</option>
                 </select>
-                <input type="text" id="b_search" placeholder="بحث..." style="flex:1;padding:9px 12px;border:2px solid var(--gray-200);border-radius:10px;font-size:13px;">
+                <input type="text" id="b_search" placeholder="بحث..." style="flex:1;padding:9px 12px;border:2px solid var(--border-light);border-radius:10px;font-size:13px;background:var(--surface-alt);color:var(--text-main);">
             </div>
             <div id="buildingList" class="projects-grid"></div>
         </div>
@@ -1781,7 +1907,7 @@
                 <button onclick="sendComm()" class="btn btn-whatsapp" style="width:100%;"><svg class="icon-svg"><use href="#i-send"/></svg> إرسال عبر واتساب</button>
             </div>
             <div style="margin-top:16px;">
-                <h3 style="font-size:14px;margin-bottom:10px;color:var(--gray-900);font-weight:800;">سجل التواصل</h3>
+                <h3 style="font-size:14px;margin-bottom:10px;color:var(--text-main);font-weight:800;">سجل التواصل</h3>
                 <div id="commList"></div>
             </div>
         </div>
@@ -1850,13 +1976,13 @@
             </div>
             <div class="archive-stats" id="archiveStats"></div>
             <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;">
-                <select id="archive_filter_type" style="flex:1;padding:9px 12px;border:2px solid var(--gray-200);border-radius:10px;font-size:13px;">
+                <select id="archive_filter_type" style="flex:1;padding:9px 12px;border:2px solid var(--border-light);border-radius:10px;font-size:13px;background:var(--surface-alt);color:var(--text-main);">
                     <option value="all">كل الأنواع</option>
                     <option value="building">رخص بناء</option>
                     <option value="elevation">رخص تعلية</option>
                     <option value="reconciliation">تصالح</option>
                 </select>
-                <input type="text" id="archive_search" placeholder="بحث بالاسم..." style="flex:1;padding:9px 12px;border:2px solid var(--gray-200);border-radius:10px;font-size:13px;">
+                <input type="text" id="archive_search" placeholder="بحث بالاسم..." style="flex:1;padding:9px 12px;border:2px solid var(--border-light);border-radius:10px;font-size:13px;background:var(--surface-alt);color:var(--text-main);">
             </div>
             <div id="archiveList" class="archive-files-grid"></div>
         </div>
@@ -1895,8 +2021,7 @@
         <span class="company">Al Brazili</span>
         <br><small>جمهورية مصر العربية | ☁️ Firebase + Cloudinary</small>
     </div>
-</div><!-- Firebase SDK -->
-<script type="module">
+</div><script type="module">
     import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js';
     import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, deleteDoc, onSnapshot, query, orderBy, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js';
 
@@ -1931,11 +2056,10 @@
     var CLOUDINARY_UPLOAD_PRESET = 'al_brazili_unsigned';
     var CLOUDINARY_UPLOAD_URL = 'https://api.cloudinary.com/v1_1/' + CLOUDINARY_CLOUD_NAME + '/auto/upload';
 
-    // حدود الملفات
     var MAX_FILE_SIZE = 10 * 1024 * 1024;
     var MAX_TOTAL_SIZE = 50 * 1024 * 1024;
 
-    // ==================== DATA STORES ====================
+    // ==================== DATA ====================
     var buildingPermits = [];
     var elevationPermits = [];
     var reconciliations = [];
@@ -1946,6 +2070,39 @@
     var db, collection, addDoc, getDocs, doc, updateDoc, deleteDoc, onSnapshot, query, orderBy, serverTimestamp;
     var uploadedFiles = { b: {}, e: {}, r: {} };
     var currentOpenProject = null;
+
+    // ==================== 🌙 DARK MODE ====================
+    function initDarkMode() {
+        var saved = localStorage.getItem('al_brazili_dark_mode');
+        if (saved === 'true') {
+            document.body.classList.add('dark-mode');
+        } else if (saved === null) {
+            // اكتشاف تفضيل النظام
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                document.body.classList.add('dark-mode');
+                localStorage.setItem('al_brazili_dark_mode', 'true');
+            }
+        }
+    }
+
+    function toggleDarkMode() {
+        document.body.classList.toggle('dark-mode');
+        var isDark = document.body.classList.contains('dark-mode');
+        localStorage.setItem('al_brazili_dark_mode', isDark ? 'true' : 'false');
+        
+        // إشعار صغير
+        Swal.fire({
+            icon: isDark ? 'success' : 'info',
+            title: isDark ? '🌙 الوضع الليلي' : '☀️ الوضع النهاري',
+            timer: 1200,
+            showConfirmButton: false,
+            toast: true,
+            position: 'top-start'
+        });
+    }
+    
+    // تشغيل الوضع الليلي فور التحميل
+    initDarkMode();
 
     // ==================== BUILDING STEPS ====================
     var BUILDING_STEPS = [
@@ -1966,7 +2123,6 @@
         { num: 15, name: 'إصدار رخصة البناء', dept: 'الحي', duration: 1 }
     ];
 
-    // ==================== ELEVATION STEPS (15 خطوة - بدون نموذج 8) ====================
     var ELEVATION_STEPS = [
         { num: 1, name: 'استلام المستندات', dept: 'الحي', duration: 1 },
         { num: 2, name: 'الرفع المساحي', dept: 'المساحة', duration: 4 },
@@ -1985,7 +2141,6 @@
         { num: 15, name: 'إصدار رخصة التعلية', dept: 'الحي', duration: 1 }
     ];
 
-    // ==================== RECONCILIATION STEPS ====================
     var RECONCILIATION_STEPS = [
         { num: 1, name: 'تجهيز المستندات الخاصة بالتصالح', dept: 'المكتب', duration: 2 },
         { num: 2, name: 'تقديم المستندات إلى الحي', dept: 'الحي', duration: 1 },
@@ -2005,7 +2160,6 @@
         { num: 16, name: 'إصدار نموذج 8 النهائي', dept: 'الحي', duration: 2 }
     ];
 
-    // ==================== DOCUMENTS LISTS ====================
     var DOCS_BUILDING = [
         { key: 'contract', label: 'عقد الملكية' },
         { key: 'id', label: 'بطاقة الرقم القومي' },
@@ -2090,6 +2244,19 @@
         return '';
     }
     
+    function getCollName(type) {
+        if (type === 'building') return 'buildingPermits';
+        if (type === 'elevation') return 'elevationPermits';
+        return 'reconciliations';
+    }
+    
+    function getProjectFromArray(type, id) {
+        if (type === 'building') return buildingPermits.find(function(x) { return x.id === id; });
+        if (type === 'elevation') return elevationPermits.find(function(x) { return x.id === id; });
+        if (type === 'reconciliation') return reconciliations.find(function(x) { return x.id === id; });
+        return null;
+    }
+    
     function setConnectionStatus(status, text) {
         var el = document.getElementById('connectionStatus');
         var txt = document.getElementById('connectionText');
@@ -2097,13 +2264,9 @@
         if (el) el.className = 'connection-status ' + status;
         if (txt) txt.textContent = text;
         if (badge) {
-            if (status === 'online') {
-                badge.innerHTML = '<svg class="icon-svg icon-svg-sm"><use href="#i-check-circle"/></svg> متصل';
-            } else if (status === 'offline') {
-                badge.innerHTML = '<svg class="icon-svg icon-svg-sm"><use href="#i-x-circle"/></svg> غير متصل';
-            } else {
-                badge.innerHTML = '<svg class="icon-svg icon-svg-sm"><use href="#i-rotate"/></svg> مزامنة...';
-            }
+            if (status === 'online') badge.innerHTML = '<svg class="icon-svg icon-svg-sm"><use href="#i-check-circle"/></svg> متصل';
+            else if (status === 'offline') badge.innerHTML = '<svg class="icon-svg icon-svg-sm"><use href="#i-x-circle"/></svg> غير متصل';
+            else badge.innerHTML = '<svg class="icon-svg icon-svg-sm"><use href="#i-rotate"/></svg> مزامنة...';
         }
     }
     
@@ -2146,7 +2309,6 @@
         return count;
     }
     
-    // تحويل Timestamp إلى نص آمن
     function safeTimestamp(ts) {
         if (!ts) return new Date().toISOString();
         if (typeof ts === 'string') return ts;
@@ -2158,11 +2320,7 @@
     // ==================== PICK CONTACT ====================
     async function pickContact(inputId) {
         if (!('contacts' in navigator && 'select' in navigator.contacts)) {
-            Swal.fire({
-                icon: 'info',
-                title: 'غير مدعوم',
-                html: '<div style="text-align:right;font-size:13px;"><p>متصفحك لا يدعم اختيار جهات الاتصال مباشرة.</p><p style="margin-top:10px;">💡 يمكنك:</p><ul style="padding-right:20px;margin-top:6px;"><li>فتح التطبيق على <strong>الجوال</strong> (Chrome)</li><li>أو كتابة الرقم يدوياً</li></ul></div>'
-            });
+            Swal.fire({ icon: 'info', title: 'غير مدعوم', html: '<div style="text-align:right;font-size:13px;"><p>متصفحك لا يدعم اختيار جهات الاتصال مباشرة.</p><p style="margin-top:10px;">💡 يمكنك:</p><ul style="padding-right:20px;margin-top:6px;"><li>فتح التطبيق على <strong>الجوال</strong> (Chrome)</li><li>أو كتابة الرقم يدوياً</li></ul></div>' });
             return;
         }
         try {
@@ -2213,10 +2371,7 @@
 
     // ==================== PROJECT MODAL ====================
     function openProjectModal(type, id) {
-        var project;
-        if (type === 'building') project = buildingPermits.find(function(x) { return x.id === id; });
-        else if (type === 'elevation') project = elevationPermits.find(function(x) { return x.id === id; });
-        else if (type === 'reconciliation') project = reconciliations.find(function(x) { return x.id === id; });
+        var project = getProjectFromArray(type, id);
         if (!project) return;
         
         currentOpenProject = { type: type, id: id };
@@ -2273,14 +2428,10 @@
         html += '</div>';
         
         // Info boxes
-        if (project.transaction) {
-            html += '<div class="info-box transaction"><svg class="icon-svg"><use href="#i-file-text"/></svg> رقم المعاملة: ' + project.transaction + '</div>';
-        }
-        if (project.next_step) {
-            html += '<div class="info-box next-step"><svg class="icon-svg"><use href="#i-arrow-left"/></svg> الخطوة القادمة: ' + project.next_step + '</div>';
-        }
+        if (project.transaction) html += '<div class="info-box transaction"><svg class="icon-svg"><use href="#i-file-text"/></svg> رقم المعاملة: ' + project.transaction + '</div>';
+        if (project.next_step) html += '<div class="info-box next-step"><svg class="icon-svg"><use href="#i-arrow-left"/></svg> الخطوة القادمة: ' + project.next_step + '</div>';
         
-        // Details
+        // Details grid
         html += '<div class="details-grid-modal">';
         html += '<div class="detail-item"><div class="label"><svg class="icon-svg"><use href="#i-map-pin"/></svg> العنوان</div><div class="value" style="font-size:13px;">' + (project.address || '-') + '</div></div>';
         html += '<div class="detail-item"><div class="label"><svg class="icon-svg"><use href="#i-phone"/></svg> الجوال</div><div class="value">' + (project.phone || '-') + '</div></div>';
@@ -2303,9 +2454,7 @@
         html += '<div class="detail-item"><div class="label"><svg class="icon-svg"><use href="#i-clock"/></svg> المتبقي</div><div class="value" style="color:' + (remaining_money > 0 ? 'var(--danger-dark)' : 'var(--success-dark)') + ';">' + formatCurrency(remaining_money) + '</div></div>';
         html += '</div>';
         
-        if (project.agreement) {
-            html += '<div class="info-box agreement"><svg class="icon-svg"><use href="#i-file-text"/></svg> ' + project.agreement + '</div>';
-        }
+        if (project.agreement) html += '<div class="info-box agreement"><svg class="icon-svg"><use href="#i-file-text"/></svg> ' + project.agreement + '</div>';
         
         // Progress
         html += '<div style="margin-bottom:16px;"><div style="display:flex;justify-content:space-between;font-size:12px;font-weight:800;margin-bottom:6px;"><span>التقدم</span><span>' + progress.toFixed(0) + '%</span></div><div style="height:8px;background:var(--gray-100);border-radius:10px;overflow:hidden;"><div style="height:100%;background:linear-gradient(90deg,var(--primary),var(--gold));width:' + progress + '%;border-radius:10px;transition:width 0.6s;"></div></div></div>';
@@ -2324,20 +2473,15 @@
             html += '<div class="gear-icon-wrap">';
             html += '<span class="gear-number">' + s.num + '</span>';
             html += '<svg class="gear-svg"><use href="#i-gear"/></svg>';
-            if (cls === 'completed') {
-                html += '<div class="gear-checkmark"><svg class="icon-svg"><use href="#i-check"/></svg></div>';
-            }
+            if (cls === 'completed') html += '<div class="gear-checkmark"><svg class="icon-svg"><use href="#i-check"/></svg></div>';
             html += '</div>';
             html += '<div class="gear-info">';
             html += '<div class="gear-name">' + s.name + '</div>';
             html += '<div class="gear-meta">';
             html += '<span class="gear-dept">' + s.dept + '</span>';
             html += '<span class="gear-duration"><svg class="icon-svg"><use href="#i-clock"/></svg> ' + s.duration + ' يوم</span>';
-            html += '</div>';
-            html += '</div>';
-            if (index < steps.length - 1) {
-                html += '<div class="gear-connector"></div>';
-            }
+            html += '</div></div>';
+            if (index < steps.length - 1) html += '<div class="gear-connector"></div>';
             html += '</div>';
         });
         
@@ -2349,17 +2493,18 @@
             html += '<button onclick="rollbackStep(\'' + type + '\',\'' + project.id + '\',' + currentStep + ')" class="btn btn-warning btn-sm"><svg class="icon-svg"><use href="#i-rotate"/></svg> تراجع</button>';
             html += '</div>';
         } else {
-            html += '<div style="margin-top:16px;text-align:center;color:var(--success-dark);font-weight:800;padding:16px;background:#D1FAE5;border-radius:12px;display:flex;align-items:center;justify-content:center;gap:8px;"><svg class="icon-svg" style="width:22px;height:22px;"><use href="#i-check-double"/></svg> تم إنجاز جميع الخطوات بنجاح</div>';
+            html += '<div style="margin-top:16px;text-align:center;color:var(--success-dark);font-weight:800;padding:16px;background:rgba(16,185,129,0.15);border-radius:12px;display:flex;align-items:center;justify-content:center;gap:8px;"><svg class="icon-svg" style="width:22px;height:22px;"><use href="#i-check-double"/></svg> تم إنجاز جميع الخطوات بنجاح</div>';
         }
         html += '</div>';
         
         // DOCUMENTS
-        html += renderDocsForCard(project.documents, type);
+        html += renderDocsForCard(project.documents, type, project.id);
         
         return html;
     }
     
-    function renderDocsForCard(docs, projectType) {
+    // ⭐ دالة عرض المستندات داخل Modal مع التبديل والحذف
+    function renderDocsForCard(docs, projectType, projectId) {
         if (!docs || Object.keys(docs).length === 0) return '';
         var docList = getDocsForType(projectType);
         var totalDocs = countTotalFiles(docs);
@@ -2374,18 +2519,32 @@
             
             html += '<div class="doc-group">';
             html += '<div class="doc-group-title"><svg class="icon-svg"><use href="#i-check-circle"/></svg> ' + doc.label + ' <span class="doc-count">' + files.length + '</span></div>';
-            html += '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:8px;">';
+            html += '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:8px;">';
             
-            files.forEach(function(f) {
+            files.forEach(function(f, index) {
                 var iconId = getFileIcon(f.name, f.type);
                 var fileUrl = f.url || f.data || '';
                 
-                html += '<div class="file-card-mini">';
+                html += '<div class="file-card-mini" style="flex-direction:column;align-items:stretch;gap:10px;padding:12px;">';
+                html += '<div style="display:flex;align-items:center;gap:10px;">';
                 html += '<div class="file-icon-mini"><svg class="icon-svg"><use href="#i-' + iconId + '"/></svg></div>';
-                html += '<div class="file-info-mini"><div class="name">' + f.name + '</div><div class="meta">' + formatFileSize(f.size) + '</div></div>';
-                html += '<div class="file-actions-mini">';
-                html += '<button class="btn-view" onclick="openPreview(\'' + escapeUrl(fileUrl) + '\', \'' + escapeStr(f.name) + '\', \'' + escapeStr(f.type || '') + '\')" title="معاينة"><svg class="icon-svg"><use href="#i-eye"/></svg></button>';
-                html += '<a class="btn-download" href="' + fileUrl + '" download="' + escapeStr(f.name) + '" target="_blank" title="تحميل"><svg class="icon-svg"><use href="#i-download"/></svg></a>';
+                html += '<div class="file-info-mini" style="flex:1;"><div class="name">' + f.name + '</div><div class="meta">' + formatFileSize(f.size) + '</div></div>';
+                html += '</div>';
+                
+                html += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">';
+                
+                html += '<button onclick="openPreview(\'' + escapeUrl(fileUrl) + '\', \'' + escapeStr(f.name) + '\', \'' + escapeStr(f.type || '') + '\')" class="btn btn-info btn-sm" style="font-size:11px;padding:7px 10px;">';
+                html += '<svg class="icon-svg" style="width:13px;height:13px;"><use href="#i-eye"/></svg> معاينة</button>';
+                
+                html += '<a href="' + fileUrl + '" download="' + escapeStr(f.name) + '" target="_blank" class="btn btn-success btn-sm" style="font-size:11px;padding:7px 10px;text-decoration:none;">';
+                html += '<svg class="icon-svg" style="width:13px;height:13px;"><use href="#i-download"/></svg> تحميل</a>';
+                
+                html += '<button onclick="replaceDocument(\'' + projectType + '\',\'' + projectId + '\',\'' + doc.key + '\',' + index + ')" class="btn btn-warning btn-sm" style="font-size:11px;padding:7px 10px;">';
+                html += '<svg class="icon-svg" style="width:13px;height:13px;"><use href="#i-rotate"/></svg> تبديل</button>';
+                
+                html += '<button onclick="deleteDocument(\'' + projectType + '\',\'' + projectId + '\',\'' + doc.key + '\',' + index + ')" class="btn btn-danger btn-sm" style="font-size:11px;padding:7px 10px;">';
+                html += '<svg class="icon-svg" style="width:13px;height:13px;"><use href="#i-trash"/></svg> حذف</button>';
+                
                 html += '</div></div>';
             });
             
@@ -2394,6 +2553,130 @@
         
         html += '</div>';
         return html;
+    }
+    
+    // ⭐ تبديل مستند
+    async function replaceDocument(projectType, projectId, docKey, fileIndex) {
+        var input = document.createElement('input');
+        input.type = 'file';
+        input.accept = '*/*';
+        
+        input.onchange = async function(e) {
+            var file = e.target.files[0];
+            if (!file) return;
+            
+            if (file.size > MAX_FILE_SIZE) {
+                Swal.fire({ icon: 'warning', title: 'ملف كبير جداً', text: 'الحد الأقصى ' + formatFileSize(MAX_FILE_SIZE) });
+                return;
+            }
+            
+            var confirm = await Swal.fire({
+                title: 'تبديل المستند؟',
+                html: '<div style="text-align:right;font-size:13px;"><p><strong>الملف الجديد:</strong> ' + file.name + '</p><p><strong>الحجم:</strong> ' + formatFileSize(file.size) + '</p><p style="margin-top:10px;color:#DC2626;">⚠️ سيتم حذف الملف القديم واستبداله</p></div>',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#F59E0B',
+                cancelButtonColor: '#6B7280',
+                confirmButtonText: '🔄 تبديل',
+                cancelButtonText: 'إلغاء'
+            });
+            
+            if (!confirm.isConfirmed) return;
+            
+            Swal.fire({
+                title: '🔄 جاري تبديل الملف...',
+                html: '<p style="font-size:13px;color:#6B7280;">☁️ رفع الملف الجديد إلى Cloudinary...</p>',
+                allowOutsideClick: false,
+                showConfirmButton: false,
+                didOpen: function() { Swal.showLoading(); }
+            });
+            
+            try {
+                var formData = new FormData();
+                formData.append('file', file);
+                formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
+                formData.append('folder', 'al-brazili/' + projectType + '/' + projectId + '/' + docKey);
+                
+                var response = await fetch(CLOUDINARY_UPLOAD_URL, { method: 'POST', body: formData });
+                if (!response.ok) throw new Error('فشل الرفع: ' + response.status);
+                var result = await response.json();
+                
+                var collName = getCollName(projectType);
+                var project = getProjectFromArray(projectType, projectId);
+                if (!project || !project.documents || !project.documents[docKey]) throw new Error('المستند غير موجود');
+                
+                project.documents[docKey][fileIndex] = {
+                    name: file.name,
+                    url: result.secure_url,
+                    publicId: result.public_id,
+                    size: file.size,
+                    format: result.format,
+                    resourceType: result.resource_type,
+                    type: file.type || 'application/octet-stream',
+                    uploadedAt: new Date().toISOString()
+                };
+                
+                await updateDoc(doc(db, collName, projectId), { documents: project.documents, updatedAt: serverTimestamp() });
+                
+                Swal.close();
+                await addAlert(projectType, projectId, '🔄 تم تبديل المستند: ' + file.name, 'document');
+                Swal.fire({ icon: 'success', title: '✅ تم التبديل', timer: 1800, showConfirmButton: false });
+                
+                if (currentOpenProject && currentOpenProject.id === projectId) {
+                    var updatedProject = getProjectFromArray(projectType, projectId);
+                    if (updatedProject) document.getElementById('modalBody').innerHTML = renderProjectDetails(updatedProject, projectType);
+                }
+            } catch (error) {
+                Swal.close();
+                console.error('خطأ التبديل:', error);
+                Swal.fire({ icon: 'error', title: '⚠️ فشل التبديل', text: error.message });
+            }
+        };
+        
+        input.click();
+    }
+    
+    // ⭐ حذف مستند
+    async function deleteDocument(projectType, projectId, docKey, fileIndex) {
+        var collName = getCollName(projectType);
+        var project = getProjectFromArray(projectType, projectId);
+        if (!project || !project.documents || !project.documents[docKey]) {
+            Swal.fire({ icon: 'error', title: 'خطأ', text: 'المستند غير موجود' });
+            return;
+        }
+        
+        var file = project.documents[docKey][fileIndex];
+        
+        var confirm = await Swal.fire({
+            title: '🗑️ حذف المستند؟',
+            html: '<div style="text-align:right;font-size:13px;"><p><strong>الملف:</strong> ' + file.name + '</p><p><strong>الحجم:</strong> ' + formatFileSize(file.size) + '</p><p style="margin-top:10px;color:#DC2626;">⚠️ لا يمكن التراجع عن هذا الإجراء</p></div>',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#DC2626',
+            cancelButtonColor: '#6B7280',
+            confirmButtonText: '🗑️ نعم، احذف',
+            cancelButtonText: 'إلغاء'
+        });
+        
+        if (!confirm.isConfirmed) return;
+        
+        try {
+            project.documents[docKey].splice(fileIndex, 1);
+            if (project.documents[docKey].length === 0) delete project.documents[docKey];
+            
+            await updateDoc(doc(db, collName, projectId), { documents: project.documents, updatedAt: serverTimestamp() });
+            await addAlert(projectType, projectId, '🗑️ تم حذف المستند: ' + file.name, 'document');
+            
+            Swal.fire({ icon: 'success', title: '✅ تم الحذف', timer: 1800, showConfirmButton: false });
+            
+            if (currentOpenProject && currentOpenProject.id === projectId) {
+                var updatedProject = getProjectFromArray(projectType, projectId);
+                if (updatedProject) document.getElementById('modalBody').innerHTML = renderProjectDetails(updatedProject, projectType);
+            }
+        } catch (error) {
+            console.error('خطأ الحذف:', error);
+            Swal.fire({ icon: 'error', title: '⚠️ فشل الحذف', text: error.message });
+        }
     }
 
     function editProject(type, id) {
@@ -2419,9 +2702,9 @@
         if (btn) btn.classList.add('active');
         var tab = document.getElementById('tab-' + tabName);
         if (tab) tab.classList.add('active');
-        if (tabName === 'reports') { updateReportProjects(); }
-        if (tabName === 'archive') { renderArchive(); }
-        if (tabName === 'appointments') { renderAppointments(); }
+        if (tabName === 'reports') updateReportProjects();
+        if (tabName === 'archive') renderArchive();
+        if (tabName === 'appointments') renderAppointments();
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
@@ -2496,7 +2779,7 @@
         }
     }
 
-    // ==================== FILE UPLOAD (مُصحّح) ====================
+    // ==================== FILE UPLOAD ====================
     function buildDocsGrid(prefix, docsList, containerId) {
         var container = document.getElementById(containerId);
         if (!container) return;
@@ -2517,13 +2800,11 @@
         docsList.forEach(function(doc) { bindFileUpload(prefix, doc.key); });
     }
 
-    // ✅ دالة bindFileUpload المُصحّحة
     function bindFileUpload(prefix, docKey) {
         var input = document.getElementById(prefix + '_doc_' + docKey + '_file');
         var docItem = document.getElementById('doc-item-' + prefix + '-' + docKey);
         if (!input) return;
         
-        // ✅ ضمان وجود البنية كاملة
         if (!uploadedFiles[prefix]) uploadedFiles[prefix] = {};
         if (!uploadedFiles[prefix][docKey]) uploadedFiles[prefix][docKey] = [];
         
@@ -2531,7 +2812,6 @@
             var files = Array.from(e.target.files);
             if (files.length === 0) return;
             
-            // ✅ تأكيد مرة أخرى قبل الإضافة
             if (!uploadedFiles[prefix]) uploadedFiles[prefix] = {};
             if (!uploadedFiles[prefix][docKey]) uploadedFiles[prefix][docKey] = [];
             
@@ -2554,23 +2834,10 @@
             input.value = '';
             
             if (rejected.length > 0) {
-                Swal.fire({ 
-                    icon: 'warning', 
-                    title: 'ملفات كبيرة', 
-                    html: '<div style="text-align:right;font-size:13px;"><p>الملفات التالية أكبر من <strong>10 MB</strong>:</p><ul style="padding-right:20px;margin-top:8px;">' + rejected.map(function(r) { return '<li>' + r + '</li>'; }).join('') + '</ul></div>', 
-                    confirmButtonText: 'حسناً' 
-                });
+                Swal.fire({ icon: 'warning', title: 'ملفات كبيرة', html: '<div style="text-align:right;font-size:13px;"><p>الملفات التالية أكبر من <strong>10 MB</strong>:</p><ul style="padding-right:20px;margin-top:8px;">' + rejected.map(function(r) { return '<li>' + r + '</li>'; }).join('') + '</ul></div>', confirmButtonText: 'حسناً' });
             }
             if (accepted > 0) {
-                Swal.fire({ 
-                    icon: 'success', 
-                    title: 'تمت الإضافة', 
-                    text: 'تم إضافة ' + accepted + ' ملف', 
-                    timer: 1500, 
-                    showConfirmButton: false, 
-                    toast: true, 
-                    position: 'top-start' 
-                });
+                Swal.fire({ icon: 'success', title: 'تمت الإضافة', text: 'تم إضافة ' + accepted + ' ملف', timer: 1500, showConfirmButton: false, toast: true, position: 'top-start' });
             }
         });
     }
@@ -2603,7 +2870,6 @@
         }
     }
 
-    // ⭐ رفع الملفات إلى Cloudinary
     async function uploadAllFiles(prefix) {
         var uploadedData = {};
         var docsList = getDocsForType(prefix === 'b' ? 'building' : prefix === 'e' ? 'elevation' : 'reconciliation');
@@ -2621,15 +2887,8 @@
         
         Swal.fire({
             title: '☁️ جاري رفع الملفات',
-            html: '<div style="text-align:right;font-size:13px;">' +
-                  '<div style="background:#E5E7EB;border-radius:10px;height:12px;overflow:hidden;margin:15px 0;">' +
-                  '<div id="uploadProgress" style="background:linear-gradient(90deg,#6B21A8,#D4AF37);height:100%;width:0%;transition:width 0.4s;"></div>' +
-                  '</div>' +
-                  '<p id="uploadStatus" style="text-align:center;font-weight:700;color:#6B21A8;margin-top:10px;">جاري البدء...</p>' +
-                  '<p style="text-align:center;font-size:11px;color:#6B7280;margin-top:5px;">☁️ Cloudinary Upload</p>' +
-                  '</div>',
-            allowOutsideClick: false, 
-            showConfirmButton: false,
+            html: '<div style="text-align:right;font-size:13px;"><div style="background:#E5E7EB;border-radius:10px;height:12px;overflow:hidden;margin:15px 0;"><div id="uploadProgress" style="background:linear-gradient(90deg,#6B21A8,#D4AF37);height:100%;width:0%;transition:width 0.4s;"></div></div><p id="uploadStatus" style="text-align:center;font-weight:700;color:#6B21A8;margin-top:10px;">جاري البدء...</p></div>',
+            allowOutsideClick: false, showConfirmButton: false,
             didOpen: function() { Swal.showLoading(); }
         });
         
@@ -2655,16 +2914,8 @@
                     formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
                     formData.append('folder', 'al-brazili/' + (prefix === 'b' ? 'building' : prefix === 'e' ? 'elevation' : 'reconciliation'));
                     
-                    var response = await fetch(CLOUDINARY_UPLOAD_URL, {
-                        method: 'POST',
-                        body: formData
-                    });
-                    
-                    if (!response.ok) {
-                        var errText = await response.text();
-                        throw new Error('فشل الرفع (' + response.status + '): ' + errText);
-                    }
-                    
+                    var response = await fetch(CLOUDINARY_UPLOAD_URL, { method: 'POST', body: formData });
+                    if (!response.ok) throw new Error('فشل الرفع (' + response.status + ')');
                     var result = await response.json();
                     
                     uploadedData[docKey].push({
@@ -2679,33 +2930,16 @@
                     });
                     
                     totalSize += file.size;
-                    
                 } catch (error) {
-                    console.error('❌ خطأ رفع:', error);
                     Swal.close();
-                    Swal.fire({ 
-                        icon: 'error', 
-                        title: '⚠️ فشل رفع الملف',
-                        html: '<div style="text-align:right;font-size:13px;">' +
-                              '<p><strong>الملف:</strong> ' + file.name + '</p>' +
-                              '<p><strong>السبب:</strong> ' + error.message + '</p>' +
-                              '</div>',
-                        confirmButtonColor: '#6B21A8'
-                    });
+                    Swal.fire({ icon: 'error', title: '⚠️ فشل رفع الملف', html: '<p><strong>الملف:</strong> ' + file.name + '</p><p><strong>السبب:</strong> ' + error.message + '</p>' });
                     throw error;
                 }
             }
         }
         
         Swal.close();
-        Swal.fire({ 
-            icon: 'success', 
-            title: '✅ تم رفع ' + processed + ' ملف',
-            text: 'الحجم: ' + formatFileSize(totalSize),
-            timer: 2000, 
-            showConfirmButton: false 
-        });
-        
+        Swal.fire({ icon: 'success', title: '✅ تم رفع ' + processed + ' ملف', text: 'الحجم: ' + formatFileSize(totalSize), timer: 2000, showConfirmButton: false });
         setConnectionStatus('online', 'متصل - ' + new Date().toLocaleTimeString('ar-EG'));
         return uploadedData;
     }
@@ -2714,84 +2948,21 @@
     function buildWhatsAppMessage(type, data) {
         var line = '━━━━━━━━━━━━━━━━━';
         var lineThin = '───────────────';
-        
-        var header = 
-            '🏛️ *AL BRAZILI TECHNOLOGIES* 🏛️\n' +
-            '✨ نظام إدارة الأعمال المتكامل ✨\n' +
-            line;
-        
-        var footer = 
-            line + '\n' +
-            '🇪🇬 *Al Brazili Technologies*\n' +
-            '📞 ' + WHATSAPP_NUMBER + '\n' +
-            '🕐 ' + new Date().toLocaleString('ar-EG');
+        var header = '🏛️ *AL BRAZILI TECHNOLOGIES* 🏛️\n✨ نظام إدارة الأعمال المتكامل ✨\n' + line;
+        var footer = line + '\n🇪🇬 *Al Brazili Technologies*\n📞 ' + WHATSAPP_NUMBER + '\n🕐 ' + new Date().toLocaleString('ar-EG');
         
         if (type === 'step') {
-            return header + '\n\n' +
-                '🔔 *تذكير بمهمة جديدة*\n\n' +
-                '👤 *العميل*\n   ' + data.client + '\n\n' +
-                '📁 *نوع المعاملة*\n   ' + data.typeLabel + '\n\n' +
-                '📋 *رقم المعاملة*\n   ' + (data.transaction || 'غير محدد') + '\n\n' +
-                '📍 *العنوان*\n   ' + (data.address || 'غير محدد') + '\n\n' +
-                lineThin + '\n' +
-                '📌 *الخطوة المطلوبة* 📌\n' +
-                lineThin + '\n\n' +
-                '▶️ *' + data.stepName + '*\n\n' +
-                '🏢 الجهة: ' + data.dept + '\n' +
-                '⏱️ المدة: ' + data.duration + ' يوم\n\n' +
-                lineThin + '\n\n' +
-                '💼 *مع تحيات*\n' +
-                '*Al Brazili Technologies* 🏛️\n\n' +
-                footer;
+            return header + '\n\n🔔 *تذكير بمهمة جديدة*\n\n👤 *العميل*\n   ' + data.client + '\n\n📁 *نوع المعاملة*\n   ' + data.typeLabel + '\n\n📋 *رقم المعاملة*\n   ' + (data.transaction || 'غير محدد') + '\n\n📍 *العنوان*\n   ' + (data.address || 'غير محدد') + '\n\n' + lineThin + '\n📌 *الخطوة المطلوبة* 📌\n' + lineThin + '\n\n▶️ *' + data.stepName + '*\n\n🏢 الجهة: ' + data.dept + '\n⏱️ المدة: ' + data.duration + ' يوم\n\n' + lineThin + '\n\n💼 *مع تحيات*\n*Al Brazili Technologies* 🏛️\n\n' + footer;
         }
-        
         if (type === 'communication') {
-            return header + '\n\n' +
-                '📨 *رسالة تواصل رسمية*\n\n' +
-                lineThin + '\n' +
-                '📌 *الموضوع:* ' + data.subject + '\n' +
-                '📁 *المشروع:* ' + data.project + '\n' +
-                lineThin + '\n\n' +
-                '💬 *نص الرسالة:*\n\n' +
-                '┌─────────────────────┐\n' +
-                '│\n' +
-                '│  ' + data.message + '\n' +
-                '│\n' +
-                '└─────────────────────┘\n\n' +
-                (data.next ? '➡️ *الخطوة القادمة*\n   ' + data.next + '\n\n' : '') +
-                (data.progress ? '✅ *ما تم إنجازه*\n   ' + data.progress + '\n\n' : '') +
-                footer;
+            return header + '\n\n📨 *رسالة تواصل رسمية*\n\n' + lineThin + '\n📌 *الموضوع:* ' + data.subject + '\n📁 *المشروع:* ' + data.project + '\n' + lineThin + '\n\n💬 *نص الرسالة:*\n\n' + data.message + '\n\n' + (data.next ? '➡️ *الخطوة القادمة*\n   ' + data.next + '\n\n' : '') + (data.progress ? '✅ *ما تم إنجازه*\n   ' + data.progress + '\n\n' : '') + footer;
         }
-        
         if (type === 'appointment') {
-            return header + '\n\n' +
-                '📅 *تذكير بموعد مهم*\n\n' +
-                lineThin + '\n\n' +
-                '📌 *' + data.title + '*\n\n' +
-                '📁 *المشروع:* ' + data.project + '\n' +
-                '📅 *التاريخ:* ' + data.date + '\n' +
-                '⏰ *الوقت:* ' + data.time + '\n' +
-                (data.notes ? '\n📝 *ملاحظات:*\n   ' + data.notes + '\n' : '') +
-                '\n' + lineThin + '\n\n' +
-                '⚠️ *يرجى الحضور في الموعد المحدد*\n' +
-                '🤝 *شكراً لتعاونكم*\n\n' +
-                footer;
+            return header + '\n\n📅 *تذكير بموعد مهم*\n\n' + lineThin + '\n\n📌 *' + data.title + '*\n\n📁 *المشروع:* ' + data.project + '\n📅 *التاريخ:* ' + data.date + '\n⏰ *الوقت:* ' + data.time + '\n' + (data.notes ? '\n📝 *ملاحظات:*\n   ' + data.notes + '\n' : '') + '\n' + lineThin + '\n\n⚠️ *يرجى الحضور في الموعد المحدد*\n\n' + footer;
         }
-        
         if (type === 'greeting') {
-            return header + '\n\n' +
-                '🌟 *تحية طيبة* 🌟\n\n' +
-                'السلام عليكم ورحمة الله وبركاته\n\n' +
-                'أ. *' + data.name + '*\n\n' +
-                lineThin + '\n\n' +
-                '✨ نتمنى لكم يوماً سعيداً\n' +
-                'مليئاً بالنجاح والتوفيق ✨\n\n' +
-                lineThin + '\n\n' +
-                '🤝 *نحن هنا لخدمتكم دائماً*\n' +
-                '📞 للتواصل: ' + WHATSAPP_NUMBER + '\n\n' +
-                footer;
+            return header + '\n\n🌟 *تحية طيبة* 🌟\n\nالسلام عليكم ورحمة الله وبركاته\n\nأ. *' + data.name + '*\n\n' + lineThin + '\n\n✨ نتمنى لكم يوماً سعيداً\nمليئاً بالنجاح والتوفيق ✨\n\n' + lineThin + '\n\n🤝 *نحن هنا لخدمتكم دائماً*\n📞 للتواصل: ' + WHATSAPP_NUMBER + '\n\n' + footer;
         }
-        
         return header + '\n\n' + (data.message || '') + '\n\n' + footer;
     }
 
@@ -2805,10 +2976,7 @@
 
     function sendStepWhatsApp(projectType, projectId, stepNum) {
         var steps = getStepsForType(projectType);
-        var project;
-        if (projectType === 'building') project = buildingPermits.find(function(x) { return x.id === projectId; });
-        else if (projectType === 'elevation') project = elevationPermits.find(function(x) { return x.id === projectId; });
-        else if (projectType === 'reconciliation') project = reconciliations.find(function(x) { return x.id === projectId; });
+        var project = getProjectFromArray(projectType, projectId);
         if (!project) return;
         
         var eng = project.engineer_id ? getEngineer(project.engineer_id) : null;
@@ -2822,74 +2990,37 @@
         
         Swal.fire({
             title: '📤 إرسال تذكير',
-            html: '<div style="text-align:right;font-size:13px;line-height:1.8;">' +
-                  '<p><strong>👷 المهندس:</strong> ' + eng.name + '</p>' +
-                  '<p><strong>📱 الجوال:</strong> ' + eng.phone + '</p>' +
-                  '<p><strong>📌 الخطوة:</strong> ' + step.name + '</p>' +
-                  '</div>',
+            html: '<div style="text-align:right;font-size:13px;line-height:1.8;"><p><strong>👷 المهندس:</strong> ' + eng.name + '</p><p><strong>📱 الجوال:</strong> ' + eng.phone + '</p><p><strong>📌 الخطوة:</strong> ' + step.name + '</p></div>',
             showCancelButton: true, confirmButtonText: '📤 إرسال الآن', cancelButtonText: 'إلغاء',
             confirmButtonColor: '#25D366'
         }).then(function(result) {
             if (!result.isConfirmed) return;
             var msg = buildWhatsAppMessage('step', {
-                client: project.client,
-                typeLabel: getTypeLabel(projectType),
-                transaction: project.transaction,
-                address: project.address,
-                stepName: step.name,
-                dept: step.dept,
-                duration: step.duration
+                client: project.client, typeLabel: getTypeLabel(projectType),
+                transaction: project.transaction, address: project.address,
+                stepName: step.name, dept: step.dept, duration: step.duration
             });
             sendWhatsApp(eng.phone, msg);
         });
     }
 
-    // ==================== ALERTS (مُصحّح) ====================
+    // ==================== ALERTS ====================
     async function addAlert(type, projectId, message, cat) {
         if (!cat) cat = 'status';
         
-        var tempAlert = { 
-            id: 'temp_' + Date.now(), 
-            type: type, projectId: projectId, 
-            message: message, cat: cat, 
-            date: new Date().toLocaleString('ar-EG'),
-            createdAt: new Date().toISOString()
-        };
+        var tempAlert = { id: 'temp_' + Date.now(), type: type, projectId: projectId, message: message, cat: cat, date: new Date().toLocaleString('ar-EG'), createdAt: new Date().toISOString() };
         allAlerts.unshift(tempAlert);
-        renderAlerts(); 
+        renderAlerts();
         updateUI();
         
-        var iconMap = {
-            'payment': 'success',
-            'deadline': 'warning',
-            'document': 'info',
-            'status': 'success',
-            'engineer': 'info',
-            'appointment': 'info'
-        };
-        Swal.fire({ 
-            icon: iconMap[cat] || 'info', 
-            title: '🔔 تنبيه جديد', 
-            text: message, 
-            timer: 3500, 
-            timerProgressBar: true, 
-            showConfirmButton: false, 
-            toast: true, 
-            position: 'top-start'
-        });
+        var iconMap = { 'payment': 'success', 'deadline': 'warning', 'document': 'info', 'status': 'success', 'engineer': 'info', 'appointment': 'info' };
+        Swal.fire({ icon: iconMap[cat] || 'info', title: '🔔 تنبيه جديد', text: message, timer: 3500, timerProgressBar: true, showConfirmButton: false, toast: true, position: 'top-start' });
         
         try {
             if (db && collection && addDoc) {
-                await addDoc(collection(db, 'alerts'), { 
-                    type: type, projectId: projectId, 
-                    message: message, cat: cat, 
-                    date: new Date().toLocaleString('ar-EG'), 
-                    createdAt: serverTimestamp() 
-                });
+                await addDoc(collection(db, 'alerts'), { type: type, projectId: projectId, message: message, cat: cat, date: new Date().toLocaleString('ar-EG'), createdAt: serverTimestamp() });
             }
-        } catch (e) { 
-            console.error('⚠️ فشل حفظ التنبيه:', e.message);
-        }
+        } catch (e) { console.error('⚠️ فشل حفظ التنبيه:', e.message); }
     }
 
     // ==================== LOGIN ====================
@@ -2940,37 +3071,31 @@
         });
     }
 
-    // ==================== LOAD DATA (مُصحّح) ====================
+    // ==================== LOAD DATA ====================
     async function loadAllDataFromFirebase() {
         try {
             setConnectionStatus('syncing', 'جاري المزامنة...');
-            console.log('🔄 بدء تحميل البيانات...');
             
             var engSnap = await getDocs(collection(db, 'engineers'));
             engineers = [];
             engSnap.forEach(function(d) { engineers.push({ id: d.id, ...d.data() }); });
-            console.log('✅ مهندسين:', engineers.length);
             
             var bpSnap = await getDocs(collection(db, 'buildingPermits'));
             buildingPermits = [];
             bpSnap.forEach(function(d) { buildingPermits.push({ id: d.id, ...d.data() }); });
-            console.log('✅ رخص بناء:', buildingPermits.length);
             
             var epSnap = await getDocs(collection(db, 'elevationPermits'));
             elevationPermits = [];
             epSnap.forEach(function(d) { elevationPermits.push({ id: d.id, ...d.data() }); });
-            console.log('✅ رخص تعلية:', elevationPermits.length);
             
             var recSnap = await getDocs(collection(db, 'reconciliations'));
             reconciliations = [];
             recSnap.forEach(function(d) { reconciliations.push({ id: d.id, ...d.data() }); });
-            console.log('✅ تصالح:', reconciliations.length);
             
             var commSnap = await getDocs(collection(db, 'communications'));
             communications = [];
             commSnap.forEach(function(d) { communications.push({ id: d.id, ...d.data() }); });
             
-            // ✅ alerts مع تحويل Timestamp
             var alertSnap = await getDocs(collection(db, 'alerts'));
             allAlerts = [];
             alertSnap.forEach(function(d) { 
@@ -2978,15 +3103,12 @@
                 data.createdAt = safeTimestamp(data.createdAt);
                 allAlerts.push({ id: d.id, ...data }); 
             });
-            allAlerts.sort(function(a, b) { 
-                return String(b.createdAt || '').localeCompare(String(a.createdAt || '')); 
-            });
+            allAlerts.sort(function(a, b) { return String(b.createdAt || '').localeCompare(String(a.createdAt || '')); });
             
             var appSnap = await getDocs(collection(db, 'appointments'));
             appointments = [];
             appSnap.forEach(function(d) { appointments.push({ id: d.id, ...d.data() }); });
             
-            console.log('✅ تم تحميل كل البيانات');
             setConnectionStatus('online', 'متصل - ' + new Date().toLocaleTimeString('ar-EG'));
             updateUI();
             renderAll();
@@ -2997,45 +3119,43 @@
         }
     }
 
-    // ==================== REALTIME SYNC (مُصحّح) ====================
     function setupRealtimeSync() {
         onSnapshot(collection(db, 'buildingPermits'), function(snapshot) {
             buildingPermits = [];
             snapshot.forEach(function(d) { buildingPermits.push({ id: d.id, ...d.data() }); });
             renderBuildingPermits(); updateUI();
             if (currentOpenProject && currentOpenProject.type === 'building') {
-                var p = buildingPermits.find(function(x) { return x.id === currentOpenProject.id; });
+                var p = getProjectFromArray('building', currentOpenProject.id);
                 if (p) document.getElementById('modalBody').innerHTML = renderProjectDetails(p, 'building');
             }
-        }, function(err) { console.error('❌ buildingPermits:', err); });
+        });
         
         onSnapshot(collection(db, 'elevationPermits'), function(snapshot) {
             elevationPermits = [];
             snapshot.forEach(function(d) { elevationPermits.push({ id: d.id, ...d.data() }); });
             renderElevationPermits(); updateUI();
             if (currentOpenProject && currentOpenProject.type === 'elevation') {
-                var p = elevationPermits.find(function(x) { return x.id === currentOpenProject.id; });
+                var p = getProjectFromArray('elevation', currentOpenProject.id);
                 if (p) document.getElementById('modalBody').innerHTML = renderProjectDetails(p, 'elevation');
             }
-        }, function(err) { console.error('❌ elevationPermits:', err); });
+        });
         
         onSnapshot(collection(db, 'reconciliations'), function(snapshot) {
             reconciliations = [];
             snapshot.forEach(function(d) { reconciliations.push({ id: d.id, ...d.data() }); });
             renderReconciliations(); updateUI();
             if (currentOpenProject && currentOpenProject.type === 'reconciliation') {
-                var p = reconciliations.find(function(x) { return x.id === currentOpenProject.id; });
+                var p = getProjectFromArray('reconciliation', currentOpenProject.id);
                 if (p) document.getElementById('modalBody').innerHTML = renderProjectDetails(p, 'reconciliation');
             }
-        }, function(err) { console.error('❌ reconciliations:', err); });
+        });
         
         onSnapshot(collection(db, 'engineers'), function(snapshot) {
             engineers = [];
             snapshot.forEach(function(d) { engineers.push({ id: d.id, ...d.data() }); });
             renderEngineers(); updateSelects(); updateUI();
-        }, function(err) { console.error('❌ engineers:', err); });
+        });
         
-        // ✅ alerts مع تحويل Timestamp
         onSnapshot(collection(db, 'alerts'), function(snapshot) {
             allAlerts = [];
             snapshot.forEach(function(d) { 
@@ -3043,23 +3163,21 @@
                 data.createdAt = safeTimestamp(data.createdAt);
                 allAlerts.push({ id: d.id, ...data }); 
             });
-            allAlerts.sort(function(a, b) { 
-                return String(b.createdAt || '').localeCompare(String(a.createdAt || '')); 
-            });
+            allAlerts.sort(function(a, b) { return String(b.createdAt || '').localeCompare(String(a.createdAt || '')); });
             renderAlerts(); updateUI();
-        }, function(err) { console.error('❌ alerts:', err); });
+        });
         
         onSnapshot(collection(db, 'communications'), function(snapshot) {
             communications = [];
             snapshot.forEach(function(d) { communications.push({ id: d.id, ...d.data() }); });
             renderCommunications();
-        }, function(err) { console.error('❌ communications:', err); });
+        });
         
         onSnapshot(collection(db, 'appointments'), function(snapshot) {
             appointments = [];
             snapshot.forEach(function(d) { appointments.push({ id: d.id, ...d.data() }); });
             renderAppointments(); updateUI();
-        }, function(err) { console.error('❌ appointments:', err); });
+        });
     }
 
     // ==================== BUILDING ====================
@@ -3069,13 +3187,14 @@
         var total = parseFloat(document.getElementById('b_total').value) || 0;
         var paid = parseFloat(document.getElementById('b_paid').value) || 0;
         var hasFiles = false;
-        Object.keys(uploadedFiles.b).forEach(function(k) { 
-            if (uploadedFiles.b[k] && uploadedFiles.b[k].length > 0) hasFiles = true; 
-        });
+        Object.keys(uploadedFiles.b).forEach(function(k) { if (uploadedFiles.b[k] && uploadedFiles.b[k].length > 0) hasFiles = true; });
+        
         Swal.fire({ title: hasFiles ? '☁️ جاري رفع الملفات...' : 'جاري الحفظ...', allowOutsideClick: false, didOpen: function() { Swal.showLoading(); } });
+        
         try {
             var docsData = {};
             try { docsData = await uploadAllFiles('b'); } catch (uploadErr) { Swal.close(); return; }
+            
             var data = {
                 client: document.getElementById('b_client').value,
                 phone: document.getElementById('b_phone').value,
@@ -3091,6 +3210,7 @@
                 documents: docsData,
                 updatedAt: serverTimestamp()
             };
+            
             if (editId) {
                 if (Object.keys(docsData).length > 0) {
                     var oldP = buildingPermits.find(function(x) { return x.id === editId; });
@@ -3167,9 +3287,7 @@
         var search = document.getElementById('b_search').value.toLowerCase();
         var list = buildingPermits;
         if (filter !== 'all') list = list.filter(function(p) { return p.status === filter; });
-        if (search) list = list.filter(function(p) { 
-            return (p.client || '').toLowerCase().includes(search) || (p.address || '').toLowerCase().includes(search); 
-        });
+        if (search) list = list.filter(function(p) { return (p.client || '').toLowerCase().includes(search) || (p.address || '').toLowerCase().includes(search); });
         document.getElementById('buildingCount').textContent = list.length;
         if (list.length === 0) {
             container.innerHTML = '<div class="empty-state"><div class="icon-wrap"><svg class="icon-svg"><use href="#i-building"/></svg></div><h3>لا توجد رخص</h3><p style="font-size:12px;">اضغط على زر الإضافة بالأعلى</p></div>';
@@ -3184,27 +3302,14 @@
             var docsCount = countTotalFiles(p.documents);
             
             html += '<div class="project-tile building" onclick="openProjectModal(\'building\',\'' + p.id + '\')">';
-            html += '<div class="tile-header">';
-            html += '<div class="tile-icon"><svg class="icon-svg"><use href="#i-building"/></svg></div>';
-            html += '<div class="tile-info">';
-            html += '<div class="tile-title">' + p.client + '</div>';
-            html += '<div class="tile-sub">' + (p.address || '').substring(0, 30) + '</div>';
-            html += '</div></div>';
+            html += '<div class="tile-header"><div class="tile-icon"><svg class="icon-svg"><use href="#i-building"/></svg></div>';
+            html += '<div class="tile-info"><div class="tile-title">' + p.client + '</div><div class="tile-sub">' + (p.address || '').substring(0, 30) + '</div></div></div>';
             html += '<div class="tile-status status-' + p.status + '">' + getStatusText(p.status) + '</div>';
-            
-            // شارة المستندات
-            if (docsCount > 0) {
-                html += '<div class="tile-docs-badge"><svg class="icon-svg"><use href="#i-folder"/></svg> ' + docsCount + ' مستند</div>';
-            }
-            
-            html += '<div class="tile-progress">';
-            html += '<div class="tile-progress-info"><span>التقدم</span><span>' + currentStep + '/' + total + '</span></div>';
-            html += '<div class="tile-progress-bar"><div class="fill" style="width:' + progress + '%;"></div></div>';
+            if (docsCount > 0) html += '<div class="tile-docs-badge"><svg class="icon-svg"><use href="#i-folder"/></svg> ' + docsCount + ' مستند</div>';
+            html += '<div class="tile-progress"><div class="tile-progress-info"><span>التقدم</span><span>' + currentStep + '/' + total + '</span></div><div class="tile-progress-bar"><div class="fill" style="width:' + progress + '%;"></div></div></div>';
+            html += '<div class="tile-money"><div class="item"><div class="label">الإجمالي</div><div class="value">' + formatCurrency(p.total) + '</div></div>';
+            html += '<div class="item"><div class="label">المتبقي</div><div class="value" style="color:' + (remaining > 0 ? 'var(--danger)' : 'var(--success)') + ';">' + formatCurrency(remaining) + '</div></div></div>';
             html += '</div>';
-            html += '<div class="tile-money">';
-            html += '<div class="item"><div class="label">الإجمالي</div><div class="value">' + formatCurrency(p.total) + '</div></div>';
-            html += '<div class="item"><div class="label">المتبقي</div><div class="value" style="color:' + (remaining > 0 ? 'var(--danger-dark)' : 'var(--success-dark)') + ';">' + formatCurrency(remaining) + '</div></div>';
-            html += '</div></div>';
         });
         container.innerHTML = html;
     }
@@ -3218,10 +3323,8 @@
         });
         if (!result.isConfirmed) return;
         var val = parseFloat(result.value);
-        var project, collName;
-        if (type === 'building') { project = buildingPermits.find(function(p) { return p.id === id; }); collName = 'buildingPermits'; }
-        else if (type === 'elevation') { project = elevationPermits.find(function(p) { return p.id === id; }); collName = 'elevationPermits'; }
-        else if (type === 'reconciliation') { project = reconciliations.find(function(p) { return p.id === id; }); collName = 'reconciliations'; }
+        var project = getProjectFromArray(type, id);
+        var collName = getCollName(type);
         if (!project) return;
         try {
             await updateDoc(doc(db, collName, id), {
@@ -3243,32 +3346,18 @@
 
     async function completeStep(type, id, stepNum) {
         var steps = getStepsForType(type);
-        var collName = type === 'building' ? 'buildingPermits' : type === 'elevation' ? 'elevationPermits' : 'reconciliations';
-        var project;
-        if (type === 'building') project = buildingPermits.find(function(x) { return x.id === id; });
-        else if (type === 'elevation') project = elevationPermits.find(function(x) { return x.id === id; });
-        else if (type === 'reconciliation') project = reconciliations.find(function(x) { return x.id === id; });
+        var collName = getCollName(type);
+        var project = getProjectFromArray(type, id);
         if (!project) return;
-        if (stepNum !== (project.current_step || 0) + 1) { 
-            Swal.fire({ icon: 'warning', title: 'تنبيه', text: 'الرجاء إنجاز الخطوات بالترتيب' }); 
-            return; 
-        }
+        if (stepNum !== (project.current_step || 0) + 1) { Swal.fire({ icon: 'warning', title: 'تنبيه', text: 'الرجاء إنجاز الخطوات بالترتيب' }); return; }
         
         var eng = project.engineer_id ? getEngineer(project.engineer_id) : null;
         var result = await Swal.fire({
             title: '✅ إنجاز الخطوة ' + stepNum,
-            html: '<div style="text-align:right;font-size:13px;line-height:1.8;">' +
-                  '<p><strong>📌 الخطوة:</strong> ' + steps[stepNum - 1].name + '</p>' +
-                  (stepNum < steps.length ? '<p><strong>➡️ القادمة:</strong> ' + steps[stepNum].name + '</p>' : '<p style="color:#10B981;font-weight:800;">🎉 سيكتمل المشروع!</p>') +
-                  (eng ? '<p style="margin-top:10px;color:#6B21A8;"><strong>👷 المهندس:</strong> ' + eng.name + '</p>' : '') +
-                  '</div>',
-            showCancelButton: true,
-            showDenyButton: !!eng,
-            confirmButtonText: '✅ إنجاز فقط',
-            denyButtonText: '📤 إنجاز + إرسال',
-            cancelButtonText: 'إلغاء',
-            confirmButtonColor: '#10B981',
-            denyButtonColor: '#25D366'
+            html: '<div style="text-align:right;font-size:13px;line-height:1.8;"><p><strong>📌 الخطوة:</strong> ' + steps[stepNum - 1].name + '</p>' + (stepNum < steps.length ? '<p><strong>➡️ القادمة:</strong> ' + steps[stepNum].name + '</p>' : '<p style="color:#10B981;font-weight:800;">🎉 سيكتمل المشروع!</p>') + (eng ? '<p style="margin-top:10px;color:#6B21A8;"><strong>👷 المهندس:</strong> ' + eng.name + '</p>' : '') + '</div>',
+            showCancelButton: true, showDenyButton: !!eng,
+            confirmButtonText: '✅ إنجاز فقط', denyButtonText: '📤 إنجاز + إرسال',
+            cancelButtonText: 'إلغاء', confirmButtonColor: '#10B981', denyButtonColor: '#25D366'
         });
         if (!result.isConfirmed && !result.isDenied) return;
         
@@ -3291,13 +3380,9 @@
 
     async function rollbackStep(type, id, currentStep) {
         if (currentStep <= 0) { Swal.fire({ icon: 'warning', title: 'تنبيه', text: 'لا يمكن التراجع' }); return; }
-        var result = await Swal.fire({ 
-            title: 'التراجع عن خطوة؟', icon: 'question', 
-            showCancelButton: true, confirmButtonText: 'نعم', 
-            cancelButtonText: 'إلغاء', confirmButtonColor: '#F59E0B' 
-        });
+        var result = await Swal.fire({ title: 'التراجع عن خطوة؟', icon: 'question', showCancelButton: true, confirmButtonText: 'نعم', cancelButtonText: 'إلغاء', confirmButtonColor: '#F59E0B' });
         if (!result.isConfirmed) return;
-        var collName = type === 'building' ? 'buildingPermits' : type === 'elevation' ? 'elevationPermits' : 'reconciliations';
+        var collName = getCollName(type);
         try {
             await updateDoc(doc(db, collName, id), { current_step: currentStep - 1, status: 'under_review' });
             await addAlert(type, id, '↩️ تم التراجع عن خطوة', 'status');
@@ -3306,14 +3391,9 @@
     }
 
     async function deleteProject(type, id) {
-        var result = await Swal.fire({ 
-            title: 'حذف المشروع؟', text: 'لا يمكن التراجع', 
-            icon: 'warning', showCancelButton: true, 
-            confirmButtonColor: '#EF4444', confirmButtonText: 'نعم، احذف', 
-            cancelButtonText: 'إلغاء' 
-        });
+        var result = await Swal.fire({ title: 'حذف المشروع؟', text: 'لا يمكن التراجع', icon: 'warning', showCancelButton: true, confirmButtonColor: '#EF4444', confirmButtonText: 'نعم، احذف', cancelButtonText: 'إلغاء' });
         if (!result.isConfirmed) return;
-        var collName = type === 'building' ? 'buildingPermits' : type === 'elevation' ? 'elevationPermits' : 'reconciliations';
+        var collName = getCollName(type);
         try {
             await deleteDoc(doc(db, collName, id));
             Swal.fire({ icon: 'success', title: 'تم الحذف', timer: 1500, showConfirmButton: false });
@@ -3432,26 +3512,14 @@
             var docsCount = countTotalFiles(p.documents);
             
             html += '<div class="project-tile elevation" onclick="openProjectModal(\'elevation\',\'' + p.id + '\')">';
-            html += '<div class="tile-header">';
-            html += '<div class="tile-icon"><svg class="icon-svg"><use href="#i-elevation"/></svg></div>';
-            html += '<div class="tile-info">';
-            html += '<div class="tile-title">' + p.client + '</div>';
-            html += '<div class="tile-sub">' + (p.address || '').substring(0, 30) + '</div>';
-            html += '</div></div>';
+            html += '<div class="tile-header"><div class="tile-icon"><svg class="icon-svg"><use href="#i-elevation"/></svg></div>';
+            html += '<div class="tile-info"><div class="tile-title">' + p.client + '</div><div class="tile-sub">' + (p.address || '').substring(0, 30) + '</div></div></div>';
             html += '<div class="tile-status status-' + p.status + '">' + getStatusText(p.status) + '</div>';
-            
-            if (docsCount > 0) {
-                html += '<div class="tile-docs-badge"><svg class="icon-svg"><use href="#i-folder"/></svg> ' + docsCount + ' مستند</div>';
-            }
-            
-            html += '<div class="tile-progress">';
-            html += '<div class="tile-progress-info"><span>التقدم</span><span>' + currentStep + '/' + total + '</span></div>';
-            html += '<div class="tile-progress-bar"><div class="fill" style="width:' + progress + '%;"></div></div>';
+            if (docsCount > 0) html += '<div class="tile-docs-badge"><svg class="icon-svg"><use href="#i-folder"/></svg> ' + docsCount + ' مستند</div>';
+            html += '<div class="tile-progress"><div class="tile-progress-info"><span>التقدم</span><span>' + currentStep + '/' + total + '</span></div><div class="tile-progress-bar"><div class="fill" style="width:' + progress + '%;"></div></div></div>';
+            html += '<div class="tile-money"><div class="item"><div class="label">الإجمالي</div><div class="value">' + formatCurrency(p.total) + '</div></div>';
+            html += '<div class="item"><div class="label">المتبقي</div><div class="value" style="color:' + (remaining > 0 ? 'var(--danger)' : 'var(--success)') + ';">' + formatCurrency(remaining) + '</div></div></div>';
             html += '</div>';
-            html += '<div class="tile-money">';
-            html += '<div class="item"><div class="label">الإجمالي</div><div class="value">' + formatCurrency(p.total) + '</div></div>';
-            html += '<div class="item"><div class="label">المتبقي</div><div class="value" style="color:' + (remaining > 0 ? 'var(--danger-dark)' : 'var(--success-dark)') + ';">' + formatCurrency(remaining) + '</div></div>';
-            html += '</div></div>';
         });
         c.innerHTML = html;
     }
@@ -3564,26 +3632,14 @@
             var docsCount = countTotalFiles(p.documents);
             
             html += '<div class="project-tile reconciliation" onclick="openProjectModal(\'reconciliation\',\'' + p.id + '\')">';
-            html += '<div class="tile-header">';
-            html += '<div class="tile-icon"><svg class="icon-svg"><use href="#i-scale"/></svg></div>';
-            html += '<div class="tile-info">';
-            html += '<div class="tile-title">' + p.client + '</div>';
-            html += '<div class="tile-sub">' + (p.address || '').substring(0, 30) + '</div>';
-            html += '</div></div>';
+            html += '<div class="tile-header"><div class="tile-icon"><svg class="icon-svg"><use href="#i-scale"/></svg></div>';
+            html += '<div class="tile-info"><div class="tile-title">' + p.client + '</div><div class="tile-sub">' + (p.address || '').substring(0, 30) + '</div></div></div>';
             html += '<div class="tile-status status-' + p.status + '">' + getStatusText(p.status) + '</div>';
-            
-            if (docsCount > 0) {
-                html += '<div class="tile-docs-badge"><svg class="icon-svg"><use href="#i-folder"/></svg> ' + docsCount + ' مستند</div>';
-            }
-            
-            html += '<div class="tile-progress">';
-            html += '<div class="tile-progress-info"><span>التقدم</span><span>' + currentStep + '/' + total + '</span></div>';
-            html += '<div class="tile-progress-bar"><div class="fill" style="width:' + progress + '%;"></div></div>';
+            if (docsCount > 0) html += '<div class="tile-docs-badge"><svg class="icon-svg"><use href="#i-folder"/></svg> ' + docsCount + ' مستند</div>';
+            html += '<div class="tile-progress"><div class="tile-progress-info"><span>التقدم</span><span>' + currentStep + '/' + total + '</span></div><div class="tile-progress-bar"><div class="fill" style="width:' + progress + '%;"></div></div></div>';
+            html += '<div class="tile-money"><div class="item"><div class="label">الإجمالي</div><div class="value">' + formatCurrency(p.total) + '</div></div>';
+            html += '<div class="item"><div class="label">المتبقي</div><div class="value" style="color:' + (remaining > 0 ? 'var(--danger)' : 'var(--success)') + ';">' + formatCurrency(remaining) + '</div></div></div>';
             html += '</div>';
-            html += '<div class="tile-money">';
-            html += '<div class="item"><div class="label">الإجمالي</div><div class="value">' + formatCurrency(p.total) + '</div></div>';
-            html += '<div class="item"><div class="label">المتبقي</div><div class="value" style="color:' + (remaining > 0 ? 'var(--danger-dark)' : 'var(--success-dark)') + ';">' + formatCurrency(remaining) + '</div></div>';
-            html += '</div></div>';
         });
         c.innerHTML = html;
     }
@@ -3653,10 +3709,8 @@
         engineers.forEach(function(e) {
             var initial = (e.name || '؟').charAt(0);
             html += '<div class="engineer-tile">';
-            html += '<div class="eng-header">';
-            html += '<div class="eng-avatar">' + initial + '</div>';
-            html += '<div class="eng-info"><div class="eng-name">' + e.name + '</div><div class="eng-phone">' + (e.phone || '') + '</div></div>';
-            html += '</div>';
+            html += '<div class="eng-header"><div class="eng-avatar">' + initial + '</div>';
+            html += '<div class="eng-info"><div class="eng-name">' + e.name + '</div><div class="eng-phone">' + (e.phone || '') + '</div></div></div>';
             html += '<div class="eng-specialty">' + (e.specialization === 'structural' ? 'إنشائي' : e.specialization === 'architectural' ? 'معماري' : e.specialization === 'electrical' ? 'كهرباء' : 'ميكانيكا') + '</div>';
             html += '<div class="eng-actions">';
             html += '<button onclick="editEngineer(\'' + e.id + '\')" class="btn btn-gold btn-sm"><svg class="icon-svg"><use href="#i-pencil"/></svg> تعديل</button>';
@@ -3675,11 +3729,7 @@
     }
 
     async function deleteEngineer(id) {
-        var result = await Swal.fire({ 
-            title: 'حذف المهندس؟', icon: 'warning', 
-            showCancelButton: true, confirmButtonColor: '#EF4444', 
-            confirmButtonText: 'نعم، احذف', cancelButtonText: 'إلغاء' 
-        });
+        var result = await Swal.fire({ title: 'حذف المهندس؟', icon: 'warning', showCancelButton: true, confirmButtonColor: '#EF4444', confirmButtonText: 'نعم، احذف', cancelButtonText: 'إلغاء' });
         if (!result.isConfirmed) return;
         try {
             await deleteDoc(doc(db, 'engineers', id));
@@ -3689,17 +3739,14 @@
 
     function renderCommunications() {
         var c = document.getElementById('commList');
-        if (communications.length === 0) { 
-            c.innerHTML = '<div style="text-align:center;padding:20px;color:var(--gray-400);font-size:13px;">لا يوجد سجل تواصل</div>'; 
-            return; 
-        }
+        if (communications.length === 0) { c.innerHTML = '<div style="text-align:center;padding:20px;color:var(--text-muted);font-size:13px;">لا يوجد سجل تواصل</div>'; return; }
         var html = '';
         var list = communications.slice().reverse().slice(0, 15);
         list.forEach(function(cm) {
             html += '<div class="communication-item">';
             html += '<div class="msg-subject"><svg class="icon-svg"><use href="#i-chat"/></svg> ' + cm.subject + '</div>';
             html += '<div class="msg-body">' + (cm.message || '') + '</div>';
-            if (cm.next) html += '<div style="font-size:11px;color:var(--primary);margin-top:5px;font-weight:700;">' + cm.next + '</div>';
+            if (cm.next) html += '<div style="font-size:11px;color:var(--primary-light);margin-top:5px;font-weight:700;">' + cm.next + '</div>';
             html += '<div class="msg-meta"><span>المهندس: ' + getEngineerName(cm.engineerId) + '</span><span>' + cm.date + '</span></div>';
             html += '</div>';
         });
@@ -3709,17 +3756,12 @@
     function renderAlerts() {
         var c = document.getElementById('alertsList');
         if (!c) return;
-        if (allAlerts.length === 0) { 
-            c.innerHTML = '<div style="text-align:center;padding:30px;color:var(--gray-400);font-size:13px;">لا توجد تنبيهات</div>'; 
-            return; 
-        }
+        if (allAlerts.length === 0) { c.innerHTML = '<div style="text-align:center;padding:30px;color:var(--text-muted);font-size:13px;">لا توجد تنبيهات</div>'; return; }
         var html = '';
         var list = allAlerts.slice(0, 100);
         list.forEach(function(a) {
             var catClass = a.cat === 'payment' ? 'payment' : a.cat === 'deadline' ? 'deadline' : a.cat === 'document' ? 'document' : a.cat === 'engineer' ? 'engineer' : a.cat === 'appointment' ? 'appointment' : 'status';
-            html += '<div class="alert-item alert-' + catClass + '">';
-            html += '<div><strong>' + a.message + '</strong></div>';
-            html += '<div class="time">' + (a.date || '') + '</div></div>';
+            html += '<div class="alert-item alert-' + catClass + '"><div><strong>' + a.message + '</strong></div><div class="time">' + (a.date || '') + '</div></div>';
         });
         c.innerHTML = html;
     }
@@ -3848,9 +3890,7 @@
             c.innerHTML = '<div class="empty-state" style="grid-column:1/-1;"><div class="icon-wrap"><svg class="icon-svg"><use href="#i-calendar"/></svg></div><h3>لا توجد مواعيد</h3></div>';
             return;
         }
-        var sorted = appointments.slice().sort(function(a, b) { 
-            return (a.date + ' ' + (a.time || '')).localeCompare(b.date + ' ' + (b.time || '')); 
-        });
+        var sorted = appointments.slice().sort(function(a, b) { return (a.date + ' ' + (a.time || '')).localeCompare(b.date + ' ' + (b.time || '')); });
         var html = '';
         sorted.forEach(function(a) {
             var status = getAppointmentStatus(a);
@@ -3867,9 +3907,7 @@
             html += '</div>';
             html += '<div class="app-actions">';
             html += '<button onclick="editAppointment(\'' + a.id + '\')" class="btn btn-gold btn-sm"><svg class="icon-svg"><use href="#i-pencil"/></svg></button>';
-            if (a.status !== 'completed') {
-                html += '<button onclick="completeAppointment(\'' + a.id + '\')" class="btn btn-success btn-sm"><svg class="icon-svg"><use href="#i-check"/></svg></button>';
-            }
+            if (a.status !== 'completed') html += '<button onclick="completeAppointment(\'' + a.id + '\')" class="btn btn-success btn-sm"><svg class="icon-svg"><use href="#i-check"/></svg></button>';
             html += '<button onclick="sendAppointmentWhatsApp(\'' + a.id + '\')" class="btn btn-whatsapp btn-sm"><svg class="icon-svg"><use href="#i-whatsapp"/></svg></button>';
             html += '<button onclick="deleteAppointment(\'' + a.id + '\')" class="btn btn-danger btn-sm"><svg class="icon-svg"><use href="#i-trash"/></svg></button>';
             html += '</div></div>';
@@ -3886,11 +3924,7 @@
     }
 
     async function deleteAppointment(id) {
-        var result = await Swal.fire({ 
-            title: 'حذف الموعد؟', icon: 'warning', 
-            showCancelButton: true, confirmButtonColor: '#EF4444', 
-            confirmButtonText: 'نعم، احذف', cancelButtonText: 'إلغاء' 
-        });
+        var result = await Swal.fire({ title: 'حذف الموعد؟', icon: 'warning', showCancelButton: true, confirmButtonColor: '#EF4444', confirmButtonText: 'نعم، احذف', cancelButtonText: 'إلغاء' });
         if (!result.isConfirmed) return;
         try {
             await deleteDoc(doc(db, 'appointments', id));
@@ -3904,10 +3938,7 @@
         var eng = a.engineerId ? getEngineer(a.engineerId) : null;
         var phone = eng ? eng.phone : WHATSAPP_NUMBER;
         var projName = a.projectId ? getProjectName(a.projectType, a.projectId) : 'عام';
-        var msg = buildWhatsAppMessage('appointment', {
-            title: a.title, project: projName,
-            date: a.date, time: a.time || '-', notes: a.notes
-        });
+        var msg = buildWhatsAppMessage('appointment', { title: a.title, project: projName, date: a.date, time: a.time || '-', notes: a.notes });
         sendWhatsApp(phone, msg);
     }
 
@@ -3956,31 +3987,19 @@
                     files.forEach(function(f) {
                         allFiles.push({
                             projectType: type, projectId: p.id, client: p.client,
-                            docLabel: docDef.label, fileName: f.name, 
-                            fileUrl: f.url || f.data,
-                            fileSize: f.size, fileType: f.type, uploadedAt: f.uploadedAt
+                            docLabel: docDef.label, fileName: f.name,
+                            fileUrl: f.url || f.data, fileSize: f.size, fileType: f.type
                         });
                     });
                 });
             });
         });
         var bCount = 0, eCount = 0, rCount = 0;
-        allFiles.forEach(function(f) {
-            if (f.projectType === 'building') bCount++;
-            else if (f.projectType === 'elevation') eCount++;
-            else rCount++;
-        });
+        allFiles.forEach(function(f) { if (f.projectType === 'building') bCount++; else if (f.projectType === 'elevation') eCount++; else rCount++; });
         var statsEl = document.getElementById('archiveStats');
-        if (statsEl) {
-            statsEl.innerHTML = '<div class="archive-stat"><div class="num">' + bCount + '</div><div class="lbl">رخص بناء</div></div>' +
-                                '<div class="archive-stat"><div class="num">' + eCount + '</div><div class="lbl">رخص تعلية</div></div>' +
-                                '<div class="archive-stat"><div class="num">' + rCount + '</div><div class="lbl">تصالح</div></div>';
-        }
+        if (statsEl) statsEl.innerHTML = '<div class="archive-stat"><div class="num">' + bCount + '</div><div class="lbl">رخص بناء</div></div><div class="archive-stat"><div class="num">' + eCount + '</div><div class="lbl">رخص تعلية</div></div><div class="archive-stat"><div class="num">' + rCount + '</div><div class="lbl">تصالح</div></div>';
         document.getElementById('archiveCount').textContent = allFiles.length;
-        if (allFiles.length === 0) {
-            c.innerHTML = '<div class="empty-state" style="grid-column:1/-1;"><div class="icon-wrap"><svg class="icon-svg"><use href="#i-archive"/></svg></div><h3>لا توجد ملفات</h3></div>';
-            return;
-        }
+        if (allFiles.length === 0) { c.innerHTML = '<div class="empty-state" style="grid-column:1/-1;"><div class="icon-wrap"><svg class="icon-svg"><use href="#i-archive"/></svg></div><h3>لا توجد ملفات</h3></div>'; return; }
         var html = '';
         allFiles.forEach(function(f) {
             var iconId = getFileIcon(f.fileName, f.fileType);
@@ -4003,17 +4022,13 @@
             if (!sel) return;
             var old = sel.value;
             sel.innerHTML = '<option value="">اختر مهندس</option>';
-            engineers.forEach(function(e) { 
-                sel.innerHTML += '<option value="' + e.id + '">' + e.name + ' - ' + e.phone + '</option>'; 
-            });
+            engineers.forEach(function(e) { sel.innerHTML += '<option value="' + e.id + '">' + e.name + ' - ' + e.phone + '</option>'; });
             if (old && engineers.some(function(e) { return e.id == old; })) sel.value = old;
         });
         var sel5 = document.getElementById('e_building');
         if (sel5) {
             sel5.innerHTML = '<option value="">بدون</option>';
-            buildingPermits.forEach(function(p) { 
-                sel5.innerHTML += '<option value="' + p.id + '">' + p.client + '</option>'; 
-            });
+            buildingPermits.forEach(function(p) { sel5.innerHTML += '<option value="' + p.id + '">' + p.client + '</option>'; });
         }
     }
 
@@ -4126,10 +4141,10 @@
         var urgent = allAlerts.filter(function(a) { return a.cat === 'deadline' || a.cat === 'appointment'; }).slice(0, 5);
         var uc = document.getElementById('dash_urgent_tasks');
         if (uc) {
-            if (urgent.length === 0) uc.innerHTML = '<div style="color:var(--gray-400);text-align:center;padding:15px;font-size:12px;">لا توجد مهام</div>';
+            if (urgent.length === 0) uc.innerHTML = '<div style="color:var(--text-muted);text-align:center;padding:15px;font-size:12px;">لا توجد مهام</div>';
             else {
                 var h = '';
-                urgent.forEach(function(a) { h += '<div style="padding:8px 0;border-bottom:1px solid var(--gray-100);font-size:12px;">' + a.message + '</div>'; });
+                urgent.forEach(function(a) { h += '<div style="padding:8px 0;border-bottom:1px solid var(--border-light);font-size:12px;">' + a.message + '</div>'; });
                 uc.innerHTML = h;
             }
         }
@@ -4141,10 +4156,10 @@
         }).slice(0, 5);
         var dl = document.getElementById('dash_upcoming_deadlines');
         if (dl) {
-            if (upcomingApps.length === 0) dl.innerHTML = '<div style="color:var(--gray-400);text-align:center;padding:15px;font-size:12px;">لا توجد مواعيد</div>';
+            if (upcomingApps.length === 0) dl.innerHTML = '<div style="color:var(--text-muted);text-align:center;padding:15px;font-size:12px;">لا توجد مواعيد</div>';
             else {
                 var h = '';
-                upcomingApps.forEach(function(a) { h += '<div style="padding:8px 0;border-bottom:1px solid var(--gray-100);font-size:12px;">' + a.title + ' - ' + a.date + '</div>'; });
+                upcomingApps.forEach(function(a) { h += '<div style="padding:8px 0;border-bottom:1px solid var(--border-light);font-size:12px;">' + a.title + ' - ' + a.date + '</div>'; });
                 dl.innerHTML = h;
             }
         }
@@ -4152,10 +4167,10 @@
         var ac = document.getElementById('dash_recent_alerts');
         var recent = allAlerts.slice(0, 5);
         if (ac) {
-            if (recent.length === 0) ac.innerHTML = '<div style="color:var(--gray-400);text-align:center;padding:15px;font-size:12px;">لا توجد تنبيهات</div>';
+            if (recent.length === 0) ac.innerHTML = '<div style="color:var(--text-muted);text-align:center;padding:15px;font-size:12px;">لا توجد تنبيهات</div>';
             else {
                 var h = '';
-                recent.forEach(function(a) { h += '<div style="padding:8px 0;border-bottom:1px solid var(--gray-100);font-size:12px;">' + a.message + '</div>'; });
+                recent.forEach(function(a) { h += '<div style="padding:8px 0;border-bottom:1px solid var(--border-light);font-size:12px;">' + a.message + '</div>'; });
                 ac.innerHTML = h;
             }
         }
@@ -4192,7 +4207,6 @@
             var loading = document.getElementById('loadingScreen');
             var login = document.getElementById('loginScreen');
             if (loading && !loading.classList.contains('hidden')) {
-                console.log('⚠️ Force hiding loading screen');
                 loading.classList.add('hidden');
                 if (login) login.classList.remove('hidden');
             }
@@ -4218,19 +4232,24 @@
         });
         
         document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                closePreview();
-                closeProjectModal();
-            }
+            if (e.key === 'Escape') { closePreview(); closeProjectModal(); }
         });
+        
+        // 💡 اكتشاف تغيير تفضيل النظام للوضع الليلي
+        if (window.matchMedia) {
+            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(e) {
+                if (localStorage.getItem('al_brazili_dark_mode') === null) {
+                    if (e.matches) document.body.classList.add('dark-mode');
+                    else document.body.classList.remove('dark-mode');
+                }
+            });
+        }
         
         console.log('═══════════════════════════════');
         console.log('✅ Al Brazili System Ready');
+        console.log('🌙 Dark Mode:', document.body.classList.contains('dark-mode') ? 'ON' : 'OFF');
         console.log('📸 Photo:', MY_PHOTO_URL);
-        console.log('☁️ Cloudinary Cloud:', CLOUDINARY_CLOUD_NAME);
-        console.log('☁️ Cloudinary Preset:', CLOUDINARY_UPLOAD_PRESET);
-        console.log('📁 Max File Size:', formatFileSize(MAX_FILE_SIZE));
-        console.log('📁 Max Total Size:', formatFileSize(MAX_TOTAL_SIZE));
+        console.log('☁️ Cloudinary:', CLOUDINARY_CLOUD_NAME);
         console.log('═══════════════════════════════');
     });
 </script>
