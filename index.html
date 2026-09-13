@@ -3198,21 +3198,8 @@
         console.error('❌ خطأ في التحميل:', error);
         setConnectionStatus('offline', 'خطأ: ' + error.message);
         
-        Swal.fire({
-            icon: 'error',
-            title: '⚠️ خطأ في الاتصال بـ Firebase',
-            html: '<div style="text-align:right;font-size:13px;">' +
-                  '<p><strong>السبب:</strong> ' + error.message + '</p>' +
-                  '<p style="margin-top:10px;color:#DC2626;"><strong>💡 الحل:</strong></p>' +
-                  '<ol style="padding-right:20px;margin-top:6px;">' +
-                  '<li>افتح <a href="https://console.firebase.google.com/" target="_blank" style="color:#6B21A8;">Firebase Console</a></li>' +
-                  '<li>Firestore Database → Rules</li>' +
-                  '<li>تأكد من أن القواعد تسمح بالقراءة والكتابة</li>' +
-                  '</ol>' +
-                  '</div>',
-            confirmButtonText: 'فهمت',
-            confirmButtonColor: '#6B21A8'
-        });
+        
+     
     }
 }
 
