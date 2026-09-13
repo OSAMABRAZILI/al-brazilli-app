@@ -46,7 +46,6 @@
             --shadow-xl: 0 20px 40px rgba(107,33,168,0.25);
             --shadow-3d: 0 20px 60px rgba(107,33,168,0.3), 0 0 100px rgba(212,175,55,0.15);
             --shadow-primary: 0 8px 25px rgba(107,33,168,0.4);
-            --radius: 14px;
         }
         
         body {
@@ -152,9 +151,7 @@
             border-radius: 50%;
             background: linear-gradient(135deg, var(--gold), var(--primary), var(--gold));
             animation: rotate 4s linear infinite;
-            z-index: 0;
-            filter: blur(8px);
-            opacity: 0.7;
+            z-index: 0; filter: blur(8px); opacity: 0.7;
         }
         .login-box .photo-container::after {
             content: ''; position: absolute; inset: -6px;
@@ -165,8 +162,7 @@
         }
         .login-box .user-photo {
             width: 100%; height: 100%;
-            border-radius: 50%;
-            object-fit: cover;
+            border-radius: 50%; object-fit: cover;
             position: relative; z-index: 2;
             border: 5px solid white;
             box-shadow: 0 15px 40px rgba(107,33,168,0.5);
@@ -180,8 +176,7 @@
             width: 36px; height: 36px;
             border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
-            z-index: 3;
-            border: 3px solid white;
+            z-index: 3; border: 3px solid white;
             box-shadow: 0 4px 12px rgba(0,0,0,0.2);
         }
         .login-box .photo-badge .icon-svg { width: 18px; height: 18px; }
@@ -197,16 +192,14 @@
         }
         .login-box .brand-sub {
             font-size: 14px; color: var(--gray-500);
-            display: block; margin-top: 6px;
-            font-weight: 600;
+            display: block; margin-top: 6px; font-weight: 600;
         }
         .login-box .country-badge {
             display: inline-flex; align-items: center; gap: 6px;
             font-size: 12px; color: var(--gold-dark); font-weight: 700;
             margin-top: 12px; padding: 5px 16px;
             background: linear-gradient(135deg, #FEF3C7, #FDE68A);
-            border-radius: 20px;
-            border: 1px solid var(--gold-light);
+            border-radius: 20px; border: 1px solid var(--gold-light);
         }
         .login-box .input-group { position: relative; margin: 22px 0; }
         .login-box .input-group .input-icon {
@@ -228,8 +221,7 @@
             background: linear-gradient(135deg, var(--primary), var(--black));
             color: white; border: none; border-radius: 14px;
             font-size: 17px; font-weight: 800; cursor: pointer;
-            transition: all 0.4s ease;
-            box-shadow: var(--shadow-primary);
+            transition: all 0.4s ease; box-shadow: var(--shadow-primary);
             display: flex; align-items: center; justify-content: center; gap: 10px;
         }
         .login-box .btn-login:hover { 
@@ -249,12 +241,9 @@
         /* HEADER */
         .header {
             background: linear-gradient(135deg, var(--primary) 0%, var(--black) 100%);
-            color: white; padding: 16px 22px;
-            border-radius: 24px;
-            margin-bottom: 14px;
-            position: sticky; top: 10px; z-index: 100;
-            box-shadow: var(--shadow-3d);
-            overflow: hidden;
+            color: white; padding: 16px 22px; border-radius: 24px;
+            margin-bottom: 14px; position: sticky; top: 10px; z-index: 100;
+            box-shadow: var(--shadow-3d); overflow: hidden;
         }
         .header::before {
             content: ''; position: absolute; top: -50%; right: -50%;
@@ -268,21 +257,13 @@
             position: relative; z-index: 1;
         }
         .header-brand { display: flex; align-items: center; gap: 12px; }
-        
         .header-brand .header-photo {
-            width: 52px; height: 52px;
-            border-radius: 50%;
-            overflow: hidden;
-            border: 3px solid var(--gold);
+            width: 52px; height: 52px; border-radius: 50%;
+            overflow: hidden; border: 3px solid var(--gold);
             box-shadow: 0 6px 20px rgba(0,0,0,0.4), 0 0 20px rgba(212,175,55,0.5);
             flex-shrink: 0;
         }
-        .header-brand .header-photo img {
-            width: 100%; height: 100%;
-            object-fit: cover;
-            display: block;
-        }
-        
+        .header-brand .header-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
         .header-brand .brand-text .name { font-size: 20px; font-weight: 900; color: white; }
         .header-brand .brand-text .name .gold { color: var(--gold); }
         .header-brand .brand-text .sub { font-size: 10px; opacity: 0.85; display: block; color: var(--gold-light); margin-top: 2px; }
@@ -303,8 +284,8 @@
         .header-actions .btn-out:hover { background: rgba(255,255,255,0.3); transform: scale(1.1); }
         .header-stats { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; position: relative; z-index: 1; }
         .header-stats .stat {
-            background: rgba(255,255,255,0.1);
-            padding: 6px 12px; border-radius: 20px; font-size: 11px;
+            background: rgba(255,255,255,0.1); padding: 6px 12px;
+            border-radius: 20px; font-size: 11px;
             display: flex; align-items: center; gap: 6px;
             border: 1px solid rgba(255,255,255,0.08);
             backdrop-filter: blur(10px); font-weight: 600;
@@ -314,8 +295,7 @@
         
         /* TABS */
         .tabs {
-            display: flex; gap: 6px;
-            background: white; padding: 8px;
+            display: flex; gap: 6px; background: white; padding: 8px;
             border-radius: 18px; box-shadow: var(--shadow-lg);
             overflow-x: auto; margin-bottom: 14px; flex-wrap: nowrap;
             border: 1px solid var(--gray-100);
@@ -328,8 +308,7 @@
             cursor: pointer; flex: 1 0 auto; min-width: 70px;
             white-space: nowrap; display: flex; align-items: center;
             gap: 6px; justify-content: center;
-            transition: all 0.3s ease; 
-            color: var(--gray-500);
+            transition: all 0.3s ease; color: var(--gray-500);
         }
         .tab-btn .icon-svg { width: 15px; height: 15px; }
         .tab-btn:hover { background: var(--gray-100); color: var(--gray-900); }
@@ -346,29 +325,25 @@
         
         /* CARDS */
         .card {
-            background: white; border-radius: 20px;
-            padding: 20px; box-shadow: var(--shadow-md);
-            margin-bottom: 14px;
+            background: white; border-radius: 20px; padding: 20px;
+            box-shadow: var(--shadow-md); margin-bottom: 14px;
             border: 1px solid rgba(107,33,168,0.08);
         }
         .card-header {
             display: flex; justify-content: space-between;
-            align-items: center;
-            border-bottom: 2px solid var(--gray-100);
+            align-items: center; border-bottom: 2px solid var(--gray-100);
             padding-bottom: 12px; margin-bottom: 14px;
             flex-wrap: wrap; gap: 10px;
         }
         .card-header h2 {
-            font-size: 17px;
-            display: flex; align-items: center; gap: 8px;
-            color: var(--gray-900); font-weight: 800;
+            font-size: 17px; display: flex; align-items: center;
+            gap: 8px; color: var(--gray-900); font-weight: 800;
         }
         .card-header h2 .icon-svg { color: var(--primary); }
         .card-header .badge-count {
             background: linear-gradient(135deg, var(--primary), var(--black));
-            color: white; padding: 4px 14px;
-            border-radius: 20px; font-size: 12px;
-            font-weight: 800; box-shadow: var(--shadow-primary);
+            color: white; padding: 4px 14px; border-radius: 20px;
+            font-size: 12px; font-weight: 800; box-shadow: var(--shadow-primary);
         }
         
         /* STATS */
@@ -376,10 +351,9 @@
         @media (min-width: 700px) { .grid-4 { grid-template-columns: repeat(4, 1fr); } }
         
         .stat-card {
-            background: white; padding: 20px;
-            border-radius: 20px; box-shadow: var(--shadow-md);
-            text-align: center; cursor: pointer;
-            transition: all 0.5s ease;
+            background: white; padding: 20px; border-radius: 20px;
+            box-shadow: var(--shadow-md); text-align: center;
+            cursor: pointer; transition: all 0.5s ease;
             position: relative; overflow: hidden;
             border: 1px solid var(--gray-100);
         }
@@ -391,11 +365,7 @@
         .stat-card.elevation::before { background: linear-gradient(90deg, var(--gold), var(--gold-light)); }
         .stat-card.reconciliation::before { background: linear-gradient(90deg, var(--secondary), #F472B6); }
         .stat-card.appointments::before { background: linear-gradient(90deg, var(--success), #34D399); }
-        
-        .stat-card:hover { 
-            transform: translateY(-8px) scale(1.03);
-            box-shadow: var(--shadow-3d);
-        }
+        .stat-card:hover { transform: translateY(-8px) scale(1.03); box-shadow: var(--shadow-3d); }
         .stat-card .icon-wrap {
             width: 56px; height: 56px; border-radius: 16px;
             display: flex; align-items: center; justify-content: center;
@@ -419,51 +389,29 @@
         .projects-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
-            gap: 14px;
-            margin-top: 14px;
+            gap: 14px; margin-top: 14px;
         }
-        @media (max-width: 600px) {
-            .projects-grid { grid-template-columns: 1fr; }
-        }
+        @media (max-width: 600px) { .projects-grid { grid-template-columns: 1fr; } }
         
         .project-tile {
-            background: white;
-            border-radius: 20px;
-            padding: 18px;
-            box-shadow: var(--shadow-md);
-            cursor: pointer;
+            background: white; border-radius: 20px; padding: 18px;
+            box-shadow: var(--shadow-md); cursor: pointer;
             transition: all 0.5s ease;
             border: 1px solid var(--gray-100);
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
+            position: relative; overflow: hidden;
+            display: flex; flex-direction: column; gap: 12px;
         }
         .project-tile::before {
-            content: '';
-            position: absolute;
-            top: 0; right: 0; left: 0;
-            height: 5px;
+            content: ''; position: absolute; top: 0; right: 0; left: 0; height: 5px;
         }
         .project-tile.building::before { background: linear-gradient(90deg, var(--primary), var(--primary-light)); }
         .project-tile.elevation::before { background: linear-gradient(90deg, var(--gold), var(--gold-light)); }
         .project-tile.reconciliation::before { background: linear-gradient(90deg, var(--secondary), #F472B6); }
+        .project-tile:hover { transform: translateY(-8px) scale(1.02); box-shadow: var(--shadow-3d); border-color: var(--primary-light); }
         
-        .project-tile:hover {
-            transform: translateY(-8px) scale(1.02);
-            box-shadow: var(--shadow-3d);
-            border-color: var(--primary-light);
-        }
-        
-        .project-tile .tile-header {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
+        .project-tile .tile-header { display: flex; align-items: center; gap: 12px; }
         .project-tile .tile-icon {
-            width: 50px; height: 50px;
-            border-radius: 15px;
+            width: 50px; height: 50px; border-radius: 15px;
             display: flex; align-items: center; justify-content: center;
             flex-shrink: 0;
         }
@@ -483,8 +431,7 @@
         }
         
         .project-tile .tile-status {
-            align-self: flex-start;
-            padding: 4px 12px; border-radius: 20px;
+            align-self: flex-start; padding: 4px 12px; border-radius: 20px;
             font-size: 10px; font-weight: 800;
         }
         .status-draft { background: var(--gray-200); color: var(--gray-700); }
@@ -494,9 +441,7 @@
         .status-issued { background: #E9D5FF; color: var(--primary-dark); }
         .status-completed { background: #A7F3D0; color: #065F46; }
         
-        .project-tile .tile-progress {
-            display: flex; flex-direction: column; gap: 6px;
-        }
+        .project-tile .tile-progress { display: flex; flex-direction: column; gap: 6px; }
         .project-tile .tile-progress-info {
             display: flex; justify-content: space-between;
             font-size: 11px; font-weight: 700;
@@ -506,9 +451,7 @@
             border-radius: 10px; overflow: hidden;
         }
         .project-tile .tile-progress-bar .fill {
-            height: 100%;
-            border-radius: 10px;
-            transition: width 0.6s ease;
+            height: 100%; border-radius: 10px; transition: width 0.6s ease;
         }
         .project-tile.building .tile-progress-bar .fill { background: linear-gradient(90deg, var(--primary), var(--primary-light)); }
         .project-tile.elevation .tile-progress-bar .fill { background: linear-gradient(90deg, var(--gold), var(--gold-light)); }
@@ -516,26 +459,28 @@
         
         .project-tile .tile-money {
             display: flex; justify-content: space-between; gap: 8px;
-            padding-top: 10px; border-top: 1px solid var(--gray-100);
-            font-size: 11px;
+            padding-top: 10px; border-top: 1px solid var(--gray-100); font-size: 11px;
         }
         .project-tile .tile-money .item { flex: 1; text-align: center; }
-        .project-tile .tile-money .item .label {
-            color: var(--gray-500); font-weight: 600; font-size: 10px;
+        .project-tile .tile-money .item .label { color: var(--gray-500); font-weight: 600; font-size: 10px; }
+        .project-tile .tile-money .item .value { font-weight: 800; color: var(--gray-900); font-size: 12px; margin-top: 2px; }
+        
+        /* Docs Badge on tile */
+        .tile-docs-badge {
+            display: inline-flex; align-items: center; gap: 6px;
+            padding: 6px 12px;
+            background: linear-gradient(135deg, #FEF3C7, #FDE68A);
+            border-radius: 10px; font-size: 11px; font-weight: 800;
+            color: #78350F; align-self: flex-start;
         }
-        .project-tile .tile-money .item .value {
-            font-weight: 800; color: var(--gray-900); font-size: 12px; margin-top: 2px;
-        }
+        .tile-docs-badge .icon-svg { width: 14px; height: 14px; }
         
         .empty-state {
-            text-align: center;
-            padding: 60px 20px;
-            color: var(--gray-400);
-            grid-column: 1/-1;
+            text-align: center; padding: 60px 20px;
+            color: var(--gray-400); grid-column: 1/-1;
         }
         .empty-state .icon-wrap {
-            width: 100px; height: 100px;
-            border-radius: 30px;
+            width: 100px; height: 100px; border-radius: 30px;
             background: var(--gray-100);
             display: flex; align-items: center; justify-content: center;
             margin: 0 auto 20px;
@@ -545,27 +490,21 @@
         
         /* MODAL */
         .modal-overlay {
-            display: none;
-            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            display: none; position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
             background: rgba(15,15,30,0.85);
-            z-index: 10002;
-            backdrop-filter: blur(10px);
+            z-index: 10002; backdrop-filter: blur(10px);
             animation: fadeIn 0.3s ease;
-            padding: 20px;
-            overflow-y: auto;
+            padding: 20px; overflow-y: auto;
         }
         .modal-overlay.active { display: flex; align-items: flex-start; justify-content: center; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         
         .modal-content {
-            background: white;
-            border-radius: 28px;
-            max-width: 950px;
-            width: 100%;
-            margin: 20px auto;
+            background: white; border-radius: 28px;
+            max-width: 950px; width: 100%; margin: 20px auto;
             box-shadow: 0 40px 100px rgba(0,0,0,0.5), 0 0 60px rgba(107,33,168,0.3);
-            animation: slideUp 0.5s ease;
-            overflow: hidden;
+            animation: slideUp 0.5s ease; overflow: hidden;
         }
         @keyframes slideUp {
             from { opacity: 0; transform: translateY(60px) scale(0.9); }
@@ -574,84 +513,53 @@
         
         .modal-header {
             background: linear-gradient(135deg, var(--primary), var(--black));
-            color: white;
-            padding: 22px 26px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 12px;
-            position: relative;
-            overflow: hidden;
+            color: white; padding: 22px 26px;
+            display: flex; justify-content: space-between;
+            align-items: center; gap: 12px;
+            position: relative; overflow: hidden;
         }
         .modal-header::before {
-            content: '';
-            position: absolute;
-            top: -50%; right: -50%;
-            width: 200%; height: 200%;
+            content: ''; position: absolute;
+            top: -50%; right: -50%; width: 200%; height: 200%;
             background: radial-gradient(circle, rgba(212,175,55,0.25), transparent 60%);
-            pointer-events: none;
-            animation: rotate 30s linear infinite;
+            pointer-events: none; animation: rotate 30s linear infinite;
         }
         .modal-header .header-info {
             display: flex; align-items: center; gap: 14px;
-            position: relative; z-index: 1;
-            flex: 1; min-width: 0;
+            position: relative; z-index: 1; flex: 1; min-width: 0;
         }
         .modal-header .header-info .tile-icon {
-            width: 54px; height: 54px;
-            border-radius: 16px;
+            width: 54px; height: 54px; border-radius: 16px;
             background: rgba(255,255,255,0.15);
             display: flex; align-items: center; justify-content: center;
-            flex-shrink: 0;
-            backdrop-filter: blur(10px);
+            flex-shrink: 0; backdrop-filter: blur(10px);
             border: 2px solid var(--gold);
             box-shadow: 0 0 25px rgba(212,175,55,0.5);
         }
-        .modal-header .header-info .tile-icon .icon-svg {
-            width: 26px; height: 26px;
-            color: var(--gold);
-        }
-        .modal-header .header-info .title-text {
-            flex: 1; min-width: 0;
-        }
+        .modal-header .header-info .tile-icon .icon-svg { width: 26px; height: 26px; color: var(--gold); }
+        .modal-header .header-info .title-text { flex: 1; min-width: 0; }
         .modal-header .header-info .title-text h3 {
             font-size: 19px; font-weight: 900;
             white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
         }
         .modal-header .header-info .title-text .sub {
-            font-size: 12px; opacity: 0.85;
-            margin-top: 3px;
+            font-size: 12px; opacity: 0.85; margin-top: 3px;
             white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
         }
         .modal-close-btn {
-            background: rgba(255,255,255,0.15);
-            border: none;
-            color: white;
-            width: 44px; height: 44px;
-            border-radius: 14px;
-            cursor: pointer;
+            background: rgba(255,255,255,0.15); border: none;
+            color: white; width: 44px; height: 44px;
+            border-radius: 14px; cursor: pointer;
             display: flex; align-items: center; justify-content: center;
-            flex-shrink: 0;
-            transition: all 0.4s ease;
+            flex-shrink: 0; transition: all 0.4s ease;
             position: relative; z-index: 1;
         }
-        .modal-close-btn:hover {
-            background: rgba(255,255,255,0.3);
-            transform: rotate(90deg);
-        }
+        .modal-close-btn:hover { background: rgba(255,255,255,0.3); transform: rotate(90deg); }
         
-        .modal-body {
-            padding: 24px;
-            max-height: calc(100vh - 180px);
-            overflow-y: auto;
-        }
-        
+        .modal-body { padding: 24px; max-height: calc(100vh - 180px); overflow-y: auto; }
         .modal-actions {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-            margin-bottom: 18px;
-            padding-bottom: 18px;
+            display: flex; gap: 8px; flex-wrap: wrap;
+            margin-bottom: 18px; padding-bottom: 18px;
             border-bottom: 1px solid var(--gray-100);
         }
         
@@ -659,64 +567,48 @@
         .details-grid-modal {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-            gap: 12px;
-            margin-bottom: 18px;
+            gap: 12px; margin-bottom: 18px;
         }
         .detail-item {
             background: linear-gradient(135deg, #F5F3FF, white);
-            padding: 14px;
-            border-radius: 14px;
+            padding: 14px; border-radius: 14px;
             border: 1px solid var(--gray-100);
         }
         .detail-item .label {
-            font-size: 11px; color: var(--gray-500);
-            font-weight: 700;
-            display: flex; align-items: center; gap: 4px;
-            margin-bottom: 4px;
+            font-size: 11px; color: var(--gray-500); font-weight: 700;
+            display: flex; align-items: center; gap: 4px; margin-bottom: 4px;
         }
         .detail-item .label .icon-svg { width: 12px; height: 12px; }
-        .detail-item .value {
-            font-size: 15px; font-weight: 800;
-            color: var(--gray-900);
-        }
+        .detail-item .value { font-size: 15px; font-weight: 800; color: var(--gray-900); }
         
         .info-box {
-            padding: 14px 18px;
-            border-radius: 14px;
-            margin-bottom: 14px;
-            display: flex;
-            align-items: start;
-            gap: 10px;
-            font-size: 13px;
-            font-weight: 600;
+            padding: 14px 18px; border-radius: 14px;
+            margin-bottom: 14px; display: flex;
+            align-items: start; gap: 10px;
+            font-size: 13px; font-weight: 600;
         }
         .info-box .icon-svg { width: 18px; height: 18px; flex-shrink: 0; margin-top: 2px; }
         .info-box.agreement {
             background: linear-gradient(135deg, #FFFBEB, #FEF3C7);
-            border-right: 4px solid var(--gold);
-            color: #78350F;
+            border-right: 4px solid var(--gold); color: #78350F;
         }
         .info-box.agreement .icon-svg { color: var(--gold-dark); }
         .info-box.next-step {
             background: linear-gradient(135deg, #E0F2FE, #BAE6FD);
-            border-right: 4px solid var(--info);
-            color: #075985;
+            border-right: 4px solid var(--info); color: #075985;
         }
         .info-box.next-step .icon-svg { color: var(--info-dark); }
         .info-box.transaction {
             background: linear-gradient(135deg, #F0FDF4, #DCFCE7);
-            border-right: 4px solid var(--success);
-            color: #166534;
+            border-right: 4px solid var(--success); color: #166534;
         }
         .info-box.transaction .icon-svg { color: var(--success-dark); }
         
         /* GEAR STEPS */
         .steps-section {
             background: linear-gradient(135deg, #F5F3FF, #EDE9FE);
-            padding: 20px 16px;
-            border-radius: 20px;
-            margin-bottom: 16px;
-            border-right: 4px solid var(--primary);
+            padding: 20px 16px; border-radius: 20px;
+            margin-bottom: 16px; border-right: 4px solid var(--primary);
         }
         .steps-section .section-title {
             font-weight: 800; color: var(--primary);
@@ -724,9 +616,7 @@
             display: flex; justify-content: space-between;
             align-items: center; flex-wrap: wrap; gap: 8px;
         }
-        .steps-section .section-title .title-text {
-            display: flex; align-items: center; gap: 8px;
-        }
+        .steps-section .section-title .title-text { display: flex; align-items: center; gap: 8px; }
         .steps-section .progress-badge {
             font-size: 11px;
             background: linear-gradient(135deg, var(--primary), var(--primary-dark));
@@ -736,40 +626,25 @@
         }
         
         .gears-timeline {
-            display: flex;
-            flex-direction: column;
-            gap: 0;
-            padding: 10px 0;
-            position: relative;
+            display: flex; flex-direction: column;
+            gap: 0; padding: 10px 0; position: relative;
         }
         
         .gear-step {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            padding: 10px 0;
-            position: relative;
-            cursor: pointer;
+            display: flex; align-items: center; gap: 14px;
+            padding: 10px 0; position: relative; cursor: pointer;
         }
         
         .gear-icon-wrap {
-            width: 62px;
-            height: 62px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            position: relative;
-            transition: all 0.4s ease;
-            z-index: 2;
+            width: 62px; height: 62px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0; position: relative;
+            transition: all 0.4s ease; z-index: 2;
         }
         
         .gear-svg {
-            width: 34px;
-            height: 34px;
-            transition: all 0.6s ease;
-            transform-origin: center;
+            width: 34px; height: 34px;
+            transition: all 0.6s ease; transform-origin: center;
         }
         
         .gear-step.pending .gear-icon-wrap {
@@ -786,18 +661,14 @@
             animation: gearPulse 2s ease-in-out infinite;
         }
         .gear-step.current .gear-svg {
-            color: white;
-            animation: gearSpin 3s linear infinite;
+            color: white; animation: gearSpin 3s linear infinite;
         }
         .gear-step.current .gear-info .gear-name {
-            color: var(--warning-dark);
-            font-weight: 900;
-            font-size: 15px;
+            color: var(--warning-dark); font-weight: 900; font-size: 15px;
         }
         .gear-step.current .gear-info .gear-dept {
             background: linear-gradient(135deg, var(--warning), var(--warning-dark));
-            color: white;
-            font-weight: 800;
+            color: white; font-weight: 800;
         }
         
         @keyframes gearSpin {
@@ -815,12 +686,10 @@
             box-shadow: 0 6px 20px rgba(16,185,129,0.35);
         }
         .gear-step.completed .gear-svg {
-            color: white;
-            animation: gearComplete 1s ease-out;
+            color: white; animation: gearComplete 1s ease-out;
         }
         .gear-step.completed .gear-info .gear-name {
-            color: var(--success-dark);
-            font-weight: 800;
+            color: var(--success-dark); font-weight: 800;
             text-decoration: line-through;
             text-decoration-color: var(--success);
             text-decoration-thickness: 2px;
@@ -837,98 +706,62 @@
         }
         
         .gear-step.completed .gear-checkmark {
-            position: absolute;
-            bottom: -2px;
-            right: -2px;
-            width: 22px;
-            height: 22px;
-            background: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            position: absolute; bottom: -2px; right: -2px;
+            width: 22px; height: 22px; background: white;
+            border-radius: 50%; display: flex;
+            align-items: center; justify-content: center;
             box-shadow: 0 2px 8px rgba(0,0,0,0.2);
         }
         .gear-step.completed .gear-checkmark .icon-svg {
-            width: 14px;
-            height: 14px;
-            color: var(--success);
+            width: 14px; height: 14px; color: var(--success);
             stroke-width: 3;
         }
         
         .gear-info {
-            flex: 1;
-            min-width: 0;
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
+            flex: 1; min-width: 0;
+            display: flex; flex-direction: column; gap: 5px;
         }
         .gear-info .gear-name {
-            font-size: 13.5px;
-            font-weight: 700;
-            color: var(--gray-900);
+            font-size: 13.5px; font-weight: 700; color: var(--gray-900);
         }
         .gear-info .gear-meta {
-            display: flex;
-            gap: 8px;
-            align-items: center;
-            flex-wrap: wrap;
+            display: flex; gap: 8px;
+            align-items: center; flex-wrap: wrap;
         }
         .gear-info .gear-dept {
-            font-size: 10.5px;
-            background: var(--gray-100);
-            color: var(--gray-500);
-            padding: 3px 10px;
-            border-radius: 10px;
-            font-weight: 700;
+            font-size: 10.5px; background: var(--gray-100);
+            color: var(--gray-500); padding: 3px 10px;
+            border-radius: 10px; font-weight: 700;
         }
         .gear-info .gear-duration {
-            font-size: 10.5px;
-            color: var(--gray-500);
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 3px;
+            font-size: 10.5px; color: var(--gray-500);
+            font-weight: 600; display: flex;
+            align-items: center; gap: 3px;
         }
         .gear-info .gear-duration .icon-svg { width: 11px; height: 11px; }
         
         .gear-number {
-            position: absolute;
-            top: -4px;
-            right: -4px;
-            background: white;
-            color: var(--gray-700);
-            width: 22px;
-            height: 22px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 11px;
-            font-weight: 900;
+            position: absolute; top: -4px; right: -4px;
+            background: white; color: var(--gray-700);
+            width: 22px; height: 22px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 11px; font-weight: 900;
             box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-            border: 2px solid var(--gray-200);
-            z-index: 3;
+            border: 2px solid var(--gray-200); z-index: 3;
         }
         .gear-step.current .gear-number {
-            background: var(--warning);
-            color: white;
+            background: var(--warning); color: white;
             border-color: white;
         }
         .gear-step.completed .gear-number {
-            background: var(--success);
-            color: white;
+            background: var(--success); color: white;
             border-color: white;
         }
         
         .gear-connector {
-            position: absolute;
-            right: 30px;
-            top: 62px;
-            bottom: -10px;
-            width: 3px;
-            background: var(--gray-200);
-            z-index: 1;
+            position: absolute; right: 30px; top: 62px;
+            bottom: -10px; width: 3px;
+            background: var(--gray-200); z-index: 1;
         }
         .gear-step.completed .gear-connector {
             background: linear-gradient(180deg, var(--success), var(--success-dark));
@@ -936,41 +769,55 @@
         .gear-step:last-child .gear-connector { display: none; }
         
         .steps-actions {
-            display: flex; gap: 8px; flex-wrap: wrap; margin-top: 16px;
-            padding-top: 16px;
+            display: flex; gap: 8px; flex-wrap: wrap;
+            margin-top: 16px; padding-top: 16px;
             border-top: 1px solid var(--gray-200);
         }
         
-        /* DOCUMENTS */
+        /* DOCUMENTS داخل Modal */
         .documents-section {
-            background: linear-gradient(135deg, #FFFBEB, #FEF3C7);
+            background: linear-gradient(135deg, #F0FDF4, #DCFCE7);
             padding: 16px; border-radius: 16px;
             margin-bottom: 16px;
-            border-right: 4px solid var(--gold);
+            border-right: 4px solid var(--success);
         }
         .documents-section .section-title {
-            font-weight: 800; color: #92400E;
+            font-weight: 800; color: #166534;
             margin-bottom: 12px; font-size: 14px;
             display: flex; align-items: center; gap: 8px;
         }
-        .doc-files-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-            gap: 8px;
+        .doc-group {
+            margin-bottom: 12px; padding: 10px 12px;
+            background: white; border-radius: 12px;
+            border: 1px solid var(--success);
+        }
+        .doc-group-title {
+            font-size: 12px; font-weight: 800;
+            color: #166534; margin-bottom: 10px;
+            display: flex; align-items: center; gap: 6px;
+        }
+        .doc-group-title .icon-svg { width: 14px; height: 14px; }
+        .doc-count {
+            background: #166534; color: white;
+            padding: 2px 8px; border-radius: 10px; font-size: 10px;
         }
         
         .file-card-mini {
             display: flex; align-items: center; gap: 10px;
             background: white; padding: 10px 12px;
-            border-radius: 12px;
-            border: 1px solid var(--gray-200);
+            border-radius: 12px; border: 1px solid var(--gray-200);
+            transition: all 0.3s ease;
+        }
+        .file-card-mini:hover {
+            border-color: var(--primary-light);
+            box-shadow: 0 6px 15px rgba(107,33,168,0.15);
+            transform: translateY(-2px);
         }
         .file-card-mini .file-icon-mini {
             width: 38px; height: 38px; border-radius: 10px;
             background: linear-gradient(135deg, #E9D5FF, #C4B5FD);
             display: flex; align-items: center; justify-content: center;
-            flex-shrink: 0;
-            color: var(--primary);
+            flex-shrink: 0; color: var(--primary);
         }
         .file-card-mini .file-icon-mini .icon-svg { width: 18px; height: 18px; }
         .file-card-mini .file-info-mini { flex: 1; min-width: 0; }
@@ -980,26 +827,31 @@
             white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
         }
         .file-card-mini .file-info-mini .meta {
-            font-size: 10px; color: var(--gray-500);
-            margin-top: 2px;
+            font-size: 10px; color: var(--gray-500); margin-top: 2px;
         }
         .file-card-mini .file-actions-mini { display: flex; gap: 4px; flex-shrink: 0; }
         .file-card-mini .file-actions-mini button,
         .file-card-mini .file-actions-mini a {
             width: 32px; height: 32px;
             border-radius: 8px; border: none;
-            cursor: pointer;
-            display: flex; align-items: center; justify-content: center;
-            text-decoration: none;
+            cursor: pointer; display: flex;
+            align-items: center; justify-content: center;
+            text-decoration: none; transition: all 0.2s ease;
         }
         .file-card-mini .file-actions-mini .icon-svg { width: 14px; height: 14px; }
         .file-card-mini .file-actions-mini .btn-view {
             background: linear-gradient(135deg, #E9D5FF, #C4B5FD);
             color: var(--primary);
         }
+        .file-card-mini .file-actions-mini .btn-view:hover {
+            background: var(--primary); color: white;
+        }
         .file-card-mini .file-actions-mini .btn-download {
             background: linear-gradient(135deg, #D1FAE5, #A7F3D0);
             color: var(--success);
+        }
+        .file-card-mini .file-actions-mini .btn-download:hover {
+            background: var(--success); color: white;
         }
         
         /* FORMS */
@@ -1033,21 +885,16 @@
         .phone-input-group { position: relative; }
         .phone-input-group input { padding-left: 55px !important; }
         .phone-input-group .contact-btn {
-            position: absolute;
-            left: 6px; top: 50%;
+            position: absolute; left: 6px; top: 50%;
             transform: translateY(-50%);
             background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            color: white;
-            border: none;
-            width: 40px; height: 40px;
-            border-radius: 10px;
-            cursor: pointer;
-            display: flex; align-items: center; justify-content: center;
+            color: white; border: none;
+            width: 40px; height: 40px; border-radius: 10px;
+            cursor: pointer; display: flex;
+            align-items: center; justify-content: center;
             transition: all 0.3s ease;
         }
-        .phone-input-group .contact-btn:hover {
-            transform: translateY(-50%) scale(1.1);
-        }
+        .phone-input-group .contact-btn:hover { transform: translateY(-50%) scale(1.1); }
         .phone-input-group .contact-btn .icon-svg { width: 18px; height: 18px; }
         
         /* BUTTONS */
@@ -1092,7 +939,7 @@
         }
         .add-btn-floating .icon-svg { width: 20px; height: 20px; }
         .add-btn-floating:hover { 
-            transform: translateY(-4px); 
+            transform: translateY(-4px);
             box-shadow: 0 20px 50px rgba(107,33,168,0.6), 0 0 40px rgba(212,175,55,0.3);
         }
         
@@ -1122,8 +969,7 @@
         
         .doc-item {
             background: white; padding: 12px;
-            border-radius: 12px;
-            border: 2px solid var(--gray-200);
+            border-radius: 12px; border: 2px solid var(--gray-200);
             transition: all 0.3s ease;
         }
         .doc-item.uploaded {
@@ -1165,8 +1011,7 @@
             padding: 8px 10px;
             background: linear-gradient(135deg, #F0FDF4, #DCFCE7);
             border: 1px solid var(--success);
-            border-radius: 8px; margin-bottom: 5px;
-            font-size: 11px;
+            border-radius: 8px; margin-bottom: 5px; font-size: 11px;
         }
         .file-item .file-info { flex: 1; min-width: 0; }
         .file-item .file-info .file-name {
@@ -1179,8 +1024,7 @@
             color: var(--success-dark); flex-shrink: 0;
         }
         .file-item .file-info .file-size {
-            font-size: 10px; color: var(--gray-500);
-            margin-top: 1px;
+            font-size: 10px; color: var(--gray-500); margin-top: 1px;
         }
         .file-item .remove-file-btn {
             background: linear-gradient(135deg, var(--danger), var(--danger-dark));
@@ -1205,8 +1049,7 @@
         }
         .appointment-tile::before {
             content: ''; position: absolute;
-            top: 0; right: 0; bottom: 0;
-            width: 5px;
+            top: 0; right: 0; bottom: 0; width: 5px;
         }
         .appointment-tile.overdue::before { background: var(--danger); }
         .appointment-tile.today::before { background: var(--warning); }
@@ -1218,14 +1061,10 @@
             margin-bottom: 10px;
         }
         .appointment-tile .app-title {
-            font-size: 14px; font-weight: 800;
-            color: var(--gray-900);
+            font-size: 14px; font-weight: 800; color: var(--gray-900);
             display: flex; align-items: center; gap: 6px;
         }
-        .appointment-tile .app-title .icon-svg {
-            width: 16px; height: 16px;
-            color: var(--primary);
-        }
+        .appointment-tile .app-title .icon-svg { width: 16px; height: 16px; color: var(--primary); }
         .appointment-tile .app-badge {
             padding: 4px 12px; border-radius: 20px;
             font-size: 10px; font-weight: 800;
@@ -1243,13 +1082,11 @@
             color: var(--gray-700);
         }
         .appointment-tile .app-info-item .icon-svg {
-            width: 14px; height: 14px;
-            color: var(--gray-400);
+            width: 14px; height: 14px; color: var(--gray-400);
         }
         .appointment-tile .app-actions {
             display: flex; gap: 6px; flex-wrap: wrap;
-            padding-top: 10px;
-            border-top: 1px solid var(--gray-100);
+            padding-top: 10px; border-top: 1px solid var(--gray-100);
         }
         
         /* ALERTS */
@@ -1274,8 +1111,7 @@
             padding: 14px 16px;
             background: linear-gradient(135deg, #FAF5FF, #F3E8FF);
             border-radius: 12px; margin-bottom: 8px;
-            border-right: 4px solid var(--purple);
-            font-size: 12px;
+            border-right: 4px solid var(--purple); font-size: 12px;
         }
         .communication-item .msg-subject {
             font-weight: 800; color: var(--primary);
@@ -1284,8 +1120,7 @@
         }
         .communication-item .msg-subject .icon-svg { width: 14px; height: 14px; }
         .communication-item .msg-body {
-            font-size: 12px; color: var(--gray-700);
-            margin-top: 5px;
+            font-size: 12px; color: var(--gray-700); margin-top: 5px;
         }
         .communication-item .msg-meta {
             font-size: 10px; color: var(--gray-500);
@@ -1313,26 +1148,17 @@
             box-shadow: 0 8px 20px rgba(139,92,246,0.4);
         }
         .engineer-tile .eng-info { flex: 1; min-width: 0; }
-        .engineer-tile .eng-name {
-            font-size: 14px; font-weight: 800;
-            color: var(--gray-900);
-        }
-        .engineer-tile .eng-phone {
-            font-size: 12px; color: var(--gray-500);
-            margin-top: 2px;
-        }
+        .engineer-tile .eng-name { font-size: 14px; font-weight: 800; color: var(--gray-900); }
+        .engineer-tile .eng-phone { font-size: 12px; color: var(--gray-500); margin-top: 2px; }
         .engineer-tile .eng-specialty {
-            display: inline-block;
-            padding: 3px 12px; border-radius: 12px;
-            font-size: 10px; font-weight: 700;
+            display: inline-block; padding: 3px 12px;
+            border-radius: 12px; font-size: 10px; font-weight: 700;
             background: linear-gradient(135deg, #EDE9FE, #DDD6FE);
-            color: #6B46C1;
-            margin-top: 6px;
+            color: #6B46C1; margin-top: 6px;
         }
         .engineer-tile .eng-actions {
             display: flex; gap: 6px; flex-wrap: wrap;
-            margin-top: 10px;
-            padding-top: 10px;
+            margin-top: 10px; padding-top: 10px;
             border-top: 1px solid var(--gray-100);
         }
         
@@ -1362,22 +1188,20 @@
         .company-badge {
             background: linear-gradient(135deg, var(--primary), var(--black));
             color: white; padding: 4px 14px;
-            border-radius: 20px; font-size: 11px;
-            font-weight: 800;
+            border-radius: 20px; font-size: 11px; font-weight: 800;
         }
         
         /* FOOTER */
         .footer {
             text-align: center; padding: 24px 15px;
             color: var(--gray-500); font-size: 11px;
-            border-top: 1px solid var(--gray-200);
-            margin-top: 24px;
+            border-top: 1px solid var(--gray-200); margin-top: 24px;
         }
         .footer .company {
             font-weight: 900;
             background: linear-gradient(135deg, var(--primary), var(--gold));
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-            font-size: 15px;
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-clip: text; font-size: 15px;
         }
         
         /* PREVIEW MODAL */
@@ -1426,8 +1250,7 @@
         }
         .preview-modal .preview-content iframe {
             width: 100%; height: 85vh;
-            border: none; border-radius: 12px;
-            background: white;
+            border: none; border-radius: 12px; background: white;
         }
         .preview-modal .preview-content .no-preview {
             color: white; text-align: center; padding: 40px;
@@ -1468,8 +1291,7 @@
         }
     </style>
 </head>
-<body><!-- SVG Icons -->
-<svg style="display:none;" xmlns="http://www.w3.org/2000/svg">
+<body><svg style="display:none;" xmlns="http://www.w3.org/2000/svg">
     <symbol id="i-chart" viewBox="0 0 24 24"><path d="M3 3v18h18M7 14l4-4 4 4 5-5"/></symbol>
     <symbol id="i-building" viewBox="0 0 24 24"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 9h.01M15 9h.01M9 13h.01M15 13h.01M9 17h.01M15 17h.01"/></symbol>
     <symbol id="i-elevation" viewBox="0 0 24 24"><path d="M3 21h18M5 21V9h14v12M9 9V5h6v4M9 15h6"/></symbol>
@@ -1526,20 +1348,17 @@
     </symbol>
 </svg>
 
-<!-- Loading -->
 <div class="loading-screen" id="loadingScreen">
     <div class="spinner"></div>
     <div class="brand">Al Brazili</div>
     <div class="subtext">جاري الاتصال بقاعدة البيانات...</div>
 </div>
 
-<!-- Connection Status -->
 <div class="connection-status" id="connectionStatus">
     <div class="dot"></div>
     <span id="connectionText">جاري الاتصال...</span>
 </div>
 
-<!-- Login Screen -->
 <div class="login-screen hidden" id="loginScreen">
     <div class="login-box">
         <div class="photo-container">
@@ -1563,7 +1382,6 @@
     </div>
 </div>
 
-<!-- Project Details Modal -->
 <div class="modal-overlay" id="projectModal" onclick="closeModalIfOutside(event)">
     <div class="modal-content" onclick="event.stopPropagation()">
         <div class="modal-header">
@@ -1584,7 +1402,6 @@
     </div>
 </div>
 
-<!-- File Preview Modal -->
 <div class="preview-modal" id="previewModal">
     <div class="preview-header">
         <div class="preview-title" id="previewTitle">معاينة الملف</div>
@@ -1601,7 +1418,6 @@
     <div class="preview-content" id="previewContent"></div>
 </div>
 
-<!-- Main App -->
 <div class="app" id="appContainer">
     <div class="header">
         <div class="header-content">
@@ -1645,7 +1461,6 @@
         <button class="tab-btn" data-tab="reports"><svg class="icon-svg"><use href="#i-doc"/></svg>تقارير</button>
     </div>
     
-    <!-- DASHBOARD -->
     <div id="tab-dashboard" class="tab-content active">
         <div class="grid-4">
             <div class="stat-card building" onclick="switchTab('building')">
@@ -2099,10 +1914,7 @@
     const db = getFirestore(app);
 
     window.firebaseDB = db;
-    window.fsAPI = { 
-        collection, addDoc, getDocs, doc, updateDoc, deleteDoc, 
-        onSnapshot, query, orderBy, serverTimestamp
-    };
+    window.fsAPI = { collection, addDoc, getDocs, doc, updateDoc, deleteDoc, onSnapshot, query, orderBy, serverTimestamp };
     window.firebaseReady = true;
     window.dispatchEvent(new Event('firebase-ready'));
     console.log('✅ Firebase initialized');
@@ -2114,14 +1926,14 @@
     var SECRET_PASSWORD = "01110798913";
     var WHATSAPP_NUMBER = "01110798913";
 
-    // ==================== CLOUDINARY CONFIG ====================
+    // Cloudinary
     var CLOUDINARY_CLOUD_NAME = 'zccoee2a';
     var CLOUDINARY_UPLOAD_PRESET = 'al_brazili_unsigned';
     var CLOUDINARY_UPLOAD_URL = 'https://api.cloudinary.com/v1_1/' + CLOUDINARY_CLOUD_NAME + '/auto/upload';
 
-    // ==================== FILE SIZE LIMITS ====================
-    var MAX_FILE_SIZE = 10 * 1024 * 1024;   // 10 MB لكل ملف
-    var MAX_TOTAL_SIZE = 50 * 1024 * 1024;  // 50 MB إجمالي
+    // حدود الملفات
+    var MAX_FILE_SIZE = 10 * 1024 * 1024;
+    var MAX_TOTAL_SIZE = 50 * 1024 * 1024;
 
     // ==================== DATA STORES ====================
     var buildingPermits = [];
@@ -2154,7 +1966,7 @@
         { num: 15, name: 'إصدار رخصة البناء', dept: 'الحي', duration: 1 }
     ];
 
-    // ==================== ELEVATION STEPS (بدون نموذج 8) ====================
+    // ==================== ELEVATION STEPS (15 خطوة - بدون نموذج 8) ====================
     var ELEVATION_STEPS = [
         { num: 1, name: 'استلام المستندات', dept: 'الحي', duration: 1 },
         { num: 2, name: 'الرفع المساحي', dept: 'المساحة', duration: 4 },
@@ -2333,6 +2145,15 @@
         });
         return count;
     }
+    
+    // تحويل Timestamp إلى نص آمن
+    function safeTimestamp(ts) {
+        if (!ts) return new Date().toISOString();
+        if (typeof ts === 'string') return ts;
+        if (typeof ts.toDate === 'function') return ts.toDate().toISOString();
+        if (typeof ts.seconds === 'number') return new Date(ts.seconds * 1000).toISOString();
+        return new Date().toISOString();
+    }
 
     // ==================== PICK CONTACT ====================
     async function pickContact(inputId) {
@@ -2340,30 +2161,18 @@
             Swal.fire({
                 icon: 'info',
                 title: 'غير مدعوم',
-                html: '<div style="text-align:right;font-size:13px;">' +
-                      '<p>متصفحك لا يدعم اختيار جهات الاتصال مباشرة.</p>' +
-                      '<p style="margin-top:10px;">💡 يمكنك:</p>' +
-                      '<ul style="padding-right:20px;margin-top:6px;">' +
-                      '<li>فتح التطبيق على <strong>الجوال</strong> (Chrome)</li>' +
-                      '<li>أو كتابة الرقم يدوياً</li>' +
-                      '</ul></div>'
+                html: '<div style="text-align:right;font-size:13px;"><p>متصفحك لا يدعم اختيار جهات الاتصال مباشرة.</p><p style="margin-top:10px;">💡 يمكنك:</p><ul style="padding-right:20px;margin-top:6px;"><li>فتح التطبيق على <strong>الجوال</strong> (Chrome)</li><li>أو كتابة الرقم يدوياً</li></ul></div>'
             });
             return;
         }
-        
         try {
             var contacts = await navigator.contacts.select(['tel'], { multiple: false });
             if (contacts && contacts.length > 0 && contacts[0].tel && contacts[0].tel.length > 0) {
-                var phone = contacts[0].tel[0];
-                phone = phone.replace(/\s/g, '');
+                var phone = contacts[0].tel[0].replace(/\s/g, '');
                 document.getElementById(inputId).value = phone;
                 Swal.fire({ icon: 'success', title: 'تم', text: 'تم إضافة الرقم', timer: 1200, showConfirmButton: false, toast: true, position: 'top-start' });
             }
-        } catch (err) {
-            if (err.name !== 'AbortError') {
-                console.error('Contact error:', err);
-            }
-        }
+        } catch (err) { if (err.name !== 'AbortError') console.error('Contact error:', err); }
     }
 
     // ==================== PREVIEW ====================
@@ -2372,15 +2181,12 @@
         var content = document.getElementById('previewContent');
         var title = document.getElementById('previewTitle');
         var downloadLink = document.getElementById('previewDownload');
-        
         title.textContent = fileName || 'معاينة الملف';
         downloadLink.href = url;
         downloadLink.download = fileName || 'file';
-        
         var ext = (fileName || '').split('.').pop().toLowerCase();
         var type = (fileType || '').toLowerCase();
         var contentHtml = '';
-        
         if (type.startsWith('image/') || ['jpg','jpeg','png','gif','bmp','webp','svg'].includes(ext)) {
             contentHtml = '<img src="' + url + '" alt="' + fileName + '" onclick="window.open(\'' + url + '\',\'_blank\')" style="cursor:zoom-in;">';
         } else if (ext === 'pdf' || type === 'application/pdf') {
@@ -2392,7 +2198,6 @@
         } else {
             contentHtml = '<div class="no-preview"><div class="big-icon-wrap"><svg class="icon-svg"><use href="#i-file"/></svg></div><h3>' + fileName + '</h3><p style="margin-top:15px;">يمكنك تحميله لعرضه على جهازك</p><a href="' + url + '" download="' + fileName + '" target="_blank" style="display:inline-block;margin-top:24px;background:linear-gradient(135deg,#6B21A8,#0F0F1E);color:white;padding:14px 34px;border-radius:12px;text-decoration:none;font-weight:700;">📥 تحميل الملف</a></div>';
         }
-        
         content.innerHTML = contentHtml;
         modal.classList.add('active');
         document.body.style.overflow = 'hidden';
@@ -2475,7 +2280,7 @@
             html += '<div class="info-box next-step"><svg class="icon-svg"><use href="#i-arrow-left"/></svg> الخطوة القادمة: ' + project.next_step + '</div>';
         }
         
-        // Details grid
+        // Details
         html += '<div class="details-grid-modal">';
         html += '<div class="detail-item"><div class="label"><svg class="icon-svg"><use href="#i-map-pin"/></svg> العنوان</div><div class="value" style="font-size:13px;">' + (project.address || '-') + '</div></div>';
         html += '<div class="detail-item"><div class="label"><svg class="icon-svg"><use href="#i-phone"/></svg> الجوال</div><div class="value">' + (project.phone || '-') + '</div></div>';
@@ -2548,36 +2353,46 @@
         }
         html += '</div>';
         
-        // Documents
-        if (project.documents && Object.keys(project.documents).length > 0) {
-            var docsList = getDocsForType(type);
-            var hasDocs = false;
-            var docsHtml = '';
-            docsList.forEach(function(doc) {
-                var files = project.documents[doc.key];
-                if (!Array.isArray(files) || files.length === 0) return;
-                hasDocs = true;
-                docsHtml += '<div style="margin-bottom:10px;grid-column:1/-1;"><div style="font-size:11px;font-weight:800;color:#78350F;margin-bottom:6px;">' + doc.label + ' (' + files.length + ')</div></div>';
-                files.forEach(function(f) {
-                    var iconId = getFileIcon(f.name, f.type);
-                    var fileUrl = f.url || f.data;
-                    docsHtml += '<div class="file-card-mini">';
-                    docsHtml += '<div class="file-icon-mini"><svg class="icon-svg"><use href="#i-' + iconId + '"/></svg></div>';
-                    docsHtml += '<div class="file-info-mini"><div class="name">' + f.name + '</div><div class="meta">' + formatFileSize(f.size) + '</div></div>';
-                    docsHtml += '<div class="file-actions-mini">';
-                    docsHtml += '<button class="btn-view" onclick="openPreview(\'' + escapeUrl(fileUrl) + '\', \'' + escapeStr(f.name) + '\', \'' + escapeStr(f.type || '') + '\')"><svg class="icon-svg"><use href="#i-eye"/></svg></button>';
-                    docsHtml += '<a class="btn-download" href="' + fileUrl + '" download="' + escapeStr(f.name) + '" target="_blank"><svg class="icon-svg"><use href="#i-download"/></svg></a>';
-                    docsHtml += '</div></div>';
-                });
-            });
-            if (hasDocs) {
-                html += '<div class="documents-section">';
-                html += '<div class="section-title"><svg class="icon-svg"><use href="#i-folder"/></svg> المستندات المرفوعة (' + countTotalFiles(project.documents) + ')</div>';
-                html += '<div class="doc-files-grid">' + docsHtml + '</div>';
-                html += '</div>';
-            }
-        }
+        // DOCUMENTS
+        html += renderDocsForCard(project.documents, type);
         
+        return html;
+    }
+    
+    function renderDocsForCard(docs, projectType) {
+        if (!docs || Object.keys(docs).length === 0) return '';
+        var docList = getDocsForType(projectType);
+        var totalDocs = countTotalFiles(docs);
+        if (totalDocs === 0) return '';
+        
+        var html = '<div class="documents-section">';
+        html += '<div class="section-title"><svg class="icon-svg"><use href="#i-folder"/></svg> 📁 أرشيف المستندات (' + totalDocs + ' ملف)</div>';
+        
+        docList.forEach(function(doc) {
+            var files = docs[doc.key];
+            if (!Array.isArray(files) || files.length === 0) return;
+            
+            html += '<div class="doc-group">';
+            html += '<div class="doc-group-title"><svg class="icon-svg"><use href="#i-check-circle"/></svg> ' + doc.label + ' <span class="doc-count">' + files.length + '</span></div>';
+            html += '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:8px;">';
+            
+            files.forEach(function(f) {
+                var iconId = getFileIcon(f.name, f.type);
+                var fileUrl = f.url || f.data || '';
+                
+                html += '<div class="file-card-mini">';
+                html += '<div class="file-icon-mini"><svg class="icon-svg"><use href="#i-' + iconId + '"/></svg></div>';
+                html += '<div class="file-info-mini"><div class="name">' + f.name + '</div><div class="meta">' + formatFileSize(f.size) + '</div></div>';
+                html += '<div class="file-actions-mini">';
+                html += '<button class="btn-view" onclick="openPreview(\'' + escapeUrl(fileUrl) + '\', \'' + escapeStr(f.name) + '\', \'' + escapeStr(f.type || '') + '\')" title="معاينة"><svg class="icon-svg"><use href="#i-eye"/></svg></button>';
+                html += '<a class="btn-download" href="' + fileUrl + '" download="' + escapeStr(f.name) + '" target="_blank" title="تحميل"><svg class="icon-svg"><use href="#i-download"/></svg></a>';
+                html += '</div></div>';
+            });
+            
+            html += '</div></div>';
+        });
+        
+        html += '</div>';
         return html;
     }
 
@@ -2681,7 +2496,7 @@
         }
     }
 
-    // ==================== FILE UPLOAD ====================
+    // ==================== FILE UPLOAD (مُصحّح) ====================
     function buildDocsGrid(prefix, docsList, containerId) {
         var container = document.getElementById(containerId);
         if (!container) return;
@@ -2702,16 +2517,27 @@
         docsList.forEach(function(doc) { bindFileUpload(prefix, doc.key); });
     }
 
+    // ✅ دالة bindFileUpload المُصحّحة
     function bindFileUpload(prefix, docKey) {
         var input = document.getElementById(prefix + '_doc_' + docKey + '_file');
         var docItem = document.getElementById('doc-item-' + prefix + '-' + docKey);
         if (!input) return;
+        
+        // ✅ ضمان وجود البنية كاملة
+        if (!uploadedFiles[prefix]) uploadedFiles[prefix] = {};
         if (!uploadedFiles[prefix][docKey]) uploadedFiles[prefix][docKey] = [];
+        
         input.addEventListener('change', function(e) {
             var files = Array.from(e.target.files);
             if (files.length === 0) return;
+            
+            // ✅ تأكيد مرة أخرى قبل الإضافة
+            if (!uploadedFiles[prefix]) uploadedFiles[prefix] = {};
+            if (!uploadedFiles[prefix][docKey]) uploadedFiles[prefix][docKey] = [];
+            
             var accepted = 0;
             var rejected = [];
+            
             files.forEach(function(file) {
                 if (file.size > MAX_FILE_SIZE) {
                     rejected.push(file.name + ' (' + formatFileSize(file.size) + ')');
@@ -2720,6 +2546,7 @@
                     accepted++;
                 }
             });
+            
             renderFilesList(prefix, docKey);
             if (docItem && accepted > 0) docItem.classList.add('uploaded');
             var check = document.getElementById(prefix + '_doc_' + docKey + '_check');
@@ -2727,10 +2554,23 @@
             input.value = '';
             
             if (rejected.length > 0) {
-                Swal.fire({ icon: 'warning', title: 'ملفات كبيرة', html: '<div style="text-align:right;font-size:13px;"><p>الملفات التالية أكبر من <strong>10 MB</strong>:</p><ul style="padding-right:20px;margin-top:8px;">' + rejected.map(function(r) { return '<li>' + r + '</li>'; }).join('') + '</ul></div>', confirmButtonText: 'حسناً' });
+                Swal.fire({ 
+                    icon: 'warning', 
+                    title: 'ملفات كبيرة', 
+                    html: '<div style="text-align:right;font-size:13px;"><p>الملفات التالية أكبر من <strong>10 MB</strong>:</p><ul style="padding-right:20px;margin-top:8px;">' + rejected.map(function(r) { return '<li>' + r + '</li>'; }).join('') + '</ul></div>', 
+                    confirmButtonText: 'حسناً' 
+                });
             }
             if (accepted > 0) {
-                Swal.fire({ icon: 'success', title: 'تمت الإضافة', text: 'تم إضافة ' + accepted + ' ملف', timer: 1500, showConfirmButton: false, toast: true, position: 'top-start' });
+                Swal.fire({ 
+                    icon: 'success', 
+                    title: 'تمت الإضافة', 
+                    text: 'تم إضافة ' + accepted + ' ملف', 
+                    timer: 1500, 
+                    showConfirmButton: false, 
+                    toast: true, 
+                    position: 'top-start' 
+                });
             }
         });
     }
@@ -2751,7 +2591,7 @@
     }
 
     function removeFile(prefix, docKey, index) {
-        if (!uploadedFiles[prefix][docKey]) return;
+        if (!uploadedFiles[prefix] || !uploadedFiles[prefix][docKey]) return;
         uploadedFiles[prefix][docKey].splice(index, 1);
         renderFilesList(prefix, docKey);
         var files = uploadedFiles[prefix][docKey];
@@ -2843,20 +2683,12 @@
                 } catch (error) {
                     console.error('❌ خطأ رفع:', error);
                     Swal.close();
-                    
                     Swal.fire({ 
                         icon: 'error', 
                         title: '⚠️ فشل رفع الملف',
                         html: '<div style="text-align:right;font-size:13px;">' +
                               '<p><strong>الملف:</strong> ' + file.name + '</p>' +
                               '<p><strong>السبب:</strong> ' + error.message + '</p>' +
-                              '<p style="margin-top:10px;color:#DC2626;">💡 تحقق من:</p>' +
-                              '<ul style="padding-right:20px;margin-top:5px;">' +
-                              '<li>أن Upload Preset = <strong>Unsigned</strong></li>' +
-                              '<li>Cloud Name = <strong>' + CLOUDINARY_CLOUD_NAME + '</strong></li>' +
-                              '<li>Upload Preset = <strong>' + CLOUDINARY_UPLOAD_PRESET + '</strong></li>' +
-                              '<li>اتصال الإنترنت</li>' +
-                              '</ul>' +
                               '</div>',
                         confirmButtonColor: '#6B21A8'
                     });
@@ -3012,7 +2844,7 @@
         });
     }
 
-    // ==================== ALERTS ====================
+    // ==================== ALERTS (مُصحّح) ====================
     async function addAlert(type, projectId, message, cat) {
         if (!cat) cat = 'status';
         
@@ -3108,7 +2940,7 @@
         });
     }
 
-    // ==================== LOAD DATA ====================
+    // ==================== LOAD DATA (مُصحّح) ====================
     async function loadAllDataFromFirebase() {
         try {
             setConnectionStatus('syncing', 'جاري المزامنة...');
@@ -3138,10 +2970,17 @@
             communications = [];
             commSnap.forEach(function(d) { communications.push({ id: d.id, ...d.data() }); });
             
+            // ✅ alerts مع تحويل Timestamp
             var alertSnap = await getDocs(collection(db, 'alerts'));
             allAlerts = [];
-            alertSnap.forEach(function(d) { allAlerts.push({ id: d.id, ...d.data() }); });
-            allAlerts.sort(function(a, b) { return (b.createdAt || '').localeCompare(a.createdAt || ''); });
+            alertSnap.forEach(function(d) { 
+                var data = d.data();
+                data.createdAt = safeTimestamp(data.createdAt);
+                allAlerts.push({ id: d.id, ...data }); 
+            });
+            allAlerts.sort(function(a, b) { 
+                return String(b.createdAt || '').localeCompare(String(a.createdAt || '')); 
+            });
             
             var appSnap = await getDocs(collection(db, 'appointments'));
             appointments = [];
@@ -3158,6 +2997,7 @@
         }
     }
 
+    // ==================== REALTIME SYNC (مُصحّح) ====================
     function setupRealtimeSync() {
         onSnapshot(collection(db, 'buildingPermits'), function(snapshot) {
             buildingPermits = [];
@@ -3195,10 +3035,17 @@
             renderEngineers(); updateSelects(); updateUI();
         }, function(err) { console.error('❌ engineers:', err); });
         
+        // ✅ alerts مع تحويل Timestamp
         onSnapshot(collection(db, 'alerts'), function(snapshot) {
             allAlerts = [];
-            snapshot.forEach(function(d) { allAlerts.push({ id: d.id, ...d.data() }); });
-            allAlerts.sort(function(a, b) { return (b.createdAt || '').localeCompare(a.createdAt || ''); });
+            snapshot.forEach(function(d) { 
+                var data = d.data();
+                data.createdAt = safeTimestamp(data.createdAt);
+                allAlerts.push({ id: d.id, ...data }); 
+            });
+            allAlerts.sort(function(a, b) { 
+                return String(b.createdAt || '').localeCompare(String(a.createdAt || '')); 
+            });
             renderAlerts(); updateUI();
         }, function(err) { console.error('❌ alerts:', err); });
         
@@ -3222,7 +3069,9 @@
         var total = parseFloat(document.getElementById('b_total').value) || 0;
         var paid = parseFloat(document.getElementById('b_paid').value) || 0;
         var hasFiles = false;
-        Object.keys(uploadedFiles.b).forEach(function(k) { if (uploadedFiles.b[k] && uploadedFiles.b[k].length > 0) hasFiles = true; });
+        Object.keys(uploadedFiles.b).forEach(function(k) { 
+            if (uploadedFiles.b[k] && uploadedFiles.b[k].length > 0) hasFiles = true; 
+        });
         Swal.fire({ title: hasFiles ? '☁️ جاري رفع الملفات...' : 'جاري الحفظ...', allowOutsideClick: false, didOpen: function() { Swal.showLoading(); } });
         try {
             var docsData = {};
@@ -3318,7 +3167,9 @@
         var search = document.getElementById('b_search').value.toLowerCase();
         var list = buildingPermits;
         if (filter !== 'all') list = list.filter(function(p) { return p.status === filter; });
-        if (search) list = list.filter(function(p) { return (p.client || '').toLowerCase().includes(search) || (p.address || '').toLowerCase().includes(search); });
+        if (search) list = list.filter(function(p) { 
+            return (p.client || '').toLowerCase().includes(search) || (p.address || '').toLowerCase().includes(search); 
+        });
         document.getElementById('buildingCount').textContent = list.length;
         if (list.length === 0) {
             container.innerHTML = '<div class="empty-state"><div class="icon-wrap"><svg class="icon-svg"><use href="#i-building"/></svg></div><h3>لا توجد رخص</h3><p style="font-size:12px;">اضغط على زر الإضافة بالأعلى</p></div>';
@@ -3330,6 +3181,8 @@
             var total = BUILDING_STEPS.length;
             var progress = (currentStep / total) * 100;
             var remaining = (p.total || 0) - (p.paid || 0);
+            var docsCount = countTotalFiles(p.documents);
+            
             html += '<div class="project-tile building" onclick="openProjectModal(\'building\',\'' + p.id + '\')">';
             html += '<div class="tile-header">';
             html += '<div class="tile-icon"><svg class="icon-svg"><use href="#i-building"/></svg></div>';
@@ -3338,6 +3191,12 @@
             html += '<div class="tile-sub">' + (p.address || '').substring(0, 30) + '</div>';
             html += '</div></div>';
             html += '<div class="tile-status status-' + p.status + '">' + getStatusText(p.status) + '</div>';
+            
+            // شارة المستندات
+            if (docsCount > 0) {
+                html += '<div class="tile-docs-badge"><svg class="icon-svg"><use href="#i-folder"/></svg> ' + docsCount + ' مستند</div>';
+            }
+            
             html += '<div class="tile-progress">';
             html += '<div class="tile-progress-info"><span>التقدم</span><span>' + currentStep + '/' + total + '</span></div>';
             html += '<div class="tile-progress-bar"><div class="fill" style="width:' + progress + '%;"></div></div>';
@@ -3390,7 +3249,10 @@
         else if (type === 'elevation') project = elevationPermits.find(function(x) { return x.id === id; });
         else if (type === 'reconciliation') project = reconciliations.find(function(x) { return x.id === id; });
         if (!project) return;
-        if (stepNum !== (project.current_step || 0) + 1) { Swal.fire({ icon: 'warning', title: 'تنبيه', text: 'الرجاء إنجاز الخطوات بالترتيب' }); return; }
+        if (stepNum !== (project.current_step || 0) + 1) { 
+            Swal.fire({ icon: 'warning', title: 'تنبيه', text: 'الرجاء إنجاز الخطوات بالترتيب' }); 
+            return; 
+        }
         
         var eng = project.engineer_id ? getEngineer(project.engineer_id) : null;
         var result = await Swal.fire({
@@ -3429,7 +3291,11 @@
 
     async function rollbackStep(type, id, currentStep) {
         if (currentStep <= 0) { Swal.fire({ icon: 'warning', title: 'تنبيه', text: 'لا يمكن التراجع' }); return; }
-        var result = await Swal.fire({ title: 'التراجع عن خطوة؟', icon: 'question', showCancelButton: true, confirmButtonText: 'نعم', cancelButtonText: 'إلغاء', confirmButtonColor: '#F59E0B' });
+        var result = await Swal.fire({ 
+            title: 'التراجع عن خطوة؟', icon: 'question', 
+            showCancelButton: true, confirmButtonText: 'نعم', 
+            cancelButtonText: 'إلغاء', confirmButtonColor: '#F59E0B' 
+        });
         if (!result.isConfirmed) return;
         var collName = type === 'building' ? 'buildingPermits' : type === 'elevation' ? 'elevationPermits' : 'reconciliations';
         try {
@@ -3440,7 +3306,12 @@
     }
 
     async function deleteProject(type, id) {
-        var result = await Swal.fire({ title: 'حذف المشروع؟', text: 'لا يمكن التراجع', icon: 'warning', showCancelButton: true, confirmButtonColor: '#EF4444', confirmButtonText: 'نعم، احذف', cancelButtonText: 'إلغاء' });
+        var result = await Swal.fire({ 
+            title: 'حذف المشروع؟', text: 'لا يمكن التراجع', 
+            icon: 'warning', showCancelButton: true, 
+            confirmButtonColor: '#EF4444', confirmButtonText: 'نعم، احذف', 
+            cancelButtonText: 'إلغاء' 
+        });
         if (!result.isConfirmed) return;
         var collName = type === 'building' ? 'buildingPermits' : type === 'elevation' ? 'elevationPermits' : 'reconciliations';
         try {
@@ -3558,6 +3429,8 @@
             var total = ELEVATION_STEPS.length;
             var progress = (currentStep / total) * 100;
             var remaining = (p.total || 0) - (p.paid || 0);
+            var docsCount = countTotalFiles(p.documents);
+            
             html += '<div class="project-tile elevation" onclick="openProjectModal(\'elevation\',\'' + p.id + '\')">';
             html += '<div class="tile-header">';
             html += '<div class="tile-icon"><svg class="icon-svg"><use href="#i-elevation"/></svg></div>';
@@ -3566,6 +3439,11 @@
             html += '<div class="tile-sub">' + (p.address || '').substring(0, 30) + '</div>';
             html += '</div></div>';
             html += '<div class="tile-status status-' + p.status + '">' + getStatusText(p.status) + '</div>';
+            
+            if (docsCount > 0) {
+                html += '<div class="tile-docs-badge"><svg class="icon-svg"><use href="#i-folder"/></svg> ' + docsCount + ' مستند</div>';
+            }
+            
             html += '<div class="tile-progress">';
             html += '<div class="tile-progress-info"><span>التقدم</span><span>' + currentStep + '/' + total + '</span></div>';
             html += '<div class="tile-progress-bar"><div class="fill" style="width:' + progress + '%;"></div></div>';
@@ -3683,6 +3561,8 @@
             var total = RECONCILIATION_STEPS.length;
             var progress = (currentStep / total) * 100;
             var remaining = (p.total || 0) - (p.paid || 0);
+            var docsCount = countTotalFiles(p.documents);
+            
             html += '<div class="project-tile reconciliation" onclick="openProjectModal(\'reconciliation\',\'' + p.id + '\')">';
             html += '<div class="tile-header">';
             html += '<div class="tile-icon"><svg class="icon-svg"><use href="#i-scale"/></svg></div>';
@@ -3691,6 +3571,11 @@
             html += '<div class="tile-sub">' + (p.address || '').substring(0, 30) + '</div>';
             html += '</div></div>';
             html += '<div class="tile-status status-' + p.status + '">' + getStatusText(p.status) + '</div>';
+            
+            if (docsCount > 0) {
+                html += '<div class="tile-docs-badge"><svg class="icon-svg"><use href="#i-folder"/></svg> ' + docsCount + ' مستند</div>';
+            }
+            
             html += '<div class="tile-progress">';
             html += '<div class="tile-progress-info"><span>التقدم</span><span>' + currentStep + '/' + total + '</span></div>';
             html += '<div class="tile-progress-bar"><div class="fill" style="width:' + progress + '%;"></div></div>';
@@ -3790,7 +3675,11 @@
     }
 
     async function deleteEngineer(id) {
-        var result = await Swal.fire({ title: 'حذف المهندس؟', icon: 'warning', showCancelButton: true, confirmButtonColor: '#EF4444', confirmButtonText: 'نعم، احذف', cancelButtonText: 'إلغاء' });
+        var result = await Swal.fire({ 
+            title: 'حذف المهندس؟', icon: 'warning', 
+            showCancelButton: true, confirmButtonColor: '#EF4444', 
+            confirmButtonText: 'نعم، احذف', cancelButtonText: 'إلغاء' 
+        });
         if (!result.isConfirmed) return;
         try {
             await deleteDoc(doc(db, 'engineers', id));
@@ -3800,7 +3689,10 @@
 
     function renderCommunications() {
         var c = document.getElementById('commList');
-        if (communications.length === 0) { c.innerHTML = '<div style="text-align:center;padding:20px;color:var(--gray-400);font-size:13px;">لا يوجد سجل تواصل</div>'; return; }
+        if (communications.length === 0) { 
+            c.innerHTML = '<div style="text-align:center;padding:20px;color:var(--gray-400);font-size:13px;">لا يوجد سجل تواصل</div>'; 
+            return; 
+        }
         var html = '';
         var list = communications.slice().reverse().slice(0, 15);
         list.forEach(function(cm) {
@@ -3817,7 +3709,10 @@
     function renderAlerts() {
         var c = document.getElementById('alertsList');
         if (!c) return;
-        if (allAlerts.length === 0) { c.innerHTML = '<div style="text-align:center;padding:30px;color:var(--gray-400);font-size:13px;">لا توجد تنبيهات</div>'; return; }
+        if (allAlerts.length === 0) { 
+            c.innerHTML = '<div style="text-align:center;padding:30px;color:var(--gray-400);font-size:13px;">لا توجد تنبيهات</div>'; 
+            return; 
+        }
         var html = '';
         var list = allAlerts.slice(0, 100);
         list.forEach(function(a) {
@@ -3953,7 +3848,9 @@
             c.innerHTML = '<div class="empty-state" style="grid-column:1/-1;"><div class="icon-wrap"><svg class="icon-svg"><use href="#i-calendar"/></svg></div><h3>لا توجد مواعيد</h3></div>';
             return;
         }
-        var sorted = appointments.slice().sort(function(a, b) { return (a.date + ' ' + (a.time || '')).localeCompare(b.date + ' ' + (b.time || '')); });
+        var sorted = appointments.slice().sort(function(a, b) { 
+            return (a.date + ' ' + (a.time || '')).localeCompare(b.date + ' ' + (b.time || '')); 
+        });
         var html = '';
         sorted.forEach(function(a) {
             var status = getAppointmentStatus(a);
@@ -3989,7 +3886,11 @@
     }
 
     async function deleteAppointment(id) {
-        var result = await Swal.fire({ title: 'حذف الموعد؟', icon: 'warning', showCancelButton: true, confirmButtonColor: '#EF4444', confirmButtonText: 'نعم، احذف', cancelButtonText: 'إلغاء' });
+        var result = await Swal.fire({ 
+            title: 'حذف الموعد؟', icon: 'warning', 
+            showCancelButton: true, confirmButtonColor: '#EF4444', 
+            confirmButtonText: 'نعم، احذف', cancelButtonText: 'إلغاء' 
+        });
         if (!result.isConfirmed) return;
         try {
             await deleteDoc(doc(db, 'appointments', id));
@@ -4102,13 +4003,17 @@
             if (!sel) return;
             var old = sel.value;
             sel.innerHTML = '<option value="">اختر مهندس</option>';
-            engineers.forEach(function(e) { sel.innerHTML += '<option value="' + e.id + '">' + e.name + ' - ' + e.phone + '</option>'; });
+            engineers.forEach(function(e) { 
+                sel.innerHTML += '<option value="' + e.id + '">' + e.name + ' - ' + e.phone + '</option>'; 
+            });
             if (old && engineers.some(function(e) { return e.id == old; })) sel.value = old;
         });
         var sel5 = document.getElementById('e_building');
         if (sel5) {
             sel5.innerHTML = '<option value="">بدون</option>';
-            buildingPermits.forEach(function(p) { sel5.innerHTML += '<option value="' + p.id + '">' + p.client + '</option>'; });
+            buildingPermits.forEach(function(p) { 
+                sel5.innerHTML += '<option value="' + p.id + '">' + p.client + '</option>'; 
+            });
         }
     }
 
@@ -4187,6 +4092,7 @@
         });
     }
 
+    // ==================== RENDER ALL ====================
     function renderAll() {
         renderBuildingPermits();
         renderElevationPermits();
@@ -4282,7 +4188,6 @@
             if (headerPhoto) headerPhoto.src = MY_PHOTO_URL;
         }
         
-        // Force hide loading after 8 seconds
         setTimeout(function() {
             var loading = document.getElementById('loadingScreen');
             var login = document.getElementById('loginScreen');
@@ -4319,7 +4224,6 @@
             }
         });
         
-        // طباعة تأكيد الإعدادات
         console.log('═══════════════════════════════');
         console.log('✅ Al Brazili System Ready');
         console.log('📸 Photo:', MY_PHOTO_URL);
