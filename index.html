@@ -11,54 +11,29 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
-            --primary: #6B21A8;
-            --primary-light: #A855F7;
-            --primary-lighter: #E9D5FF;
-            --primary-dark: #4C1D95;
-            --secondary: #DB2777;
-            --gold: #D4AF37;
-            --gold-light: #F4E4A6;
-            --gold-dark: #B8860B;
-            --black: #0F0F1E;
-            --dark: #1A1A2E;
-            --white: #FFFFFF;
-            --success: #10B981;
-            --success-dark: #059669;
-            --danger: #EF4444;
-            --danger-dark: #DC2626;
-            --warning: #F59E0B;
-            --warning-dark: #D97706;
-            --info: #06B6D4;
-            --info-dark: #0891B2;
-            --purple: #8B5CF6;
-            --purple-dark: #7C3AED;
-            --gray-50: #F9FAFB;
-            --gray-100: #F3F4F6;
-            --gray-200: #E5E7EB;
-            --gray-300: #D1D5DB;
-            --gray-400: #9CA3AF;
-            --gray-500: #6B7280;
-            --gray-700: #374151;
-            --gray-900: #111827;
+            --primary: #6B21A8; --primary-light: #A855F7; --primary-lighter: #E9D5FF; --primary-dark: #4C1D95;
+            --secondary: #DB2777; --gold: #D4AF37; --gold-light: #F4E4A6; --gold-dark: #B8860B;
+            --black: #0F0F1E; --dark: #1A1A2E; --white: #FFFFFF;
+            --success: #10B981; --success-dark: #059669; --danger: #EF4444; --danger-dark: #DC2626;
+            --warning: #F59E0B; --warning-dark: #D97706; --info: #06B6D4; --info-dark: #0891B2;
+            --purple: #8B5CF6; --purple-dark: #7C3AED;
+            --gray-50: #F9FAFB; --gray-100: #F3F4F6; --gray-200: #E5E7EB; --gray-300: #D1D5DB;
+            --gray-400: #9CA3AF; --gray-500: #6B7280; --gray-700: #374151; --gray-900: #111827;
             --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
             --shadow-md: 0 4px 12px rgba(107,33,168,0.15);
             --shadow-lg: 0 10px 25px rgba(107,33,168,0.2);
             --shadow-xl: 0 20px 40px rgba(107,33,168,0.25);
             --shadow-3d: 0 20px 60px rgba(107,33,168,0.3), 0 0 100px rgba(212,175,55,0.15);
             --shadow-primary: 0 8px 25px rgba(107,33,168,0.4);
-            --radius: 14px;
         }
         
         body {
             font-family: 'Segoe UI', 'Tahoma', Arial, sans-serif;
-            background: 
-                radial-gradient(circle at 20% 20%, rgba(107,33,168,0.15), transparent 40%),
-                radial-gradient(circle at 80% 80%, rgba(212,175,55,0.1), transparent 40%),
-                linear-gradient(135deg, #F5F3FF 0%, #EDE9FE 50%, #F3E8FF 100%);
+            background: radial-gradient(circle at 20% 20%, rgba(107,33,168,0.15), transparent 40%),
+                        radial-gradient(circle at 80% 80%, rgba(212,175,55,0.1), transparent 40%),
+                        linear-gradient(135deg, #F5F3FF 0%, #EDE9FE 50%, #F3E8FF 100%);
             background-attachment: fixed;
-            color: var(--gray-900);
-            direction: rtl;
-            min-height: 100vh;
+            color: var(--gray-900); direction: rtl; min-height: 100vh;
         }
         
         .icon-svg { width: 20px; height: 20px; stroke-width: 2; stroke: currentColor; fill: none; display: inline-block; vertical-align: middle; }
@@ -66,8 +41,7 @@
         
         /* LOADING */
         .loading-screen {
-            display: flex; align-items: center; justify-content: center;
-            min-height: 100vh;
+            display: flex; align-items: center; justify-content: center; min-height: 100vh;
             background: linear-gradient(135deg, var(--primary) 0%, var(--black) 50%, var(--dark) 100%);
             position: fixed; top: 0; left: 0; right: 0; bottom: 0;
             z-index: 10000; color: white; flex-direction: column; gap: 24px;
@@ -80,13 +54,9 @@
         }
         @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
         .loading-screen .spinner {
-            width: 90px; height: 90px;
-            border: 5px solid rgba(255,255,255,0.15);
-            border-top-color: var(--gold);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            position: relative; z-index: 1;
-            box-shadow: 0 0 40px rgba(212,175,55,0.5);
+            width: 90px; height: 90px; border: 5px solid rgba(255,255,255,0.15);
+            border-top-color: var(--gold); border-radius: 50%;
+            animation: spin 1s linear infinite; position: relative; z-index: 1;
         }
         @keyframes spin { to { transform: rotate(360deg); } }
         .loading-screen .brand {
@@ -100,25 +70,24 @@
         
         /* CONNECTION */
         .connection-status {
-            position: fixed; bottom: 12px; left: 12px;
-            background: white; padding: 8px 18px; border-radius: 30px;
-            font-size: 12px; box-shadow: var(--shadow-lg);
-            z-index: 9998; display: flex; align-items: center; gap: 8px;
+            position: fixed; bottom: 12px; left: 12px; background: white;
+            padding: 8px 18px; border-radius: 30px; font-size: 12px;
+            box-shadow: var(--shadow-lg); z-index: 9998;
+            display: flex; align-items: center; gap: 8px;
             font-weight: 700; border: 2px solid transparent;
         }
         .connection-status.online { border-color: var(--success); }
         .connection-status.offline { border-color: var(--danger); }
         .connection-status.syncing { border-color: var(--warning); }
         .connection-status .dot { width: 10px; height: 10px; border-radius: 50%; background: #ccc; }
-        .connection-status.online .dot { background: var(--success); box-shadow: 0 0 10px var(--success); animation: pulse 2s infinite; }
-        .connection-status.offline .dot { background: var(--danger); box-shadow: 0 0 10px var(--danger); }
+        .connection-status.online .dot { background: var(--success); animation: pulse 2s infinite; }
+        .connection-status.offline .dot { background: var(--danger); }
         .connection-status.syncing .dot { background: var(--warning); animation: pulse 1s infinite; }
         @keyframes pulse { 0%,100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(1.2); } }
         
         /* LOGIN */
         .login-screen {
-            display: flex; align-items: center; justify-content: center;
-            min-height: 100vh;
+            display: flex; align-items: center; justify-content: center; min-height: 100vh;
             background: linear-gradient(135deg, var(--primary) 0%, var(--black) 50%, var(--dark) 100%);
             position: fixed; top: 0; left: 0; right: 0; bottom: 0;
             z-index: 9999; padding: 20px; transition: all 0.5s ease;
@@ -128,64 +97,38 @@
             background: radial-gradient(circle at 20% 30%, rgba(107,33,168,0.7), transparent 50%),
                         radial-gradient(circle at 80% 70%, rgba(212,175,55,0.35), transparent 50%);
             pointer-events: none;
-            animation: pulseGlow 4s ease-in-out infinite;
         }
-        @keyframes pulseGlow { 0%, 100% { opacity: 0.6; } 50% { opacity: 1; } }
         .login-screen.hidden { opacity: 0; pointer-events: none; transform: scale(1.1); }
-        
         .login-box {
-            background: rgba(255,255,255,0.98);
-            padding: 40px 35px; border-radius: 32px;
+            background: rgba(255,255,255,0.98); padding: 40px 35px; border-radius: 32px;
             text-align: center; max-width: 460px; width: 100%;
-            border: 2px solid var(--gold);
-            box-shadow: var(--shadow-3d);
+            border: 2px solid var(--gold); box-shadow: var(--shadow-3d);
             position: relative; z-index: 1; backdrop-filter: blur(20px);
         }
-        
-        .login-box .photo-container {
-            width: 140px; height: 140px;
-            margin: 0 auto 20px;
-            position: relative;
-        }
+        .login-box .photo-container { width: 140px; height: 140px; margin: 0 auto 20px; position: relative; }
         .login-box .photo-container::before {
-            content: ''; position: absolute; inset: -10px;
-            border-radius: 50%;
+            content: ''; position: absolute; inset: -10px; border-radius: 50%;
             background: linear-gradient(135deg, var(--gold), var(--primary), var(--gold));
-            animation: rotate 4s linear infinite;
-            z-index: 0;
-            filter: blur(8px);
-            opacity: 0.7;
+            animation: rotate 4s linear infinite; z-index: 0; filter: blur(8px); opacity: 0.7;
         }
         .login-box .photo-container::after {
-            content: ''; position: absolute; inset: -6px;
-            border-radius: 50%;
+            content: ''; position: absolute; inset: -6px; border-radius: 50%;
             background: linear-gradient(135deg, var(--gold), var(--primary-light), var(--gold));
-            animation: rotate 6s linear infinite reverse;
-            z-index: 1;
+            animation: rotate 6s linear infinite reverse; z-index: 1;
         }
         .login-box .user-photo {
-            width: 100%; height: 100%;
-            border-radius: 50%;
-            object-fit: cover;
-            position: relative; z-index: 2;
-            border: 5px solid white;
-            box-shadow: 0 15px 40px rgba(107,33,168,0.5);
-            display: block;
+            width: 100%; height: 100%; border-radius: 50%; object-fit: cover;
+            position: relative; z-index: 2; border: 5px solid white;
+            box-shadow: 0 15px 40px rgba(107,33,168,0.5); display: block;
         }
         .login-box .photo-badge {
-            position: absolute;
-            bottom: 5px; left: 5px;
+            position: absolute; bottom: 5px; left: 5px;
             background: linear-gradient(135deg, var(--gold), var(--gold-dark));
-            color: white;
-            width: 36px; height: 36px;
-            border-radius: 50%;
+            color: white; width: 36px; height: 36px; border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
-            z-index: 3;
-            border: 3px solid white;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            z-index: 3; border: 3px solid white; box-shadow: 0 4px 12px rgba(0,0,0,0.2);
         }
         .login-box .photo-badge .icon-svg { width: 18px; height: 18px; }
-        
         .login-box .brand-name {
             font-size: 32px; font-weight: 900;
             background: linear-gradient(135deg, var(--primary), var(--black));
@@ -195,18 +138,13 @@
             background: linear-gradient(135deg, var(--gold), var(--gold-dark));
             -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
         }
-        .login-box .brand-sub {
-            font-size: 14px; color: var(--gray-500);
-            display: block; margin-top: 6px;
-            font-weight: 600;
-        }
+        .login-box .brand-sub { font-size: 14px; color: var(--gray-500); display: block; margin-top: 6px; font-weight: 600; }
         .login-box .country-badge {
             display: inline-flex; align-items: center; gap: 6px;
             font-size: 12px; color: var(--gold-dark); font-weight: 700;
             margin-top: 12px; padding: 5px 16px;
             background: linear-gradient(135deg, #FEF3C7, #FDE68A);
-            border-radius: 20px;
-            border: 1px solid var(--gold-light);
+            border-radius: 20px; border: 1px solid var(--gold-light);
         }
         .login-box .input-group { position: relative; margin: 22px 0; }
         .login-box .input-group .input-icon {
@@ -216,26 +154,21 @@
         .login-box .input-group input {
             width: 100%; padding: 16px 55px 16px 20px;
             border: 2px solid var(--gray-200); border-radius: 14px;
-            font-size: 16px; transition: all 0.3s ease;
-            background: var(--gray-50); font-weight: 600;
+            font-size: 16px; transition: all 0.3s ease; background: var(--gray-50); font-weight: 600;
         }
         .login-box .input-group input:focus {
-            border-color: var(--primary); outline: none;
-            background: white; box-shadow: 0 0 0 4px rgba(107,33,168,0.1);
+            border-color: var(--primary); outline: none; background: white;
+            box-shadow: 0 0 0 4px rgba(107,33,168,0.1);
         }
         .login-box .btn-login {
             width: 100%; padding: 16px;
             background: linear-gradient(135deg, var(--primary), var(--black));
             color: white; border: none; border-radius: 14px;
             font-size: 17px; font-weight: 800; cursor: pointer;
-            transition: all 0.4s ease;
-            box-shadow: var(--shadow-primary);
+            transition: all 0.4s ease; box-shadow: var(--shadow-primary);
             display: flex; align-items: center; justify-content: center; gap: 10px;
         }
-        .login-box .btn-login:hover { 
-            transform: translateY(-3px); 
-            box-shadow: 0 15px 40px rgba(107,33,168,0.6), 0 0 30px rgba(212,175,55,0.4);
-        }
+        .login-box .btn-login:hover { transform: translateY(-3px); box-shadow: 0 15px 40px rgba(107,33,168,0.6); }
         .login-box .error-msg {
             background: #FEF2F2; color: var(--danger-dark);
             padding: 12px; border-radius: 12px; font-size: 13px;
@@ -249,12 +182,9 @@
         /* HEADER */
         .header {
             background: linear-gradient(135deg, var(--primary) 0%, var(--black) 100%);
-            color: white; padding: 16px 22px;
-            border-radius: 24px;
-            margin-bottom: 14px;
-            position: sticky; top: 10px; z-index: 100;
-            box-shadow: var(--shadow-3d);
-            overflow: hidden;
+            color: white; padding: 16px 22px; border-radius: 24px;
+            margin-bottom: 14px; position: sticky; top: 10px; z-index: 100;
+            box-shadow: var(--shadow-3d); overflow: hidden;
         }
         .header::before {
             content: ''; position: absolute; top: -50%; right: -50%;
@@ -263,59 +193,45 @@
             animation: rotate 25s linear infinite; pointer-events: none;
         }
         .header-content {
-            display: flex; justify-content: space-between;
-            align-items: center; flex-wrap: wrap; gap: 10px;
-            position: relative; z-index: 1;
+            display: flex; justify-content: space-between; align-items: center;
+            flex-wrap: wrap; gap: 10px; position: relative; z-index: 1;
         }
         .header-brand { display: flex; align-items: center; gap: 12px; }
-        
         .header-brand .header-photo {
-            width: 52px; height: 52px;
-            border-radius: 50%;
-            overflow: hidden;
+            width: 52px; height: 52px; border-radius: 50%; overflow: hidden;
             border: 3px solid var(--gold);
             box-shadow: 0 6px 20px rgba(0,0,0,0.4), 0 0 20px rgba(212,175,55,0.5);
             flex-shrink: 0;
         }
-        .header-brand .header-photo img {
-            width: 100%; height: 100%;
-            object-fit: cover;
-            display: block;
-        }
-        
+        .header-brand .header-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
         .header-brand .brand-text .name { font-size: 20px; font-weight: 900; color: white; }
         .header-brand .brand-text .name .gold { color: var(--gold); }
         .header-brand .brand-text .sub { font-size: 10px; opacity: 0.85; display: block; color: var(--gold-light); margin-top: 2px; }
         .header-actions { display: flex; gap: 8px; align-items: center; }
         .header-actions .badge {
-            background: rgba(255,255,255,0.15); padding: 6px 12px;
-            border-radius: 20px; font-size: 11px; font-weight: 700;
-            backdrop-filter: blur(10px);
+            background: rgba(255,255,255,0.15); padding: 6px 12px; border-radius: 20px;
+            font-size: 11px; font-weight: 700; backdrop-filter: blur(10px);
             border: 1px solid rgba(255,255,255,0.2);
             display: flex; align-items: center; gap: 5px;
         }
         .header-actions .btn-out {
-            background: rgba(255,255,255,0.15); border: none;
-            color: white; padding: 8px 12px; border-radius: 12px;
-            cursor: pointer; transition: all 0.3s ease;
-            display: flex; align-items: center; justify-content: center;
+            background: rgba(255,255,255,0.15); border: none; color: white;
+            padding: 8px 12px; border-radius: 12px; cursor: pointer;
+            transition: all 0.3s ease; display: flex; align-items: center; justify-content: center;
         }
         .header-actions .btn-out:hover { background: rgba(255,255,255,0.3); transform: scale(1.1); }
         .header-stats { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; position: relative; z-index: 1; }
         .header-stats .stat {
-            background: rgba(255,255,255,0.1);
-            padding: 6px 12px; border-radius: 20px; font-size: 11px;
-            display: flex; align-items: center; gap: 6px;
-            border: 1px solid rgba(255,255,255,0.08);
-            backdrop-filter: blur(10px); font-weight: 600;
+            background: rgba(255,255,255,0.1); padding: 6px 12px; border-radius: 20px;
+            font-size: 11px; display: flex; align-items: center; gap: 6px;
+            border: 1px solid rgba(255,255,255,0.08); backdrop-filter: blur(10px); font-weight: 600;
         }
         .header-stats .stat .icon-svg { color: var(--gold-light); width: 14px; height: 14px; }
         .header-stats .stat strong { font-size: 14px; color: var(--gold-light); }
         
         /* TABS */
         .tabs {
-            display: flex; gap: 6px;
-            background: white; padding: 8px;
+            display: flex; gap: 6px; background: white; padding: 8px;
             border-radius: 18px; box-shadow: var(--shadow-lg);
             overflow-x: auto; margin-bottom: 14px; flex-wrap: nowrap;
             border: 1px solid var(--gray-100);
@@ -327,8 +243,7 @@
             background: transparent; font-weight: 700; font-size: 12px;
             cursor: pointer; flex: 1 0 auto; min-width: 70px;
             white-space: nowrap; display: flex; align-items: center;
-            gap: 6px; justify-content: center;
-            transition: all 0.3s ease; 
+            gap: 6px; justify-content: center; transition: all 0.3s ease;
             color: var(--gray-500);
         }
         .tab-btn .icon-svg { width: 15px; height: 15px; }
@@ -346,29 +261,25 @@
         
         /* CARDS */
         .card {
-            background: white; border-radius: 20px;
-            padding: 20px; box-shadow: var(--shadow-md);
-            margin-bottom: 14px;
+            background: white; border-radius: 20px; padding: 20px;
+            box-shadow: var(--shadow-md); margin-bottom: 14px;
             border: 1px solid rgba(107,33,168,0.08);
         }
         .card-header {
-            display: flex; justify-content: space-between;
-            align-items: center;
+            display: flex; justify-content: space-between; align-items: center;
             border-bottom: 2px solid var(--gray-100);
             padding-bottom: 12px; margin-bottom: 14px;
             flex-wrap: wrap; gap: 10px;
         }
         .card-header h2 {
-            font-size: 17px;
-            display: flex; align-items: center; gap: 8px;
+            font-size: 17px; display: flex; align-items: center; gap: 8px;
             color: var(--gray-900); font-weight: 800;
         }
         .card-header h2 .icon-svg { color: var(--primary); }
         .card-header .badge-count {
             background: linear-gradient(135deg, var(--primary), var(--black));
-            color: white; padding: 4px 14px;
-            border-radius: 20px; font-size: 12px;
-            font-weight: 800; box-shadow: var(--shadow-primary);
+            color: white; padding: 4px 14px; border-radius: 20px;
+            font-size: 12px; font-weight: 800; box-shadow: var(--shadow-primary);
         }
         
         /* STATS */
@@ -376,26 +287,17 @@
         @media (min-width: 700px) { .grid-4 { grid-template-columns: repeat(4, 1fr); } }
         
         .stat-card {
-            background: white; padding: 20px;
-            border-radius: 20px; box-shadow: var(--shadow-md);
-            text-align: center; cursor: pointer;
-            transition: all 0.5s ease;
-            position: relative; overflow: hidden;
+            background: white; padding: 20px; border-radius: 20px;
+            box-shadow: var(--shadow-md); text-align: center; cursor: pointer;
+            transition: all 0.5s ease; position: relative; overflow: hidden;
             border: 1px solid var(--gray-100);
         }
-        .stat-card::before {
-            content: ''; position: absolute; bottom: 0; right: 0; left: 0;
-            height: 5px;
-        }
+        .stat-card::before { content: ''; position: absolute; bottom: 0; right: 0; left: 0; height: 5px; }
         .stat-card.building::before { background: linear-gradient(90deg, var(--primary), var(--primary-light)); }
         .stat-card.elevation::before { background: linear-gradient(90deg, var(--gold), var(--gold-light)); }
         .stat-card.reconciliation::before { background: linear-gradient(90deg, var(--secondary), #F472B6); }
         .stat-card.appointments::before { background: linear-gradient(90deg, var(--success), #34D399); }
-        
-        .stat-card:hover { 
-            transform: translateY(-8px) scale(1.03);
-            box-shadow: var(--shadow-3d);
-        }
+        .stat-card:hover { transform: translateY(-8px) scale(1.03); box-shadow: var(--shadow-3d); }
         .stat-card .icon-wrap {
             width: 56px; height: 56px; border-radius: 16px;
             display: flex; align-items: center; justify-content: center;
@@ -411,61 +313,35 @@
         .stat-card .trend {
             font-size: 10px; padding: 4px 12px; border-radius: 20px;
             display: inline-block; margin-top: 8px; font-weight: 700;
-            background: linear-gradient(135deg, #E9D5FF, #C4B5FD);
-            color: var(--primary);
+            background: linear-gradient(135deg, #E9D5FF, #C4B5FD); color: var(--primary);
         }
         
         /* PROJECTS GRID */
         .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
-            gap: 14px;
-            margin-top: 14px;
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+            gap: 14px; margin-top: 14px;
         }
-        @media (max-width: 600px) {
-            .projects-grid { grid-template-columns: 1fr; }
-        }
+        @media (max-width: 600px) { .projects-grid { grid-template-columns: 1fr; } }
         
         .project-tile {
-            background: white;
-            border-radius: 20px;
-            padding: 18px;
-            box-shadow: var(--shadow-md);
-            cursor: pointer;
-            transition: all 0.5s ease;
-            border: 1px solid var(--gray-100);
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
+            background: white; border-radius: 20px; padding: 18px;
+            box-shadow: var(--shadow-md); cursor: pointer;
+            transition: all 0.5s ease; border: 1px solid var(--gray-100);
+            position: relative; overflow: hidden;
+            display: flex; flex-direction: column; gap: 12px;
         }
-        .project-tile::before {
-            content: '';
-            position: absolute;
-            top: 0; right: 0; left: 0;
-            height: 5px;
-        }
+        .project-tile::before { content: ''; position: absolute; top: 0; right: 0; left: 0; height: 5px; }
         .project-tile.building::before { background: linear-gradient(90deg, var(--primary), var(--primary-light)); }
         .project-tile.elevation::before { background: linear-gradient(90deg, var(--gold), var(--gold-light)); }
         .project-tile.reconciliation::before { background: linear-gradient(90deg, var(--secondary), #F472B6); }
-        
         .project-tile:hover {
             transform: translateY(-8px) scale(1.02);
-            box-shadow: var(--shadow-3d);
-            border-color: var(--primary-light);
+            box-shadow: var(--shadow-3d); border-color: var(--primary-light);
         }
-        
-        .project-tile .tile-header {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
+        .project-tile .tile-header { display: flex; align-items: center; gap: 12px; }
         .project-tile .tile-icon {
-            width: 50px; height: 50px;
-            border-radius: 15px;
-            display: flex; align-items: center; justify-content: center;
-            flex-shrink: 0;
+            width: 50px; height: 50px; border-radius: 15px;
+            display: flex; align-items: center; justify-content: center; flex-shrink: 0;
         }
         .project-tile.building .tile-icon { background: linear-gradient(135deg, #E9D5FF, #C4B5FD); color: var(--primary); }
         .project-tile.elevation .tile-icon { background: linear-gradient(135deg, #FEF3C7, #FDE68A); color: var(--gold-dark); }
@@ -478,14 +354,11 @@
         }
         .project-tile .tile-sub {
             font-size: 11px; color: var(--gray-500);
-            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-            margin-top: 2px;
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 2px;
         }
-        
         .project-tile .tile-status {
-            align-self: flex-start;
-            padding: 4px 12px; border-radius: 20px;
-            font-size: 10px; font-weight: 800;
+            align-self: flex-start; padding: 4px 12px;
+            border-radius: 20px; font-size: 10px; font-weight: 800;
         }
         .status-draft { background: var(--gray-200); color: var(--gray-700); }
         .status-under_review { background: #FEF3C7; color: #92400E; }
@@ -493,580 +366,312 @@
         .status-rejected { background: #FEE2E2; color: #991B1B; }
         .status-issued { background: #E9D5FF; color: var(--primary-dark); }
         .status-completed { background: #A7F3D0; color: #065F46; }
-        
-        .project-tile .tile-progress {
-            display: flex; flex-direction: column; gap: 6px;
-        }
-        .project-tile .tile-progress-info {
-            display: flex; justify-content: space-between;
-            font-size: 11px; font-weight: 700;
-        }
-        .project-tile .tile-progress-bar {
-            height: 6px; background: var(--gray-100);
-            border-radius: 10px; overflow: hidden;
-        }
-        .project-tile .tile-progress-bar .fill {
-            height: 100%;
-            border-radius: 10px;
-            transition: width 0.6s ease;
-        }
+        .project-tile .tile-progress { display: flex; flex-direction: column; gap: 6px; }
+        .project-tile .tile-progress-info { display: flex; justify-content: space-between; font-size: 11px; font-weight: 700; }
+        .project-tile .tile-progress-bar { height: 6px; background: var(--gray-100); border-radius: 10px; overflow: hidden; }
+        .project-tile .tile-progress-bar .fill { height: 100%; border-radius: 10px; transition: width 0.6s ease; }
         .project-tile.building .tile-progress-bar .fill { background: linear-gradient(90deg, var(--primary), var(--primary-light)); }
         .project-tile.elevation .tile-progress-bar .fill { background: linear-gradient(90deg, var(--gold), var(--gold-light)); }
         .project-tile.reconciliation .tile-progress-bar .fill { background: linear-gradient(90deg, var(--secondary), #F472B6); }
-        
         .project-tile .tile-money {
             display: flex; justify-content: space-between; gap: 8px;
-            padding-top: 10px; border-top: 1px solid var(--gray-100);
-            font-size: 11px;
+            padding-top: 10px; border-top: 1px solid var(--gray-100); font-size: 11px;
         }
         .project-tile .tile-money .item { flex: 1; text-align: center; }
-        .project-tile .tile-money .item .label {
-            color: var(--gray-500); font-weight: 600; font-size: 10px;
-        }
-        .project-tile .tile-money .item .value {
-            font-weight: 800; color: var(--gray-900); font-size: 12px; margin-top: 2px;
-        }
+        .project-tile .tile-money .item .label { color: var(--gray-500); font-weight: 600; font-size: 10px; }
+        .project-tile .tile-money .item .value { font-weight: 800; color: var(--gray-900); font-size: 12px; margin-top: 2px; }
         
-        .empty-state {
-            text-align: center;
-            padding: 60px 20px;
-            color: var(--gray-400);
-            grid-column: 1/-1;
-        }
+        .empty-state { text-align: center; padding: 60px 20px; color: var(--gray-400); grid-column: 1/-1; }
         .empty-state .icon-wrap {
-            width: 100px; height: 100px;
-            border-radius: 30px;
+            width: 100px; height: 100px; border-radius: 30px;
             background: var(--gray-100);
-            display: flex; align-items: center; justify-content: center;
-            margin: 0 auto 20px;
+            display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;
         }
         .empty-state .icon-wrap .icon-svg { width: 50px; height: 50px; color: var(--gray-400); }
         .empty-state h3 { font-size: 18px; color: var(--gray-700); margin-bottom: 8px; font-weight: 800; }
         
         /* MODAL */
         .modal-overlay {
-            display: none;
-            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(15,15,30,0.85);
-            z-index: 10002;
-            backdrop-filter: blur(10px);
-            animation: fadeIn 0.3s ease;
-            padding: 20px;
-            overflow-y: auto;
+            display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(15,15,30,0.85); z-index: 10002;
+            backdrop-filter: blur(10px); animation: fadeIn 0.3s ease;
+            padding: 20px; overflow-y: auto;
         }
         .modal-overlay.active { display: flex; align-items: flex-start; justify-content: center; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        
         .modal-content {
-            background: white;
-            border-radius: 28px;
-            max-width: 950px;
-            width: 100%;
-            margin: 20px auto;
-            box-shadow: 0 40px 100px rgba(0,0,0,0.5), 0 0 60px rgba(107,33,168,0.3);
-            animation: slideUp 0.5s ease;
-            overflow: hidden;
+            background: white; border-radius: 28px; max-width: 950px; width: 100%;
+            margin: 20px auto; box-shadow: 0 40px 100px rgba(0,0,0,0.5);
+            animation: slideUp 0.5s ease; overflow: hidden;
         }
         @keyframes slideUp {
             from { opacity: 0; transform: translateY(60px) scale(0.9); }
             to { opacity: 1; transform: translateY(0) scale(1); }
         }
-        
         .modal-header {
             background: linear-gradient(135deg, var(--primary), var(--black));
-            color: white;
-            padding: 22px 26px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 12px;
-            position: relative;
-            overflow: hidden;
+            color: white; padding: 22px 26px;
+            display: flex; justify-content: space-between; align-items: center;
+            gap: 12px; position: relative; overflow: hidden;
         }
         .modal-header::before {
-            content: '';
-            position: absolute;
-            top: -50%; right: -50%;
+            content: ''; position: absolute; top: -50%; right: -50%;
             width: 200%; height: 200%;
             background: radial-gradient(circle, rgba(212,175,55,0.25), transparent 60%);
-            pointer-events: none;
-            animation: rotate 30s linear infinite;
+            pointer-events: none; animation: rotate 30s linear infinite;
         }
         .modal-header .header-info {
             display: flex; align-items: center; gap: 14px;
-            position: relative; z-index: 1;
-            flex: 1; min-width: 0;
+            position: relative; z-index: 1; flex: 1; min-width: 0;
         }
         .modal-header .header-info .tile-icon {
-            width: 54px; height: 54px;
-            border-radius: 16px;
+            width: 54px; height: 54px; border-radius: 16px;
             background: rgba(255,255,255,0.15);
             display: flex; align-items: center; justify-content: center;
-            flex-shrink: 0;
-            backdrop-filter: blur(10px);
-            border: 2px solid var(--gold);
-            box-shadow: 0 0 25px rgba(212,175,55,0.5);
+            flex-shrink: 0; backdrop-filter: blur(10px);
+            border: 2px solid var(--gold); box-shadow: 0 0 25px rgba(212,175,55,0.5);
         }
-        .modal-header .header-info .tile-icon .icon-svg {
-            width: 26px; height: 26px;
-            color: var(--gold);
-        }
-        .modal-header .header-info .title-text {
-            flex: 1; min-width: 0;
-        }
+        .modal-header .header-info .tile-icon .icon-svg { width: 26px; height: 26px; color: var(--gold); }
+        .modal-header .header-info .title-text { flex: 1; min-width: 0; }
         .modal-header .header-info .title-text h3 {
             font-size: 19px; font-weight: 900;
             white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
         }
         .modal-header .header-info .title-text .sub {
-            font-size: 12px; opacity: 0.85;
-            margin-top: 3px;
+            font-size: 12px; opacity: 0.85; margin-top: 3px;
             white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
         }
         .modal-close-btn {
-            background: rgba(255,255,255,0.15);
-            border: none;
-            color: white;
-            width: 44px; height: 44px;
-            border-radius: 14px;
-            cursor: pointer;
+            background: rgba(255,255,255,0.15); border: none; color: white;
+            width: 44px; height: 44px; border-radius: 14px; cursor: pointer;
             display: flex; align-items: center; justify-content: center;
-            flex-shrink: 0;
-            transition: all 0.4s ease;
+            flex-shrink: 0; transition: all 0.4s ease;
             position: relative; z-index: 1;
         }
-        .modal-close-btn:hover {
-            background: rgba(255,255,255,0.3);
-            transform: rotate(90deg);
-        }
-        
-        .modal-body {
-            padding: 24px;
-            max-height: calc(100vh - 180px);
-            overflow-y: auto;
-        }
-        
+        .modal-close-btn:hover { background: rgba(255,255,255,0.3); transform: rotate(90deg); }
+        .modal-body { padding: 24px; max-height: calc(100vh - 180px); overflow-y: auto; }
         .modal-actions {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-            margin-bottom: 18px;
-            padding-bottom: 18px;
-            border-bottom: 1px solid var(--gray-100);
+            display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 18px;
+            padding-bottom: 18px; border-bottom: 1px solid var(--gray-100);
         }
         
         /* DETAILS */
         .details-grid-modal {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-            gap: 12px;
-            margin-bottom: 18px;
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 12px; margin-bottom: 18px;
         }
         .detail-item {
             background: linear-gradient(135deg, #F5F3FF, white);
-            padding: 14px;
-            border-radius: 14px;
-            border: 1px solid var(--gray-100);
+            padding: 14px; border-radius: 14px; border: 1px solid var(--gray-100);
         }
         .detail-item .label {
-            font-size: 11px; color: var(--gray-500);
-            font-weight: 700;
-            display: flex; align-items: center; gap: 4px;
-            margin-bottom: 4px;
+            font-size: 11px; color: var(--gray-500); font-weight: 700;
+            display: flex; align-items: center; gap: 4px; margin-bottom: 4px;
         }
         .detail-item .label .icon-svg { width: 12px; height: 12px; }
-        .detail-item .value {
-            font-size: 15px; font-weight: 800;
-            color: var(--gray-900);
-        }
-        
+        .detail-item .value { font-size: 15px; font-weight: 800; color: var(--gray-900); }
         .info-box {
-            padding: 14px 18px;
-            border-radius: 14px;
-            margin-bottom: 14px;
-            display: flex;
-            align-items: start;
-            gap: 10px;
-            font-size: 13px;
-            font-weight: 600;
+            padding: 14px 18px; border-radius: 14px; margin-bottom: 14px;
+            display: flex; align-items: start; gap: 10px; font-size: 13px; font-weight: 600;
         }
         .info-box .icon-svg { width: 18px; height: 18px; flex-shrink: 0; margin-top: 2px; }
-        .info-box.agreement {
-            background: linear-gradient(135deg, #FFFBEB, #FEF3C7);
-            border-right: 4px solid var(--gold);
-            color: #78350F;
-        }
+        .info-box.agreement { background: linear-gradient(135deg, #FFFBEB, #FEF3C7); border-right: 4px solid var(--gold); color: #78350F; }
         .info-box.agreement .icon-svg { color: var(--gold-dark); }
-        .info-box.next-step {
-            background: linear-gradient(135deg, #E0F2FE, #BAE6FD);
-            border-right: 4px solid var(--info);
-            color: #075985;
-        }
+        .info-box.next-step { background: linear-gradient(135deg, #E0F2FE, #BAE6FD); border-right: 4px solid var(--info); color: #075985; }
         .info-box.next-step .icon-svg { color: var(--info-dark); }
-        .info-box.transaction {
-            background: linear-gradient(135deg, #F0FDF4, #DCFCE7);
-            border-right: 4px solid var(--success);
-            color: #166534;
-        }
+        .info-box.transaction { background: linear-gradient(135deg, #F0FDF4, #DCFCE7); border-right: 4px solid var(--success); color: #166534; }
         .info-box.transaction .icon-svg { color: var(--success-dark); }
         
         /* GEAR STEPS */
         .steps-section {
             background: linear-gradient(135deg, #F5F3FF, #EDE9FE);
-            padding: 20px 16px;
-            border-radius: 20px;
-            margin-bottom: 16px;
+            padding: 20px 16px; border-radius: 20px; margin-bottom: 16px;
             border-right: 4px solid var(--primary);
         }
         .steps-section .section-title {
-            font-weight: 800; color: var(--primary);
-            margin-bottom: 20px; font-size: 15px;
-            display: flex; justify-content: space-between;
+            font-weight: 800; color: var(--primary); margin-bottom: 20px;
+            font-size: 15px; display: flex; justify-content: space-between;
             align-items: center; flex-wrap: wrap; gap: 8px;
         }
-        .steps-section .section-title .title-text {
-            display: flex; align-items: center; gap: 8px;
-        }
+        .steps-section .section-title .title-text { display: flex; align-items: center; gap: 8px; }
         .steps-section .progress-badge {
-            font-size: 11px;
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            color: white; padding: 5px 14px;
-            border-radius: 14px; font-weight: 700;
-            box-shadow: var(--shadow-primary);
+            font-size: 11px; background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white; padding: 5px 14px; border-radius: 14px; font-weight: 700;
         }
-        
-        .gears-timeline {
-            display: flex;
-            flex-direction: column;
-            gap: 0;
-            padding: 10px 0;
-            position: relative;
-        }
-        
-        .gear-step {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            padding: 10px 0;
-            position: relative;
-            cursor: pointer;
-        }
-        
+        .gears-timeline { display: flex; flex-direction: column; gap: 0; padding: 10px 0; position: relative; }
+        .gear-step { display: flex; align-items: center; gap: 14px; padding: 10px 0; position: relative; }
         .gear-icon-wrap {
-            width: 62px;
-            height: 62px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            position: relative;
-            transition: all 0.4s ease;
-            z-index: 2;
+            width: 62px; height: 62px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0; position: relative; transition: all 0.4s ease; z-index: 2;
         }
-        
-        .gear-svg {
-            width: 34px;
-            height: 34px;
-            transition: all 0.6s ease;
-            transform-origin: center;
-        }
-        
+        .gear-svg { width: 34px; height: 34px; transition: all 0.6s ease; transform-origin: center; }
         .gear-step.pending .gear-icon-wrap {
-            background: linear-gradient(135deg, #E5E7EB, #D1D5DB);
-            border: 3px solid var(--gray-300);
+            background: linear-gradient(135deg, #E5E7EB, #D1D5DB); border: 3px solid var(--gray-300);
         }
         .gear-step.pending .gear-svg { color: var(--gray-500); opacity: 0.6; }
         .gear-step.pending .gear-info .gear-name { color: var(--gray-500); font-weight: 600; }
-        
         .gear-step.current .gear-icon-wrap {
             background: linear-gradient(135deg, var(--warning), var(--warning-dark));
-            border: 3px solid var(--warning);
-            box-shadow: 0 0 0 6px rgba(245,158,11,0.2), 0 8px 20px rgba(245,158,11,0.4);
-            animation: gearPulse 2s ease-in-out infinite;
+            border: 3px solid var(--warning); animation: gearPulse 2s ease-in-out infinite;
         }
-        .gear-step.current .gear-svg {
-            color: white;
-            animation: gearSpin 3s linear infinite;
-        }
-        .gear-step.current .gear-info .gear-name {
-            color: var(--warning-dark);
-            font-weight: 900;
-            font-size: 15px;
-        }
+        .gear-step.current .gear-svg { color: white; animation: gearSpin 3s linear infinite; }
+        .gear-step.current .gear-info .gear-name { color: var(--warning-dark); font-weight: 900; font-size: 15px; }
         .gear-step.current .gear-info .gear-dept {
-            background: linear-gradient(135deg, var(--warning), var(--warning-dark));
-            color: white;
-            font-weight: 800;
+            background: linear-gradient(135deg, var(--warning), var(--warning-dark)); color: white; font-weight: 800;
         }
-        
-        @keyframes gearSpin {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
+        @keyframes gearSpin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
         @keyframes gearPulse {
             0%, 100% { box-shadow: 0 0 0 6px rgba(245,158,11,0.2), 0 8px 20px rgba(245,158,11,0.4); }
             50% { box-shadow: 0 0 0 12px rgba(245,158,11,0.1), 0 12px 30px rgba(245,158,11,0.5); }
         }
-        
         .gear-step.completed .gear-icon-wrap {
             background: linear-gradient(135deg, var(--success), var(--success-dark));
             border: 3px solid var(--success);
-            box-shadow: 0 6px 20px rgba(16,185,129,0.35);
         }
-        .gear-step.completed .gear-svg {
-            color: white;
-            animation: gearComplete 1s ease-out;
-        }
+        .gear-step.completed .gear-svg { color: white; animation: gearComplete 1s ease-out; }
         .gear-step.completed .gear-info .gear-name {
-            color: var(--success-dark);
-            font-weight: 800;
-            text-decoration: line-through;
-            text-decoration-color: var(--success);
-            text-decoration-thickness: 2px;
+            color: var(--success-dark); font-weight: 800;
+            text-decoration: line-through; text-decoration-color: var(--success);
         }
         .gear-step.completed .gear-info .gear-dept {
-            background: linear-gradient(135deg, var(--success), var(--success-dark));
-            color: white;
+            background: linear-gradient(135deg, var(--success), var(--success-dark)); color: white;
         }
-        
         @keyframes gearComplete {
             0% { transform: rotate(0deg) scale(1); }
             50% { transform: rotate(180deg) scale(1.3); }
             100% { transform: rotate(360deg) scale(1); }
         }
-        
         .gear-step.completed .gear-checkmark {
-            position: absolute;
-            bottom: -2px;
-            right: -2px;
-            width: 22px;
-            height: 22px;
-            background: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            position: absolute; bottom: -2px; right: -2px;
+            width: 22px; height: 22px; background: white; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
             box-shadow: 0 2px 8px rgba(0,0,0,0.2);
         }
         .gear-step.completed .gear-checkmark .icon-svg {
-            width: 14px;
-            height: 14px;
-            color: var(--success);
-            stroke-width: 3;
+            width: 14px; height: 14px; color: var(--success); stroke-width: 3;
         }
-        
-        .gear-info {
-            flex: 1;
-            min-width: 0;
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-        }
-        .gear-info .gear-name {
-            font-size: 13.5px;
-            font-weight: 700;
-            color: var(--gray-900);
-        }
-        .gear-info .gear-meta {
-            display: flex;
-            gap: 8px;
-            align-items: center;
-            flex-wrap: wrap;
-        }
+        .gear-info { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 5px; }
+        .gear-info .gear-name { font-size: 13.5px; font-weight: 700; color: var(--gray-900); }
+        .gear-info .gear-meta { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
         .gear-info .gear-dept {
-            font-size: 10.5px;
-            background: var(--gray-100);
-            color: var(--gray-500);
-            padding: 3px 10px;
-            border-radius: 10px;
-            font-weight: 700;
+            font-size: 10.5px; background: var(--gray-100); color: var(--gray-500);
+            padding: 3px 10px; border-radius: 10px; font-weight: 700;
         }
         .gear-info .gear-duration {
-            font-size: 10.5px;
-            color: var(--gray-500);
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 3px;
+            font-size: 10.5px; color: var(--gray-500); font-weight: 600;
+            display: flex; align-items: center; gap: 3px;
         }
         .gear-info .gear-duration .icon-svg { width: 11px; height: 11px; }
-        
         .gear-number {
-            position: absolute;
-            top: -4px;
-            right: -4px;
-            background: white;
-            color: var(--gray-700);
-            width: 22px;
-            height: 22px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 11px;
-            font-weight: 900;
+            position: absolute; top: -4px; right: -4px;
+            background: white; color: var(--gray-700);
+            width: 22px; height: 22px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 11px; font-weight: 900;
             box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-            border: 2px solid var(--gray-200);
-            z-index: 3;
+            border: 2px solid var(--gray-200); z-index: 3;
         }
-        .gear-step.current .gear-number {
-            background: var(--warning);
-            color: white;
-            border-color: white;
-        }
-        .gear-step.completed .gear-number {
-            background: var(--success);
-            color: white;
-            border-color: white;
-        }
-        
+        .gear-step.current .gear-number { background: var(--warning); color: white; border-color: white; }
+        .gear-step.completed .gear-number { background: var(--success); color: white; border-color: white; }
         .gear-connector {
-            position: absolute;
-            right: 30px;
-            top: 62px;
-            bottom: -10px;
-            width: 3px;
-            background: var(--gray-200);
-            z-index: 1;
+            position: absolute; right: 30px; top: 62px; bottom: -10px;
+            width: 3px; background: var(--gray-200); z-index: 1;
         }
-        .gear-step.completed .gear-connector {
-            background: linear-gradient(180deg, var(--success), var(--success-dark));
-        }
+        .gear-step.completed .gear-connector { background: linear-gradient(180deg, var(--success), var(--success-dark)); }
         .gear-step:last-child .gear-connector { display: none; }
-        
         .steps-actions {
             display: flex; gap: 8px; flex-wrap: wrap; margin-top: 16px;
-            padding-top: 16px;
-            border-top: 1px solid var(--gray-200);
+            padding-top: 16px; border-top: 1px solid var(--gray-200);
         }
         
         /* DOCUMENTS */
         .documents-section {
             background: linear-gradient(135deg, #FFFBEB, #FEF3C7);
-            padding: 16px; border-radius: 16px;
-            margin-bottom: 16px;
+            padding: 16px; border-radius: 16px; margin-bottom: 16px;
             border-right: 4px solid var(--gold);
         }
         .documents-section .section-title {
-            font-weight: 800; color: #92400E;
-            margin-bottom: 12px; font-size: 14px;
-            display: flex; align-items: center; gap: 8px;
+            font-weight: 800; color: #92400E; margin-bottom: 12px;
+            font-size: 14px; display: flex; align-items: center; gap: 8px;
         }
         .doc-files-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-            gap: 8px;
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 8px;
         }
-        
         .file-card-mini {
             display: flex; align-items: center; gap: 10px;
-            background: white; padding: 10px 12px;
-            border-radius: 12px;
+            background: white; padding: 10px 12px; border-radius: 12px;
             border: 1px solid var(--gray-200);
         }
         .file-card-mini .file-icon-mini {
             width: 38px; height: 38px; border-radius: 10px;
             background: linear-gradient(135deg, #E9D5FF, #C4B5FD);
             display: flex; align-items: center; justify-content: center;
-            flex-shrink: 0;
-            color: var(--primary);
+            flex-shrink: 0; color: var(--primary);
         }
         .file-card-mini .file-icon-mini .icon-svg { width: 18px; height: 18px; }
         .file-card-mini .file-info-mini { flex: 1; min-width: 0; }
         .file-card-mini .file-info-mini .name {
-            font-size: 12px; font-weight: 700;
-            color: var(--gray-900);
+            font-size: 12px; font-weight: 700; color: var(--gray-900);
             white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
         }
-        .file-card-mini .file-info-mini .meta {
-            font-size: 10px; color: var(--gray-500);
-            margin-top: 2px;
-        }
+        .file-card-mini .file-info-mini .meta { font-size: 10px; color: var(--gray-500); margin-top: 2px; }
         .file-card-mini .file-actions-mini { display: flex; gap: 4px; flex-shrink: 0; }
         .file-card-mini .file-actions-mini button,
         .file-card-mini .file-actions-mini a {
-            width: 32px; height: 32px;
-            border-radius: 8px; border: none;
-            cursor: pointer;
-            display: flex; align-items: center; justify-content: center;
-            text-decoration: none;
+            width: 32px; height: 32px; border-radius: 8px; border: none;
+            cursor: pointer; display: flex; align-items: center;
+            justify-content: center; text-decoration: none;
         }
         .file-card-mini .file-actions-mini .icon-svg { width: 14px; height: 14px; }
         .file-card-mini .file-actions-mini .btn-view {
-            background: linear-gradient(135deg, #E9D5FF, #C4B5FD);
-            color: var(--primary);
+            background: linear-gradient(135deg, #E9D5FF, #C4B5FD); color: var(--primary);
         }
         .file-card-mini .file-actions-mini .btn-download {
-            background: linear-gradient(135deg, #D1FAE5, #A7F3D0);
-            color: var(--success);
+            background: linear-gradient(135deg, #D1FAE5, #A7F3D0); color: var(--success);
         }
         
         /* FORMS */
         .form-group { margin-bottom: 12px; }
-        .form-group label {
-            display: block; font-weight: 700;
-            font-size: 12px; margin-bottom: 5px;
-            color: var(--gray-700);
-        }
+        .form-group label { display: block; font-weight: 700; font-size: 12px; margin-bottom: 5px; color: var(--gray-700); }
         .form-group label .required { color: var(--danger); }
         .form-group input,
         .form-group select,
         .form-group textarea {
-            width: 100%; padding: 11px 14px;
-            border: 2px solid var(--gray-200);
-            border-radius: 12px; font-size: 13px;
-            font-family: inherit; transition: all 0.3s ease;
-            background: var(--gray-50);
+            width: 100%; padding: 11px 14px; border: 2px solid var(--gray-200);
+            border-radius: 12px; font-size: 13px; font-family: inherit;
+            transition: all 0.3s ease; background: var(--gray-50);
         }
         .form-group input:focus,
         .form-group select:focus,
         .form-group textarea:focus {
-            border-color: var(--primary); outline: none;
-            background: white;
+            border-color: var(--primary); outline: none; background: white;
             box-shadow: 0 0 0 4px rgba(107,33,168,0.1);
         }
         .form-group textarea { resize: vertical; min-height: 55px; }
         .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
         @media (max-width: 450px) { .form-row { grid-template-columns: 1fr; } }
-        
         .phone-input-group { position: relative; }
         .phone-input-group input { padding-left: 55px !important; }
         .phone-input-group .contact-btn {
-            position: absolute;
-            left: 6px; top: 50%;
-            transform: translateY(-50%);
+            position: absolute; left: 6px; top: 50%; transform: translateY(-50%);
             background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            color: white;
-            border: none;
-            width: 40px; height: 40px;
-            border-radius: 10px;
-            cursor: pointer;
+            color: white; border: none; width: 40px; height: 40px;
+            border-radius: 10px; cursor: pointer;
             display: flex; align-items: center; justify-content: center;
-            transition: all 0.3s ease;
-        }
-        .phone-input-group .contact-btn:hover {
-            transform: translateY(-50%) scale(1.1);
         }
         .phone-input-group .contact-btn .icon-svg { width: 18px; height: 18px; }
         
         /* BUTTONS */
         .btn {
-            padding: 11px 20px; border: none;
-            border-radius: 12px; font-size: 13px;
-            font-weight: 700; cursor: pointer;
-            display: inline-flex; align-items: center;
-            gap: 6px; justify-content: center;
-            transition: all 0.3s ease;
-            font-family: inherit;
+            padding: 11px 20px; border: none; border-radius: 12px;
+            font-size: 13px; font-weight: 700; cursor: pointer;
+            display: inline-flex; align-items: center; gap: 6px;
+            justify-content: center; transition: all 0.3s ease; font-family: inherit;
         }
         .btn .icon-svg { width: 15px; height: 15px; }
         .btn:hover { transform: translateY(-3px); }
-        .btn:active { transform: translateY(0); }
-        .btn-primary {
-            background: linear-gradient(135deg, var(--primary), var(--black));
-            color: white; width: 100%; box-shadow: var(--shadow-primary);
-        }
+        .btn-primary { background: linear-gradient(135deg, var(--primary), var(--black)); color: white; width: 100%; box-shadow: var(--shadow-primary); }
         .btn-success { background: linear-gradient(135deg, var(--success), var(--success-dark)); color: white; }
         .btn-danger { background: linear-gradient(135deg, var(--danger), var(--danger-dark)); color: white; }
         .btn-warning { background: linear-gradient(135deg, var(--warning), var(--warning-dark)); color: white; }
@@ -1079,22 +684,14 @@
         /* ADD BUTTON */
         .add-btn-floating {
             background: linear-gradient(135deg, var(--primary) 0%, var(--black) 100%);
-            color: white; border: none;
-            padding: 15px 24px; border-radius: 18px;
-            font-size: 14px; font-weight: 800;
-            cursor: pointer;
+            color: white; border: none; padding: 15px 24px; border-radius: 18px;
+            font-size: 14px; font-weight: 800; cursor: pointer;
             display: inline-flex; align-items: center; gap: 8px;
-            box-shadow: var(--shadow-primary);
-            transition: all 0.4s ease;
-            margin-bottom: 14px;
-            width: 100%; justify-content: center;
-            font-family: inherit;
+            box-shadow: var(--shadow-primary); transition: all 0.4s ease;
+            margin-bottom: 14px; width: 100%; justify-content: center; font-family: inherit;
         }
         .add-btn-floating .icon-svg { width: 20px; height: 20px; }
-        .add-btn-floating:hover { 
-            transform: translateY(-4px); 
-            box-shadow: 0 20px 50px rgba(107,33,168,0.6), 0 0 40px rgba(212,175,55,0.3);
-        }
+        .add-btn-floating:hover { transform: translateY(-4px); box-shadow: 0 20px 50px rgba(107,33,168,0.6); }
         
         /* COLLAPSE */
         .form-collapse { display: none; animation: slideDown 0.5s ease; }
@@ -1108,8 +705,7 @@
         .docs-section {
             background: linear-gradient(135deg, #FFFBEB, #FEF3C7);
             padding: 14px; border-radius: 14px;
-            border: 2px solid var(--gold-light);
-            margin-bottom: 14px;
+            border: 2px solid var(--gold-light); margin-bottom: 14px;
         }
         .docs-section > label.title {
             font-weight: 800; font-size: 13px;
@@ -1119,54 +715,35 @@
         .docs-section > label.title .icon-svg { width: 16px; height: 16px; }
         .docs-grid { display: grid; grid-template-columns: 1fr; gap: 8px; }
         @media (min-width: 550px) { .docs-grid { grid-template-columns: 1fr 1fr; } }
-        
         .doc-item {
-            background: white; padding: 12px;
-            border-radius: 12px;
-            border: 2px solid var(--gray-200);
-            transition: all 0.3s ease;
+            background: white; padding: 12px; border-radius: 12px;
+            border: 2px solid var(--gray-200); transition: all 0.3s ease;
         }
-        .doc-item.uploaded {
-            border-color: var(--success);
-            background: linear-gradient(135deg, #F0FDF4, #DCFCE7);
-        }
-        .doc-item .doc-header {
-            display: flex; align-items: center;
-            gap: 8px; margin-bottom: 8px;
-        }
+        .doc-item.uploaded { border-color: var(--success); background: linear-gradient(135deg, #F0FDF4, #DCFCE7); }
+        .doc-item .doc-header { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
         .doc-item .doc-header input[type="checkbox"] {
-            width: 18px; height: 18px;
-            cursor: pointer; flex-shrink: 0;
+            width: 18px; height: 18px; cursor: pointer; flex-shrink: 0;
             accent-color: var(--primary);
         }
         .doc-item .doc-header label {
-            font-weight: 700; font-size: 12px;
-            cursor: pointer; flex: 1; margin: 0;
-            color: var(--gray-700);
+            font-weight: 700; font-size: 12px; cursor: pointer;
+            flex: 1; margin: 0; color: var(--gray-700);
         }
-        .doc-item .file-upload-area {
-            display: flex; flex-direction: column; gap: 6px;
-        }
+        .doc-item .file-upload-area { display: flex; flex-direction: column; gap: 6px; }
         .doc-item .file-upload-area input[type="file"] { display: none; }
         .doc-item .file-upload-area .upload-btn {
-            padding: 9px 12px;
-            background: linear-gradient(135deg, var(--info), var(--info-dark));
-            color: white; border-radius: 8px;
-            font-size: 11px; font-weight: 700;
-            cursor: pointer;
-            display: inline-flex; align-items: center;
+            padding: 9px 12px; background: linear-gradient(135deg, var(--info), var(--info-dark));
+            color: white; border-radius: 8px; font-size: 11px; font-weight: 700;
+            cursor: pointer; display: inline-flex; align-items: center;
             gap: 6px; width: 100%; justify-content: center;
         }
         .doc-item .file-upload-area .upload-btn .icon-svg { width: 13px; height: 13px; }
-        
         .files-list { margin-top: 8px; }
         .file-item {
             display: flex; align-items: center; gap: 8px;
-            padding: 8px 10px;
-            background: linear-gradient(135deg, #F0FDF4, #DCFCE7);
-            border: 1px solid var(--success);
-            border-radius: 8px; margin-bottom: 5px;
-            font-size: 11px;
+            padding: 8px 10px; background: linear-gradient(135deg, #F0FDF4, #DCFCE7);
+            border: 1px solid var(--success); border-radius: 8px;
+            margin-bottom: 5px; font-size: 11px;
         }
         .file-item .file-info { flex: 1; min-width: 0; }
         .file-item .file-info .file-name {
@@ -1174,18 +751,11 @@
             white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
             display: flex; align-items: center; gap: 5px;
         }
-        .file-item .file-info .file-name .icon-svg {
-            width: 12px; height: 12px;
-            color: var(--success-dark); flex-shrink: 0;
-        }
-        .file-item .file-info .file-size {
-            font-size: 10px; color: var(--gray-500);
-            margin-top: 1px;
-        }
+        .file-item .file-info .file-name .icon-svg { width: 12px; height: 12px; color: var(--success-dark); flex-shrink: 0; }
+        .file-item .file-info .file-size { font-size: 10px; color: var(--gray-500); margin-top: 1px; }
         .file-item .remove-file-btn {
             background: linear-gradient(135deg, var(--danger), var(--danger-dark));
-            color: white; border: none;
-            padding: 6px; border-radius: 6px;
+            color: white; border: none; padding: 6px; border-radius: 6px;
             cursor: pointer; flex-shrink: 0;
             display: flex; align-items: center; justify-content: center;
         }
@@ -1193,42 +763,31 @@
         
         /* APPOINTMENTS */
         .appointments-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 14px;
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px;
         }
         .appointment-tile {
-            background: white; border-radius: 18px;
-            padding: 18px; box-shadow: var(--shadow-md);
-            border: 1px solid var(--gray-100);
+            background: white; border-radius: 18px; padding: 18px;
+            box-shadow: var(--shadow-md); border: 1px solid var(--gray-100);
             position: relative; overflow: hidden;
         }
         .appointment-tile::before {
-            content: ''; position: absolute;
-            top: 0; right: 0; bottom: 0;
-            width: 5px;
+            content: ''; position: absolute; top: 0; right: 0; bottom: 0; width: 5px;
         }
         .appointment-tile.overdue::before { background: var(--danger); }
         .appointment-tile.today::before { background: var(--warning); }
         .appointment-tile.upcoming::before { background: var(--info); }
         .appointment-tile.completed::before { background: var(--success); }
         .appointment-tile .app-header {
-            display: flex; justify-content: space-between;
-            align-items: start; gap: 8px; flex-wrap: wrap;
-            margin-bottom: 10px;
+            display: flex; justify-content: space-between; align-items: start;
+            gap: 8px; flex-wrap: wrap; margin-bottom: 10px;
         }
         .appointment-tile .app-title {
-            font-size: 14px; font-weight: 800;
-            color: var(--gray-900);
+            font-size: 14px; font-weight: 800; color: var(--gray-900);
             display: flex; align-items: center; gap: 6px;
         }
-        .appointment-tile .app-title .icon-svg {
-            width: 16px; height: 16px;
-            color: var(--primary);
-        }
+        .appointment-tile .app-title .icon-svg { width: 16px; height: 16px; color: var(--primary); }
         .appointment-tile .app-badge {
-            padding: 4px 12px; border-radius: 20px;
-            font-size: 10px; font-weight: 800;
+            padding: 4px 12px; border-radius: 20px; font-size: 10px; font-weight: 800;
         }
         .app-badge.overdue { background: var(--danger); color: white; }
         .app-badge.today { background: var(--warning); color: white; }
@@ -1238,27 +797,18 @@
             display: flex; flex-direction: column; gap: 5px;
             font-size: 12px; margin-bottom: 10px;
         }
-        .appointment-tile .app-info-item {
-            display: flex; align-items: center; gap: 6px;
-            color: var(--gray-700);
-        }
-        .appointment-tile .app-info-item .icon-svg {
-            width: 14px; height: 14px;
-            color: var(--gray-400);
-        }
+        .appointment-tile .app-info-item { display: flex; align-items: center; gap: 6px; color: var(--gray-700); }
+        .appointment-tile .app-info-item .icon-svg { width: 14px; height: 14px; color: var(--gray-400); }
         .appointment-tile .app-actions {
             display: flex; gap: 6px; flex-wrap: wrap;
-            padding-top: 10px;
-            border-top: 1px solid var(--gray-100);
+            padding-top: 10px; border-top: 1px solid var(--gray-100);
         }
         
         /* ALERTS */
         .alert-item {
-            padding: 14px 18px; border-radius: 14px;
-            margin-bottom: 8px;
-            display: flex; justify-content: space-between;
-            align-items: center; border-right: 4px solid;
-            background: white; font-size: 12px;
+            padding: 14px 18px; border-radius: 14px; margin-bottom: 8px;
+            display: flex; justify-content: space-between; align-items: center;
+            border-right: 4px solid; background: white; font-size: 12px;
             box-shadow: var(--shadow-sm);
         }
         .alert-payment { border-color: var(--warning); background: linear-gradient(135deg, white, #FFFBEB); }
@@ -1271,107 +821,74 @@
         
         /* COMMUNICATION */
         .communication-item {
-            padding: 14px 16px;
-            background: linear-gradient(135deg, #FAF5FF, #F3E8FF);
+            padding: 14px 16px; background: linear-gradient(135deg, #FAF5FF, #F3E8FF);
             border-radius: 12px; margin-bottom: 8px;
-            border-right: 4px solid var(--purple);
-            font-size: 12px;
+            border-right: 4px solid var(--purple); font-size: 12px;
         }
         .communication-item .msg-subject {
-            font-weight: 800; color: var(--primary);
-            margin-bottom: 5px;
+            font-weight: 800; color: var(--primary); margin-bottom: 5px;
             display: flex; align-items: center; gap: 5px;
         }
         .communication-item .msg-subject .icon-svg { width: 14px; height: 14px; }
-        .communication-item .msg-body {
-            font-size: 12px; color: var(--gray-700);
-            margin-top: 5px;
-        }
+        .communication-item .msg-body { font-size: 12px; color: var(--gray-700); margin-top: 5px; }
         .communication-item .msg-meta {
             font-size: 10px; color: var(--gray-500);
-            margin-top: 6px; display: flex;
-            gap: 12px; flex-wrap: wrap;
+            margin-top: 6px; display: flex; gap: 12px; flex-wrap: wrap;
         }
         
         /* ENGINEERS */
         .engineer-tile {
-            background: white; border-radius: 18px;
-            padding: 18px; box-shadow: var(--shadow-md);
-            border: 1px solid var(--gray-100);
+            background: white; border-radius: 18px; padding: 18px;
+            box-shadow: var(--shadow-md); border: 1px solid var(--gray-100);
             border-right: 4px solid var(--purple);
         }
         .engineer-tile .eng-header {
-            display: flex; align-items: center; gap: 12px;
-            margin-bottom: 10px;
+            display: flex; align-items: center; gap: 12px; margin-bottom: 10px;
         }
         .engineer-tile .eng-avatar {
             width: 52px; height: 52px; border-radius: 50%;
             background: linear-gradient(135deg, var(--purple), var(--purple-dark));
             display: flex; align-items: center; justify-content: center;
-            color: white; flex-shrink: 0;
-            font-size: 22px; font-weight: 900;
-            box-shadow: 0 8px 20px rgba(139,92,246,0.4);
+            color: white; flex-shrink: 0; font-size: 22px; font-weight: 900;
         }
         .engineer-tile .eng-info { flex: 1; min-width: 0; }
-        .engineer-tile .eng-name {
-            font-size: 14px; font-weight: 800;
-            color: var(--gray-900);
-        }
-        .engineer-tile .eng-phone {
-            font-size: 12px; color: var(--gray-500);
-            margin-top: 2px;
-        }
+        .engineer-tile .eng-name { font-size: 14px; font-weight: 800; color: var(--gray-900); }
+        .engineer-tile .eng-phone { font-size: 12px; color: var(--gray-500); margin-top: 2px; }
         .engineer-tile .eng-specialty {
-            display: inline-block;
-            padding: 3px 12px; border-radius: 12px;
+            display: inline-block; padding: 3px 12px; border-radius: 12px;
             font-size: 10px; font-weight: 700;
             background: linear-gradient(135deg, #EDE9FE, #DDD6FE);
-            color: #6B46C1;
-            margin-top: 6px;
+            color: #6B46C1; margin-top: 6px;
         }
         .engineer-tile .eng-actions {
-            display: flex; gap: 6px; flex-wrap: wrap;
-            margin-top: 10px;
-            padding-top: 10px;
-            border-top: 1px solid var(--gray-100);
+            display: flex; gap: 6px; flex-wrap: wrap; margin-top: 10px;
+            padding-top: 10px; border-top: 1px solid var(--gray-100);
         }
         
         /* ARCHIVE */
-        .archive-stats {
-            display: grid; grid-template-columns: repeat(3, 1fr);
-            gap: 10px; margin-bottom: 14px;
-        }
+        .archive-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 14px; }
         .archive-stat {
             background: linear-gradient(135deg, var(--primary), var(--primary-light));
-            color: white; padding: 16px;
-            border-radius: 16px; text-align: center;
-            box-shadow: var(--shadow-md);
+            color: white; padding: 16px; border-radius: 16px;
+            text-align: center; box-shadow: var(--shadow-md);
         }
         .archive-stat:nth-child(2) { background: linear-gradient(135deg, var(--gold), var(--gold-dark)); }
         .archive-stat:nth-child(3) { background: linear-gradient(135deg, var(--secondary), #F472B6); }
         .archive-stat .num { font-size: 24px; font-weight: 900; }
         .archive-stat .lbl { font-size: 11px; opacity: 0.95; margin-top: 3px; font-weight: 600; }
-        
         .archive-files-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 10px;
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 10px;
         }
         
-        /* COMPANY BADGE */
         .company-badge {
             background: linear-gradient(135deg, var(--primary), var(--black));
-            color: white; padding: 4px 14px;
-            border-radius: 20px; font-size: 11px;
-            font-weight: 800;
+            color: white; padding: 4px 14px; border-radius: 20px;
+            font-size: 11px; font-weight: 800;
         }
         
-        /* FOOTER */
         .footer {
-            text-align: center; padding: 24px 15px;
-            color: var(--gray-500); font-size: 11px;
-            border-top: 1px solid var(--gray-200);
-            margin-top: 24px;
+            text-align: center; padding: 24px 15px; color: var(--gray-500);
+            font-size: 11px; border-top: 1px solid var(--gray-200); margin-top: 24px;
         }
         .footer .company {
             font-weight: 900;
@@ -1382,52 +899,41 @@
         
         /* PREVIEW MODAL */
         .preview-modal {
-            display: none; position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(15,15,30,0.98);
-            z-index: 10003;
-            flex-direction: column; align-items: center; justify-content: center;
-            padding: 20px;
+            display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(15,15,30,0.98); z-index: 10003;
+            flex-direction: column; align-items: center; justify-content: center; padding: 20px;
         }
         .preview-modal.active { display: flex; }
         .preview-modal .preview-header {
-            position: absolute; top: 0; left: 0; right: 0;
-            padding: 18px 24px;
+            position: absolute; top: 0; left: 0; right: 0; padding: 18px 24px;
             display: flex; justify-content: space-between; align-items: center;
             background: linear-gradient(to bottom, rgba(15,15,30,0.95), transparent);
             color: white; z-index: 10;
         }
         .preview-modal .preview-header .preview-title {
-            font-size: 14px; font-weight: 700;
-            max-width: 60%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+            font-size: 14px; font-weight: 700; max-width: 60%;
+            overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
         }
         .preview-modal .preview-header .preview-actions { display: flex; gap: 8px; }
         .preview-modal .preview-header .preview-actions button,
         .preview-modal .preview-header .preview-actions a {
-            background: rgba(255,255,255,0.15); color: white;
-            border: none; padding: 10px 16px; border-radius: 10px;
-            cursor: pointer; font-size: 12px; font-weight: 700;
-            text-decoration: none;
+            background: rgba(255,255,255,0.15); color: white; border: none;
+            padding: 10px 16px; border-radius: 10px; cursor: pointer;
+            font-size: 12px; font-weight: 700; text-decoration: none;
             display: inline-flex; align-items: center; gap: 6px;
         }
-        .preview-modal .preview-header .preview-actions button .icon-svg,
-        .preview-modal .preview-header .preview-actions a .icon-svg {
-            width: 14px; height: 14px;
-        }
+        .preview-modal .preview-header .preview-actions .icon-svg { width: 14px; height: 14px; }
         .preview-modal .preview-content {
             max-width: 95%; max-height: 85%;
             display: flex; align-items: center; justify-content: center;
             width: 100%; height: 100%;
         }
         .preview-modal .preview-content img {
-            max-width: 100%; max-height: 85vh;
-            border-radius: 12px;
+            max-width: 100%; max-height: 85vh; border-radius: 12px;
             box-shadow: 0 20px 60px rgba(0,0,0,0.6);
         }
         .preview-modal .preview-content iframe {
-            width: 100%; height: 85vh;
-            border: none; border-radius: 12px;
-            background: white;
+            width: 100%; height: 85vh; border: none; border-radius: 12px; background: white;
         }
         .preview-modal .preview-content .no-preview {
             color: white; text-align: center; padding: 40px;
@@ -1435,8 +941,7 @@
         .preview-modal .preview-content .no-preview .big-icon-wrap {
             width: 120px; height: 120px; border-radius: 30px;
             background: rgba(255,255,255,0.1);
-            display: flex; align-items: center; justify-content: center;
-            margin: 0 auto 24px;
+            display: flex; align-items: center; justify-content: center; margin: 0 auto 24px;
         }
         .preview-modal .preview-content .no-preview .big-icon-wrap .icon-svg {
             width: 60px; height: 60px; color: var(--gold);
@@ -1448,7 +953,6 @@
             .header-brand .brand-text .name { font-size: 17px; }
             .header-brand .header-photo { width: 44px; height: 44px; }
             .tab-btn { font-size: 11px; padding: 10px 10px; min-width: 60px; }
-            .tab-btn .icon-svg { width: 14px; height: 14px; }
             .card { padding: 14px; border-radius: 16px; }
             .stat-card .number { font-size: 26px; }
             .projects-grid { grid-template-columns: 1fr; }
@@ -1468,9 +972,7 @@
         }
     </style>
 </head>
-<body>
-
-<!-- SVG Icons -->
+<body><!-- SVG Icons -->
 <svg style="display:none;" xmlns="http://www.w3.org/2000/svg">
     <symbol id="i-chart" viewBox="0 0 24 24"><path d="M3 3v18h18M7 14l4-4 4 4 5-5"/></symbol>
     <symbol id="i-building" viewBox="0 0 24 24"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 9h.01M15 9h.01M9 13h.01M15 13h.01M9 17h.01M15 17h.01"/></symbol>
@@ -1529,7 +1031,9 @@
     <symbol id="i-sparkles" viewBox="0 0 24 24">
         <path d="M12 3l1.09 3.26L16.35 7.35l-3.26 1.09L12 11.7l-1.09-3.26L7.65 7.35l3.26-1.09L12 3zM19 14l.76 2.24L22 17l-2.24.76L19 20l-.76-2.24L16 17l2.24-.76L19 14zM5 14l.76 2.24L8 17l-2.24.76L5 20l-.76-2.24L2 17l2.24-.76L5 14z"/>
     </symbol>
-</svg><div class="loading-screen" id="loadingScreen">
+</svg>
+
+<div class="loading-screen" id="loadingScreen">
     <div class="spinner"></div>
     <div class="brand">Al Brazili</div>
     <div class="subtext">جاري الاتصال بقاعدة البيانات...</div>
@@ -1540,7 +1044,6 @@
     <span id="connectionText">جاري الاتصال...</span>
 </div>
 
-<!-- شاشة تسجيل الدخول مع صورتك -->
 <div class="login-screen hidden" id="loginScreen">
     <div class="login-box">
         <div class="photo-container">
@@ -1564,7 +1067,6 @@
     </div>
 </div>
 
-<!-- Modal تفاصيل المشروع -->
 <div class="modal-overlay" id="projectModal" onclick="closeModalIfOutside(event)">
     <div class="modal-content" onclick="event.stopPropagation()">
         <div class="modal-header">
@@ -1585,7 +1087,6 @@
     </div>
 </div>
 
-<!-- Modal معاينة الملفات -->
 <div class="preview-modal" id="previewModal">
     <div class="preview-header">
         <div class="preview-title" id="previewTitle">معاينة الملف</div>
@@ -1602,9 +1103,7 @@
     <div class="preview-content" id="previewContent"></div>
 </div>
 
-<!-- التطبيق الرئيسي -->
 <div class="app" id="appContainer">
-    <!-- الهيدر مع صورتك -->
     <div class="header">
         <div class="header-content">
             <div class="header-brand">
@@ -1634,7 +1133,6 @@
         </div>
     </div>
 
-    <!-- التبويبات -->
     <div class="tabs" id="mainTabs">
         <button class="tab-btn active" data-tab="dashboard"><svg class="icon-svg"><use href="#i-chart"/></svg>الرئيسية</button>
         <button class="tab-btn" data-tab="building"><svg class="icon-svg"><use href="#i-building"/></svg>بناء</button>
@@ -1648,7 +1146,6 @@
         <button class="tab-btn" data-tab="reports"><svg class="icon-svg"><use href="#i-doc"/></svg>تقارير</button>
     </div>
     
-    <!-- ==================== DASHBOARD ==================== -->
     <div id="tab-dashboard" class="tab-content active">
         <div class="grid-4">
             <div class="stat-card building" onclick="switchTab('building')">
@@ -1693,7 +1190,7 @@
         </div>
     </div>
 
-    <!-- ==================== BUILDING ==================== -->
+    <!-- BUILDING -->
     <div id="tab-building" class="tab-content">
         <button type="button" class="add-btn-floating" id="btnAddBuilding" onclick="toggleBuildingForm()">
             <svg class="icon-svg"><use href="#i-plus-circle"/></svg>
@@ -1734,7 +1231,7 @@
                 </div>
                 <div class="form-group"><label>المتفق عليه <span class="required">*</span></label><textarea id="b_agreement" rows="2" placeholder="تفاصيل الاتفاق" required></textarea></div>
                 <div class="docs-section">
-                    <label class="title"><svg class="icon-svg"><use href="#i-upload"/></svg> المستندات (2 MB كحد أقصى)</label>
+                    <label class="title"><svg class="icon-svg"><use href="#i-upload"/></svg> المستندات (800 KB كحد أقصى - يتم ضغط الصور تلقائياً)</label>
                     <div class="docs-grid" id="b_docs_grid"></div>
                 </div>
                 <div class="form-row">
@@ -1767,7 +1264,7 @@
         </div>
     </div>
 
-    <!-- ==================== ELEVATION ==================== -->
+    <!-- ELEVATION -->
     <div id="tab-elevation" class="tab-content">
         <button type="button" class="add-btn-floating" id="btnAddElevation" onclick="toggleElevationForm()">
             <svg class="icon-svg"><use href="#i-plus-circle"/></svg>
@@ -1812,7 +1309,7 @@
                 </div>
                 <div class="form-group"><label>المتفق عليه</label><textarea id="e_agreement" rows="2" placeholder="تفاصيل الاتفاق"></textarea></div>
                 <div class="docs-section">
-                    <label class="title"><svg class="icon-svg"><use href="#i-upload"/></svg> المستندات (2 MB كحد أقصى)</label>
+                    <label class="title"><svg class="icon-svg"><use href="#i-upload"/></svg> المستندات (800 KB كحد أقصى)</label>
                     <div class="docs-grid" id="e_docs_grid"></div>
                 </div>
                 <button type="submit" class="btn btn-primary"><svg class="icon-svg"><use href="#i-save"/></svg> حفظ</button>
@@ -1829,7 +1326,7 @@
         </div>
     </div>
 
-    <!-- ==================== RECONCILIATION ==================== -->
+    <!-- RECONCILIATION -->
     <div id="tab-reconciliation" class="tab-content">
         <button type="button" class="add-btn-floating" id="btnAddReconciliation" onclick="toggleReconciliationForm()">
             <svg class="icon-svg"><use href="#i-plus-circle"/></svg>
@@ -1876,7 +1373,7 @@
                 </div>
                 <div class="form-group"><label>المتفق عليه</label><textarea id="r_agreement" rows="2" placeholder="تفاصيل الاتفاق"></textarea></div>
                 <div class="docs-section">
-                    <label class="title"><svg class="icon-svg"><use href="#i-upload"/></svg> المستندات (2 MB كحد أقصى)</label>
+                    <label class="title"><svg class="icon-svg"><use href="#i-upload"/></svg> المستندات (800 KB كحد أقصى)</label>
                     <div class="docs-grid" id="r_docs_grid"></div>
                 </div>
                 <button type="submit" class="btn btn-primary"><svg class="icon-svg"><use href="#i-save"/></svg> حفظ</button>
@@ -1893,7 +1390,7 @@
         </div>
     </div>
 
-    <!-- ==================== ENGINEERS ==================== -->
+    <!-- ENGINEERS -->
     <div id="tab-engineers" class="tab-content">
         <button type="button" class="add-btn-floating" id="btnAddEngineer" onclick="toggleEngineerForm()">
             <svg class="icon-svg"><use href="#i-plus-circle"/></svg>
@@ -1944,7 +1441,7 @@
         </div>
     </div>
 
-    <!-- ==================== COMMUNICATIONS ==================== -->
+    <!-- COMMUNICATIONS -->
     <div id="tab-communications" class="tab-content">
         <div class="card">
             <div class="card-header">
@@ -1975,7 +1472,7 @@
         </div>
     </div>
 
-    <!-- ==================== APPOINTMENTS ==================== -->
+    <!-- APPOINTMENTS -->
     <div id="tab-appointments" class="tab-content">
         <button type="button" class="add-btn-floating" id="btnAddAppointment" onclick="toggleAppointmentForm()">
             <svg class="icon-svg"><use href="#i-plus-circle"/></svg>
@@ -2029,7 +1526,7 @@
         </div>
     </div>
 
-    <!-- ==================== ARCHIVE ==================== -->
+    <!-- ARCHIVE -->
     <div id="tab-archive" class="tab-content">
         <div class="card">
             <div class="card-header">
@@ -2050,7 +1547,7 @@
         </div>
     </div>
 
-    <!-- ==================== ALERTS ==================== -->
+    <!-- ALERTS -->
     <div id="tab-alerts" class="tab-content">
         <div class="card">
             <div class="card-header">
@@ -2061,7 +1558,7 @@
         </div>
     </div>
 
-    <!-- ==================== REPORTS ==================== -->
+    <!-- REPORTS -->
     <div id="tab-reports" class="tab-content">
         <div class="card">
             <div class="card-header">
@@ -2083,7 +1580,8 @@
         <span class="company">Al Brazili</span>
         <br><small>جمهورية مصر العربية | متصل بـ Firebase</small>
     </div>
-</div><!-- Firebase SDK -->
+</div>
+
 <script type="module">
     import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js';
     import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, deleteDoc, onSnapshot, query, orderBy, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js';
@@ -2127,11 +1625,31 @@
     var appointments = [];
     var db, collection, addDoc, getDocs, doc, updateDoc, deleteDoc, onSnapshot, query, orderBy, serverTimestamp;
     var uploadedFiles = { b: {}, e: {}, r: {} };
-    var MAX_FILE_SIZE = 800 * 1024;   // 800 KB لكل ملف
-    var MAX_TOTAL_SIZE = 950 * 1024;  // 950 KB إجمالي
+    var MAX_FILE_SIZE = 800 * 1024;
+    var MAX_TOTAL_SIZE = 950 * 1024;
     var currentOpenProject = null;
 
-    // ==================== BUILDING STEPS (15 خطوة) ====================
+    // ==================== SORT HELPER (يحل مشكلة localeCompare) ====================
+    function sortAlertsByDate(alerts) {
+        return alerts.sort(function(a, b) {
+            var aT = 0, bT = 0;
+            try {
+                if (a.createdAt) {
+                    if (typeof a.createdAt === 'object' && a.createdAt.seconds) aT = a.createdAt.seconds;
+                    else if (a.createdAt.toDate) aT = a.createdAt.toDate().getTime() / 1000;
+                    else aT = new Date(a.createdAt).getTime() / 1000 || 0;
+                }
+                if (b.createdAt) {
+                    if (typeof b.createdAt === 'object' && b.createdAt.seconds) bT = b.createdAt.seconds;
+                    else if (b.createdAt.toDate) bT = b.createdAt.toDate().getTime() / 1000;
+                    else bT = new Date(b.createdAt).getTime() / 1000 || 0;
+                }
+            } catch(e) { console.error('Sort error:', e); }
+            return bT - aT;
+        });
+    }
+
+    // ==================== STEPS ====================
     var BUILDING_STEPS = [
         { num: 1, name: 'استلام المستندات', dept: 'الحي', duration: 1 },
         { num: 2, name: 'الرفع المساحي', dept: 'المساحة', duration: 4 },
@@ -2150,7 +1668,6 @@
         { num: 15, name: 'إصدار رخصة البناء', dept: 'الحي', duration: 1 }
     ];
 
-    // ==================== ELEVATION STEPS (15 خطوة - بدون نموذج 8) ====================
     var ELEVATION_STEPS = [
         { num: 1, name: 'استلام المستندات', dept: 'الحي', duration: 1 },
         { num: 2, name: 'الرفع المساحي', dept: 'المساحة', duration: 4 },
@@ -2169,7 +1686,6 @@
         { num: 15, name: 'إصدار رخصة التعلية', dept: 'الحي', duration: 1 }
     ];
 
-    // ==================== RECONCILIATION STEPS (16 خطوة) ====================
     var RECONCILIATION_STEPS = [
         { num: 1, name: 'تجهيز المستندات الخاصة بالتصالح', dept: 'المكتب', duration: 2 },
         { num: 2, name: 'تقديم المستندات إلى الحي', dept: 'الحي', duration: 1 },
@@ -2189,14 +1705,12 @@
         { num: 16, name: 'إصدار نموذج 8 النهائي', dept: 'الحي', duration: 2 }
     ];
 
-    // ==================== DOCUMENTS LISTS ====================
     var DOCS_BUILDING = [
         { key: 'contract', label: 'عقد الملكية' },
         { key: 'id', label: 'بطاقة الرقم القومي' },
         { key: 'signature', label: 'صحة التوقيع' },
         { key: 'power', label: 'توكيل للمهندسين' }
     ];
-    
     var DOCS_ELEVATION = [
         { key: 'contract', label: 'عقد الملكية' },
         { key: 'id', label: 'بطاقة الرقم القومي' },
@@ -2204,7 +1718,6 @@
         { key: 'power', label: 'توكيل للمهندسين' },
         { key: 'original_permit', label: 'رخصة البناء الأصلية' }
     ];
-    
     var DOCS_RECONCILIATION = [
         { key: 'id', label: 'بطاقة الرقم القومي' },
         { key: 'contract', label: 'عقد الملكية' },
@@ -2219,26 +1732,20 @@
 
     // ==================== HELPERS ====================
     function formatCurrency(amount) { return Number(amount || 0).toFixed(2) + ' ج.م'; }
-    
     function getStatusText(s) {
         var map = { 'draft':'مسودة', 'under_review':'قيد المراجعة', 'approved':'معتمد', 'rejected':'مرفوض', 'issued':'صادر', 'expired':'منتهي', 'completed':'مكتمل' };
         return map[s] || s;
     }
-    
     function getStatusClass(s) { return 'status-' + s; }
-    
     function getViolationText(t) {
         var map = { 'building_without_permit':'بناء بدون رخصة', 'height_violation':'مخالفة ارتفاع', 'area_violation':'مخالفة مساحة', 'setback_violation':'مخالفة ارتدادات', 'floor_added':'إضافة أدوار', 'other':'أخرى' };
         return map[t] || t;
     }
-    
     function getEngineerName(id) {
         var e = engineers.find(function(x) { return x.id === id; });
         return e ? e.name : 'غير محدد';
     }
-    
     function getEngineer(id) { return engineers.find(function(x) { return x.id === id; }); }
-    
     function getProjectName(type, id) {
         var p;
         if (type === 'building') p = buildingPermits.find(function(x) { return x.id === id; });
@@ -2246,34 +1753,29 @@
         else if (type === 'reconciliation') p = reconciliations.find(function(x) { return x.id === id; });
         return p ? p.client + ' - ' + (p.address || '').substring(0, 20) : 'غير معروف';
     }
-    
     function getStepsForType(type) {
         if (type === 'building') return BUILDING_STEPS;
         if (type === 'elevation') return ELEVATION_STEPS;
         if (type === 'reconciliation') return RECONCILIATION_STEPS;
         return [];
     }
-    
     function getDocsForType(type) {
         if (type === 'building') return DOCS_BUILDING;
         if (type === 'elevation') return DOCS_ELEVATION;
         return DOCS_RECONCILIATION;
     }
-    
     function getTypeIcon(type) {
         if (type === 'building') return 'building';
         if (type === 'elevation') return 'elevation';
         if (type === 'reconciliation') return 'scale';
         return 'doc';
     }
-    
     function getTypeLabel(type) {
         if (type === 'building') return 'رخصة بناء';
         if (type === 'elevation') return 'رخصة تعلية';
         if (type === 'reconciliation') return 'طلب تصالح';
         return '';
     }
-    
     function setConnectionStatus(status, text) {
         var el = document.getElementById('connectionStatus');
         var txt = document.getElementById('connectionText');
@@ -2281,24 +1783,22 @@
         if (el) el.className = 'connection-status ' + status;
         if (txt) txt.textContent = text;
         if (badge) {
-        if (status === 'online') {
-            badge.innerHTML = '<svg class="icon-svg icon-svg-sm"><use href="#i-check-circle"/></svg> متصل';
-            badge.style.background = 'rgba(16,185,129,0.2)';
-        } else if (status === 'offline') {
-            badge.innerHTML = '<svg class="icon-svg icon-svg-sm"><use href="#i-x-circle"/></svg> غير متصل';
-            badge.style.background = 'rgba(239,68,68,0.2)';
-        } else {
-            badge.innerHTML = '<svg class="icon-svg icon-svg-sm"><use href="#i-rotate"/></svg> مزامنة...';
-            badge.style.background = 'rgba(245,158,11,0.2)';
+            if (status === 'online') {
+                badge.innerHTML = '<svg class="icon-svg icon-svg-sm"><use href="#i-check-circle"/></svg> متصل';
+                badge.style.background = 'rgba(16,185,129,0.2)';
+            } else if (status === 'offline') {
+                badge.innerHTML = '<svg class="icon-svg icon-svg-sm"><use href="#i-x-circle"/></svg> غير متصل';
+                badge.style.background = 'rgba(239,68,68,0.2)';
+            } else {
+                badge.innerHTML = '<svg class="icon-svg icon-svg-sm"><use href="#i-rotate"/></svg> مزامنة...';
+                badge.style.background = 'rgba(245,158,11,0.2)';
+            }
         }
     }
-}
-    
     function waitForFirebase(callback) {
         if (window.firebaseReady) callback();
         else window.addEventListener('firebase-ready', callback, { once: true });
     }
-    
     function getFileIcon(fileName, fileType) {
         var ext = (fileName || '').split('.').pop().toLowerCase();
         var type = (fileType || '').toLowerCase();
@@ -2308,20 +1808,16 @@
         if (['doc','docx'].includes(ext)) return 'file-text';
         return 'file';
     }
-    
     function formatFileSize(bytes) {
         if (!bytes) return '';
         if (bytes < 1024) return bytes + ' B';
         if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
         return (bytes / (1024 * 1024)).toFixed(2) + ' MB';
     }
-    
     function escapeStr(str) {
         return String(str || '').replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/"/g, '&quot;');
     }
-    
     function escapeUrl(url) { return String(url || '').replace(/'/g, "\\'"); }
-    
     function countTotalFiles(docs) {
         var count = 0;
         if (!docs) return 0;
@@ -2333,7 +1829,7 @@
         return count;
     }
 
-    // ==================== PICK CONTACT (جهات الاتصال) ====================
+    // ==================== PICK CONTACT ====================
     async function pickContact(inputId) {
         if (!('contacts' in navigator && 'select' in navigator.contacts)) {
             Swal.fire({
@@ -2349,7 +1845,6 @@
             });
             return;
         }
-        
         try {
             var contacts = await navigator.contacts.select(['tel'], { multiple: false });
             if (contacts && contacts.length > 0 && contacts[0].tel && contacts[0].tel.length > 0) {
@@ -2359,9 +1854,7 @@
                 Swal.fire({ icon: 'success', title: 'تم', text: 'تم إضافة الرقم', timer: 1200, showConfirmButton: false, toast: true, position: 'top-start' });
             }
         } catch (err) {
-            if (err.name !== 'AbortError') {
-                console.error('Contact error:', err);
-            }
+            if (err.name !== 'AbortError') console.error('Contact error:', err);
         }
     }
 
@@ -2388,7 +1881,6 @@
         modal.classList.add('active');
         document.body.style.overflow = 'hidden';
     }
-    
     function closePreview() {
         var modal = document.getElementById('previewModal');
         var content = document.getElementById('previewContent');
@@ -2404,31 +1896,25 @@
         else if (type === 'elevation') project = elevationPermits.find(function(x) { return x.id === id; });
         else if (type === 'reconciliation') project = reconciliations.find(function(x) { return x.id === id; });
         if (!project) return;
-        
         currentOpenProject = { type: type, id: id };
-        
         var modal = document.getElementById('projectModal');
         var modalIcon = document.getElementById('modalIcon');
         var modalTitle = document.getElementById('modalTitle');
         var modalSubtitle = document.getElementById('modalSubtitle');
         var modalBody = document.getElementById('modalBody');
-        
         modalIcon.innerHTML = '<svg class="icon-svg"><use href="#i-' + getTypeIcon(type) + '"/></svg>';
         modalTitle.textContent = project.client;
         modalSubtitle.textContent = getTypeLabel(type) + ' • ' + (project.address || '');
-        
         modalBody.innerHTML = renderProjectDetails(project, type);
         modal.classList.add('active');
         document.body.style.overflow = 'hidden';
     }
-    
     function closeProjectModal() {
         var modal = document.getElementById('projectModal');
         modal.classList.remove('active');
         document.body.style.overflow = '';
         currentOpenProject = null;
     }
-    
     function closeModalIfOutside(event) {
         if (event.target.id === 'projectModal') closeProjectModal();
     }
@@ -2441,10 +1927,8 @@
         var remaining = total - currentStep;
         var progress = total > 0 ? (currentStep / total) * 100 : 0;
         var remaining_money = (project.total || 0) - (project.paid || 0);
-        
         var html = '';
         
-        // أزرار الإجراءات
         html += '<div class="modal-actions">';
         html += '<button onclick="editProject(\'' + type + '\',\'' + project.id + '\')" class="btn btn-gold btn-sm"><svg class="icon-svg"><use href="#i-pencil"/></svg> تعديل</button>';
         if (type === 'building') {
@@ -2458,76 +1942,46 @@
         html += '<button onclick="deleteProjectFromModal()" class="btn btn-danger btn-sm"><svg class="icon-svg"><use href="#i-trash"/></svg></button>';
         html += '</div>';
         
-        // صناديق المعلومات
-        if (project.transaction) {
-            html += '<div class="info-box transaction"><svg class="icon-svg"><use href="#i-file-text"/></svg> رقم المعاملة: ' + project.transaction + '</div>';
-        }
-        if (project.next_step) {
-            html += '<div class="info-box next-step"><svg class="icon-svg"><use href="#i-arrow-left"/></svg> الخطوة القادمة: ' + project.next_step + '</div>';
-        }
+        if (project.transaction) html += '<div class="info-box transaction"><svg class="icon-svg"><use href="#i-file-text"/></svg> رقم المعاملة: ' + project.transaction + '</div>';
+        if (project.next_step) html += '<div class="info-box next-step"><svg class="icon-svg"><use href="#i-arrow-left"/></svg> الخطوة القادمة: ' + project.next_step + '</div>';
         
-        // شبكة التفاصيل
         html += '<div class="details-grid-modal">';
         html += '<div class="detail-item"><div class="label"><svg class="icon-svg"><use href="#i-map-pin"/></svg> العنوان</div><div class="value" style="font-size:13px;">' + (project.address || '-') + '</div></div>';
         html += '<div class="detail-item"><div class="label"><svg class="icon-svg"><use href="#i-phone"/></svg> الجوال</div><div class="value">' + (project.phone || '-') + '</div></div>';
         html += '<div class="detail-item"><div class="label"><svg class="icon-svg"><use href="#i-engineer"/></svg> المهندس</div><div class="value" style="font-size:13px;">' + (project.engineer_id ? getEngineerName(project.engineer_id) : 'غير محدد') + '</div></div>';
         html += '<div class="detail-item"><div class="label"><svg class="icon-svg"><use href="#i-badge"/></svg> الحالة</div><div class="value"><span class="status-badge ' + getStatusClass(project.status) + '" style="font-size:10px;padding:3px 10px;border-radius:12px;">' + getStatusText(project.status) + '</span></div></div>';
-        
-        if (type === 'building') {
-            html += '<div class="detail-item"><div class="label"><svg class="icon-svg"><use href="#i-building"/></svg> المساحة</div><div class="value">' + (project.area || 0) + ' م²</div></div>';
-        }
+        if (type === 'building') html += '<div class="detail-item"><div class="label"><svg class="icon-svg"><use href="#i-building"/></svg> المساحة</div><div class="value">' + (project.area || 0) + ' م²</div></div>';
         if (type === 'elevation') {
             html += '<div class="detail-item"><div class="label">الأدوار الحالية</div><div class="value">' + (project.existing || 0) + '</div></div>';
             html += '<div class="detail-item"><div class="label">الأدوار المضافة</div><div class="value">' + (project.newFloors || 0) + '</div></div>';
         }
-        if (type === 'reconciliation') {
-            html += '<div class="detail-item"><div class="label">نوع المخالفة</div><div class="value" style="font-size:13px;">' + getViolationText(project.violation) + '</div></div>';
-        }
-        
+        if (type === 'reconciliation') html += '<div class="detail-item"><div class="label">نوع المخالفة</div><div class="value" style="font-size:13px;">' + getViolationText(project.violation) + '</div></div>';
         html += '<div class="detail-item"><div class="label"><svg class="icon-svg"><use href="#i-money"/></svg> الإجمالي</div><div class="value">' + formatCurrency(project.total) + '</div></div>';
         html += '<div class="detail-item"><div class="label"><svg class="icon-svg"><use href="#i-check-circle"/></svg> المحصل</div><div class="value" style="color:var(--success-dark);">' + formatCurrency(project.paid) + '</div></div>';
         html += '<div class="detail-item"><div class="label"><svg class="icon-svg"><use href="#i-clock"/></svg> المتبقي</div><div class="value" style="color:' + (remaining_money > 0 ? 'var(--danger-dark)' : 'var(--success-dark)') + ';">' + formatCurrency(remaining_money) + '</div></div>';
         html += '</div>';
         
-        // المتفق عليه
-        if (project.agreement) {
-            html += '<div class="info-box agreement"><svg class="icon-svg"><use href="#i-file-text"/></svg> ' + project.agreement + '</div>';
-        }
+        if (project.agreement) html += '<div class="info-box agreement"><svg class="icon-svg"><use href="#i-file-text"/></svg> ' + project.agreement + '</div>';
         
-        // شريط التقدم
         html += '<div style="margin-bottom:16px;"><div style="display:flex;justify-content:space-between;font-size:12px;font-weight:800;margin-bottom:6px;"><span>التقدم</span><span>' + progress.toFixed(0) + '%</span></div><div style="height:8px;background:var(--gray-100);border-radius:10px;overflow:hidden;"><div style="height:100%;background:linear-gradient(90deg,var(--primary),var(--gold));width:' + progress + '%;border-radius:10px;transition:width 0.6s;"></div></div></div>';
         
-        // ============ التروس الدوارة ============
         html += '<div class="steps-section">';
         html += '<div class="section-title"><span class="title-text"><svg class="icon-svg"><use href="#i-gear"/></svg> خطوات المشروع</span><span class="progress-badge">' + completed + '/' + total + ' منجز • ' + remaining + ' متبقي</span></div>';
         html += '<div class="gears-timeline">';
-        
         steps.forEach(function(s, index) {
             var cls = 'pending';
             if (s.num <= currentStep) cls = 'completed';
             else if (s.num === currentStep + 1) cls = 'current';
-            
             html += '<div class="gear-step ' + cls + '">';
             html += '<div class="gear-icon-wrap">';
             html += '<span class="gear-number">' + s.num + '</span>';
             html += '<svg class="gear-svg"><use href="#i-gear"/></svg>';
-            if (cls === 'completed') {
-                html += '<div class="gear-checkmark"><svg class="icon-svg"><use href="#i-check"/></svg></div>';
-            }
+            if (cls === 'completed') html += '<div class="gear-checkmark"><svg class="icon-svg"><use href="#i-check"/></svg></div>';
             html += '</div>';
-            html += '<div class="gear-info">';
-            html += '<div class="gear-name">' + s.name + '</div>';
-            html += '<div class="gear-meta">';
-            html += '<span class="gear-dept">' + s.dept + '</span>';
-            html += '<span class="gear-duration"><svg class="icon-svg"><use href="#i-clock"/></svg> ' + s.duration + ' يوم</span>';
-            html += '</div>';
-            html += '</div>';
-            if (index < steps.length - 1) {
-                html += '<div class="gear-connector"></div>';
-            }
+            html += '<div class="gear-info"><div class="gear-name">' + s.name + '</div><div class="gear-meta"><span class="gear-dept">' + s.dept + '</span><span class="gear-duration"><svg class="icon-svg"><use href="#i-clock"/></svg> ' + s.duration + ' يوم</span></div></div>';
+            if (index < steps.length - 1) html += '<div class="gear-connector"></div>';
             html += '</div>';
         });
-        
         html += '</div>';
         
         if (currentStep < total) {
@@ -2540,7 +1994,6 @@
         }
         html += '</div>';
         
-        // المستندات
         if (project.documents && Object.keys(project.documents).length > 0) {
             var docsList = getDocsForType(type);
             var hasDocs = false;
@@ -2562,13 +2015,9 @@
                 });
             });
             if (hasDocs) {
-                html += '<div class="documents-section">';
-                html += '<div class="section-title"><svg class="icon-svg"><use href="#i-folder"/></svg> المستندات المرفوعة (' + countTotalFiles(project.documents) + ')</div>';
-                html += '<div class="doc-files-grid">' + docsHtml + '</div>';
-                html += '</div>';
+                html += '<div class="documents-section"><div class="section-title"><svg class="icon-svg"><use href="#i-folder"/></svg> المستندات المرفوعة (' + countTotalFiles(project.documents) + ')</div><div class="doc-files-grid">' + docsHtml + '</div></div>';
             }
         }
-        
         return html;
     }
 
@@ -2578,7 +2027,6 @@
         else if (type === 'elevation') editElevation(id);
         else if (type === 'reconciliation') editReconciliation(id);
     }
-    
     async function deleteProjectFromModal() {
         if (!currentOpenProject) return;
         var type = currentOpenProject.type;
@@ -2595,9 +2043,9 @@
         if (btn) btn.classList.add('active');
         var tab = document.getElementById('tab-' + tabName);
         if (tab) tab.classList.add('active');
-        if (tabName === 'reports') { updateReportProjects(); }
-        if (tabName === 'archive') { renderArchive(); }
-        if (tabName === 'appointments') { renderAppointments(); }
+        if (tabName === 'reports') updateReportProjects();
+        if (tabName === 'archive') renderArchive();
+        if (tabName === 'appointments') renderAppointments();
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
@@ -2615,7 +2063,6 @@
             setTimeout(function() { el.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 100);
         }
     }
-    
     function toggleElevationForm() {
         var el = document.getElementById('elevationFormCollapse');
         var btn = document.getElementById('btnAddElevation');
@@ -2629,7 +2076,6 @@
             setTimeout(function() { el.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 100);
         }
     }
-    
     function toggleReconciliationForm() {
         var el = document.getElementById('reconciliationFormCollapse');
         var btn = document.getElementById('btnAddReconciliation');
@@ -2643,7 +2089,6 @@
             setTimeout(function() { el.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 100);
         }
     }
-    
     function toggleEngineerForm() {
         var el = document.getElementById('engineerFormCollapse');
         var btn = document.getElementById('btnAddEngineer');
@@ -2657,7 +2102,6 @@
             setTimeout(function() { el.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 100);
         }
     }
-    
     function toggleAppointmentForm() {
         var el = document.getElementById('appointmentFormCollapse');
         var btn = document.getElementById('btnAddAppointment');
@@ -2697,9 +2141,11 @@
         var input = document.getElementById(prefix + '_doc_' + docKey + '_file');
         var docItem = document.getElementById('doc-item-' + prefix + '-' + docKey);
         if (!input) return;
+        if (!uploadedFiles[prefix]) uploadedFiles[prefix] = {};
         if (!uploadedFiles[prefix][docKey]) uploadedFiles[prefix][docKey] = [];
-        input.addEventListener('change', function(e) {
-            var files = Array.from(e.target.files);
+        
+        input.onchange = function(e) {
+            var files = Array.from(e.target.files || []);
             if (files.length === 0) return;
             var accepted = 0;
             var rejected = [];
@@ -2718,18 +2164,18 @@
             input.value = '';
             
             if (rejected.length > 0) {
-                Swal.fire({ icon: 'warning', title: 'ملفات كبيرة', html: '<div style="text-align:right;font-size:13px;"><p>الملفات التالية أكبر من <strong>2 MB</strong>:</p><ul style="padding-right:20px;margin-top:8px;">' + rejected.map(function(r) { return '<li>' + r + '</li>'; }).join('') + '</ul></div>', confirmButtonText: 'حسناً' });
+                Swal.fire({ icon: 'warning', title: 'ملفات كبيرة', html: '<div style="text-align:right;font-size:13px;"><p>الملفات التالية أكبر من <strong>800 KB</strong>:</p><ul style="padding-right:20px;margin-top:8px;">' + rejected.map(function(r) { return '<li>' + r + '</li>'; }).join('') + '</ul></div>', confirmButtonText: 'حسناً' });
             }
             if (accepted > 0) {
                 Swal.fire({ icon: 'success', title: 'تمت الإضافة', text: 'تم إضافة ' + accepted + ' ملف', timer: 1500, showConfirmButton: false, toast: true, position: 'top-start' });
             }
-        });
+        };
     }
 
     function renderFilesList(prefix, docKey) {
         var listContainer = document.getElementById(prefix + '_doc_' + docKey + '_list');
         if (!listContainer) return;
-        var files = uploadedFiles[prefix][docKey] || [];
+        var files = (uploadedFiles[prefix] && uploadedFiles[prefix][docKey]) || [];
         if (files.length === 0) { listContainer.innerHTML = ''; return; }
         var html = '';
         files.forEach(function(file, index) {
@@ -2742,7 +2188,7 @@
     }
 
     function removeFile(prefix, docKey, index) {
-        if (!uploadedFiles[prefix][docKey]) return;
+        if (!uploadedFiles[prefix] || !uploadedFiles[prefix][docKey]) return;
         uploadedFiles[prefix][docKey].splice(index, 1);
         renderFilesList(prefix, docKey);
         var files = uploadedFiles[prefix][docKey];
@@ -2755,51 +2201,41 @@
     }
 
     function compressImage(file, maxWidth, quality) {
-    return new Promise(function(resolve, reject) {
-        var reader = new FileReader();
-        reader.onload = function(e) {
-            var img = new Image();
-            img.onload = function() {
-                var canvas = document.createElement('canvas');
-                var width = img.width;
-                var height = img.height;
-                
-                // تصغير أكثر للصور الكبيرة
-                var finalMaxWidth = maxWidth;
-                if (file.size > 500 * 1024) finalMaxWidth = 600;
-                if (file.size > 1 * 1024 * 1024) finalMaxWidth = 500;
-                if (file.size > 1.5 * 1024 * 1024) finalMaxWidth = 400;
-                
-                if (width > finalMaxWidth) {
-                    height = (height * finalMaxWidth) / width;
-                    width = finalMaxWidth;
-                }
-                
-                canvas.width = width;
-                canvas.height = height;
-                var ctx = canvas.getContext('2d');
-                
-                // خلفية بيضاء للصور الشفافة
-                ctx.fillStyle = 'white';
-                ctx.fillRect(0, 0, width, height);
-                
-                ctx.drawImage(img, 0, 0, width, height);
-                
-                // جودة أقل للملفات الكبيرة
-                var finalQuality = quality;
-                if (file.size > 500 * 1024) finalQuality = 0.55;
-                if (file.size > 1 * 1024 * 1024) finalQuality = 0.45;
-                
-                var compressed = canvas.toDataURL('image/jpeg', finalQuality);
-                resolve(compressed);
+        return new Promise(function(resolve, reject) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                var img = new Image();
+                img.onload = function() {
+                    var canvas = document.createElement('canvas');
+                    var width = img.width;
+                    var height = img.height;
+                    var finalMaxWidth = maxWidth;
+                    if (file.size > 500 * 1024) finalMaxWidth = 600;
+                    if (file.size > 1 * 1024 * 1024) finalMaxWidth = 500;
+                    if (file.size > 1.5 * 1024 * 1024) finalMaxWidth = 400;
+                    if (width > finalMaxWidth) {
+                        height = (height * finalMaxWidth) / width;
+                        width = finalMaxWidth;
+                    }
+                    canvas.width = width;
+                    canvas.height = height;
+                    var ctx = canvas.getContext('2d');
+                    ctx.fillStyle = 'white';
+                    ctx.fillRect(0, 0, width, height);
+                    ctx.drawImage(img, 0, 0, width, height);
+                    var finalQuality = quality;
+                    if (file.size > 500 * 1024) finalQuality = 0.55;
+                    if (file.size > 1 * 1024 * 1024) finalQuality = 0.45;
+                    var compressed = canvas.toDataURL('image/jpeg', finalQuality);
+                    resolve(compressed);
+                };
+                img.onerror = reject;
+                img.src = e.target.result;
             };
-            img.onerror = reject;
-            img.src = e.target.result;
-        };
-        reader.onerror = reject;
-        reader.readAsDataURL(file);
-    });
-}
+            reader.onerror = reject;
+            reader.readAsDataURL(file);
+        });
+    }
 
     function fileToBase64(file) {
         return new Promise(function(resolve, reject) {
@@ -2815,189 +2251,100 @@
     }
 
     async function uploadAllFiles(prefix) {
-    var uploadedData = {};
-    var docsList = getDocsForType(prefix === 'b' ? 'building' : prefix === 'e' ? 'elevation' : 'reconciliation');
-    var hasAnyFiles = false;
-    for (var i = 0; i < docsList.length; i++) {
-        var files = uploadedFiles[prefix][docsList[i].key] || [];
-        if (files.length > 0) { hasAnyFiles = true; break; }
-    }
-    if (!hasAnyFiles) return uploadedData;
-    
-    var totalFiles = 0;
-    docsList.forEach(function(d) { totalFiles += (uploadedFiles[prefix][d.key] || []).length; });
-    var processed = 0;
-    var totalSize = 0;
-    
-    Swal.fire({
-        title: '⏳ جاري معالجة الملفات...',
-        html: '<div style="text-align:right;font-size:13px;"><div style="background:#E5E7EB;border-radius:10px;height:10px;overflow:hidden;margin:15px 0;"><div id="uploadProgress" style="background:linear-gradient(90deg,#6B21A8,#D4AF37);height:100%;width:0%;transition:width 0.3s;"></div></div><p id="uploadStatus" style="text-align:center;font-weight:700;color:#6B21A8;">جاري البدء...</p></div>',
-        allowOutsideClick: false, showConfirmButton: false,
-        didOpen: function() { Swal.showLoading(); }
-    });
-    
-    for (var i = 0; i < docsList.length; i++) {
-        var docKey = docsList[i].key;
-        var files = uploadedFiles[prefix][docKey] || [];
-        if (files.length === 0) continue;
-        uploadedData[docKey] = [];
+        var uploadedData = {};
+        var docsList = getDocsForType(prefix === 'b' ? 'building' : prefix === 'e' ? 'elevation' : 'reconciliation');
+        var hasAnyFiles = false;
+        for (var i = 0; i < docsList.length; i++) {
+            var files = (uploadedFiles[prefix] && uploadedFiles[prefix][docsList[i].key]) || [];
+            if (files.length > 0) { hasAnyFiles = true; break; }
+        }
+        if (!hasAnyFiles) return uploadedData;
         
-        for (var j = 0; j < files.length; j++) {
-            var file = files[j];
-            processed++;
-            var progressPct = (processed / totalFiles) * 100;
-            var progressEl = document.getElementById('uploadProgress');
-            var statusEl = document.getElementById('uploadStatus');
-            if (progressEl) progressEl.style.width = progressPct + '%';
-            if (statusEl) statusEl.textContent = 'معالجة ' + processed + '/' + totalFiles + ': ' + file.name;
-            
-            try {
-                var base64 = await fileToBase64(file);
-                var base64Size = Math.round((base64.length * 3) / 4);
-                totalSize += base64Size;
-                
-                if (totalSize > MAX_TOTAL_SIZE) {
-                    throw new Error('حجم الملفات (' + formatFileSize(totalSize) + ') تجاوز الحد (' + formatFileSize(MAX_TOTAL_SIZE) + '). جرب ملفات أقل أو أصغر.');
+        var totalFiles = 0;
+        docsList.forEach(function(d) { totalFiles += ((uploadedFiles[prefix] && uploadedFiles[prefix][d.key]) || []).length; });
+        var processed = 0;
+        var totalSize = 0;
+        
+        Swal.fire({
+            title: '⏳ جاري معالجة الملفات',
+            html: '<div style="text-align:right;font-size:13px;"><div style="background:#E5E7EB;border-radius:10px;height:10px;overflow:hidden;margin:15px 0;"><div id="uploadProgress" style="background:linear-gradient(90deg,#6B21A8,#D4AF37);height:100%;width:0%;transition:width 0.3s;"></div></div><p id="uploadStatus" style="text-align:center;font-weight:700;color:#6B21A8;">جاري البدء...</p></div>',
+            allowOutsideClick: false, showConfirmButton: false,
+            didOpen: function() { Swal.showLoading(); }
+        });
+        
+        for (var i = 0; i < docsList.length; i++) {
+            var docKey = docsList[i].key;
+            var files = (uploadedFiles[prefix] && uploadedFiles[prefix][docKey]) || [];
+            if (files.length === 0) continue;
+            uploadedData[docKey] = [];
+            for (var j = 0; j < files.length; j++) {
+                var file = files[j];
+                processed++;
+                var progressPct = (processed / totalFiles) * 100;
+                var progressEl = document.getElementById('uploadProgress');
+                var statusEl = document.getElementById('uploadStatus');
+                if (progressEl) progressEl.style.width = progressPct + '%';
+                if (statusEl) statusEl.textContent = 'معالجة ' + processed + '/' + totalFiles + ': ' + file.name;
+                try {
+                    var base64 = await fileToBase64(file);
+                    var base64Size = Math.round((base64.length * 3) / 4);
+                    totalSize += base64Size;
+                    if (totalSize > MAX_TOTAL_SIZE) throw new Error('حجم الملفات تجاوز الحد المسموح');
+                    uploadedData[docKey].push({
+                        name: file.name, data: base64, size: file.size,
+                        finalSize: base64Size,
+                        type: file.type || 'application/octet-stream',
+                        uploadedAt: new Date().toISOString()
+                    });
+                } catch (error) {
+                    Swal.close();
+                    Swal.fire({ icon: 'error', title: '⚠️ خطأ في الملف', html: '<div style="text-align:right;font-size:13px;"><p><strong>الملف:</strong> ' + file.name + '</p><p><strong>السبب:</strong> ' + error.message + '</p></div>' });
+                    throw error;
                 }
-                
-                uploadedData[docKey].push({
-                    name: file.name, data: base64, size: file.size,
-                    finalSize: base64Size,
-                    type: file.type || 'application/octet-stream',
-                    uploadedAt: new Date().toISOString()
-                });
-            } catch (error) {
-                Swal.close();
-                Swal.fire({ 
-                    icon: 'error', 
-                    title: '⚠️ خطأ في الملف',
-                    html: '<div style="text-align:right;font-size:13px;"><p><strong>الملف:</strong> ' + file.name + '</p><p><strong>السبب:</strong> ' + error.message + '</p></div>'
-                });
-                throw error;
             }
         }
+        Swal.close();
+        Swal.fire({ icon: 'success', title: '✅ تمت معالجة ' + processed + ' ملف', text: 'الحجم النهائي: ' + formatFileSize(totalSize), timer: 2000, showConfirmButton: false });
+        setConnectionStatus('online', 'متصل - ' + new Date().toLocaleTimeString('ar-EG'));
+        return uploadedData;
     }
-    
-    Swal.close();
-    Swal.fire({ 
-        icon: 'success', 
-        title: '✅ تمت معالجة ' + processed + ' ملف',
-        text: 'الحجم النهائي: ' + formatFileSize(totalSize),
-        timer: 2000, 
-        showConfirmButton: false 
-    });
-    
-    setConnectionStatus('online', 'متصل - ' + new Date().toLocaleTimeString('ar-EG'));
-    return uploadedData;
-}
 
-    // ==================== WHATSAPP PROFESSIONAL ====================
+    // ==================== WHATSAPP ====================
     function buildWhatsAppMessage(type, data) {
-    var line = '━━━━━━━━━━━━━━━━━';
-    var lineThin = '───────────────';
-    
-    var header = 
-        '🏛️ *AL BRAZILI TECHNOLOGIES* 🏛️\n' +
-        '✨ نظام إدارة الأعمال المتكامل ✨\n' +
-        line;
-    
-    var footer = 
-        line + '\n' +
-        '🇪🇬 *Al Brazili Technologies*\n' +
-        '📞 ' + WHATSAPP_NUMBER + '\n' +
-        '🕐 ' + new Date().toLocaleString('ar-EG', { 
-            weekday: 'long', 
-            year: 'numeric', 
-            month: 'long', 
-            day: 'numeric',
-            hour: '2-digit',
-            minute: '2-digit'
-        });
-    
-    if (type === 'step') {
-        return header + '\n\n' +
-            '🔔 *تذكير بمهمة جديدة*\n\n' +
-            '👤 *العميل*\n' +
-            '   ' + data.client + '\n\n' +
-            '📁 *نوع المعاملة*\n' +
-            '   ' + data.typeLabel + '\n\n' +
-            '📋 *رقم المعاملة*\n' +
-            '   ' + (data.transaction || 'غير محدد') + '\n\n' +
-            '📍 *العنوان*\n' +
-            '   ' + (data.address || 'غير محدد') + '\n\n' +
-            lineThin + '\n' +
-            '📌 *الخطوة المطلوبة* 📌\n' +
-            lineThin + '\n\n' +
-            '▶️ *' + data.stepName + '*\n\n' +
-            '🏢 الجهة: ' + data.dept + '\n' +
-            '⏱️ المدة: ' + data.duration + ' يوم\n\n' +
-            lineThin + '\n\n' +
-            '💼 *مع تحيات*\n' +
-            '*Al Brazili Technologies* 🏛️\n\n' +
-            footer;
+        var line = '━━━━━━━━━━━━━━━━━';
+        var lineThin = '───────────────';
+        var header = '🏛️ *AL BRAZILI TECHNOLOGIES* 🏛️\n✨ نظام إدارة الأعمال المتكامل ✨\n' + line;
+        var footer = line + '\n🇪🇬 *Al Brazili Technologies*\n📞 ' + WHATSAPP_NUMBER + '\n🕐 ' + new Date().toLocaleString('ar-EG');
+        
+        if (type === 'step') {
+            return header + '\n\n🔔 *تذكير بمهمة جديدة*\n\n' +
+                '👤 *العميل*\n   ' + data.client + '\n\n' +
+                '📁 *نوع المعاملة*\n   ' + data.typeLabel + '\n\n' +
+                '📋 *رقم المعاملة*\n   ' + (data.transaction || 'غير محدد') + '\n\n' +
+                '📍 *العنوان*\n   ' + (data.address || 'غير محدد') + '\n\n' +
+                lineThin + '\n📌 *الخطوة المطلوبة* 📌\n' + lineThin + '\n\n' +
+                '▶️ *' + data.stepName + '*\n\n🏢 الجهة: ' + data.dept + '\n⏱️ المدة: ' + data.duration + ' يوم\n\n' +
+                lineThin + '\n\n💼 *مع تحيات*\n*Al Brazili Technologies* 🏛️\n\n' + footer;
+        }
+        if (type === 'communication') {
+            return header + '\n\n📨 *رسالة تواصل رسمية*\n\n' +
+                lineThin + '\n📌 *الموضوع:* ' + data.subject + '\n📁 *المشروع:* ' + data.project + '\n' + lineThin + '\n\n' +
+                '💬 *نص الرسالة:*\n\n┌─────────────────────┐\n│\n│  ' + data.message + '\n│\n└─────────────────────┘\n\n' +
+                (data.next ? '➡️ *الخطوة القادمة*\n   ' + data.next + '\n\n' : '') +
+                (data.progress ? '✅ *ما تم إنجازه*\n   ' + data.progress + '\n\n' : '') + footer;
+        }
+        if (type === 'appointment') {
+            return header + '\n\n📅 *تذكير بموعد مهم*\n\n' + lineThin + '\n\n' +
+                '📌 *' + data.title + '*\n\n📁 *المشروع:* ' + data.project + '\n📅 *التاريخ:* ' + data.date + '\n⏰ *الوقت:* ' + data.time + '\n' +
+                (data.notes ? '\n📝 *ملاحظات:*\n   ' + data.notes + '\n' : '') +
+                '\n' + lineThin + '\n\n⚠️ *يرجى الحضور في الموعد المحدد*\n🤝 *شكراً لتعاونكم*\n\n' + footer;
+        }
+        if (type === 'greeting') {
+            return header + '\n\n🌟 *تحية طيبة* 🌟\n\nالسلام عليكم ورحمة الله وبركاته\n\nأ. *' + data.name + '*\n\n' +
+                lineThin + '\n\n✨ نتمنى لكم يوماً سعيداً\nمليئاً بالنجاح والتوفيق ✨\n\n' + lineThin + '\n\n🤝 *نحن هنا لخدمتكم دائماً*\n📞 للتواصل: ' + WHATSAPP_NUMBER + '\n\n' + footer;
+        }
+        return header + '\n\n' + (data.message || '') + '\n\n' + footer;
     }
-    
-    if (type === 'communication') {
-        return header + '\n\n' +
-            '📨 *رسالة تواصل رسمية*\n\n' +
-            lineThin + '\n' +
-            '📌 *الموضوع:* ' + data.subject + '\n' +
-            '📁 *المشروع:* ' + data.project + '\n' +
-            lineThin + '\n\n' +
-            '💬 *نص الرسالة:*\n\n' +
-            '┌─────────────────────┐\n' +
-            '│\n' +
-            '│  ' + data.message + '\n' +
-            '│\n' +
-            '└─────────────────────┘\n\n' +
-            (data.next ? '➡️ *الخطوة القادمة*\n   ' + data.next + '\n\n' : '') +
-            (data.progress ? '✅ *ما تم إنجازه*\n   ' + data.progress + '\n\n' : '') +
-            footer;
-    }
-    
-    if (type === 'appointment') {
-        return header + '\n\n' +
-            '📅 *تذكير بموعد مهم*\n\n' +
-            lineThin + '\n\n' +
-            '📌 *' + data.title + '*\n\n' +
-            '📁 *المشروع:* ' + data.project + '\n' +
-            '📅 *التاريخ:* ' + data.date + '\n' +
-            '⏰ *الوقت:* ' + data.time + '\n' +
-            (data.notes ? '\n📝 *ملاحظات:*\n   ' + data.notes + '\n' : '') +
-            '\n' + lineThin + '\n\n' +
-            '⚠️ *يرجى الحضور في الموعد المحدد*\n' +
-            '🤝 *شكراً لتعاونكم*\n\n' +
-            footer;
-    }
-    
-    if (type === 'greeting') {
-        return header + '\n\n' +
-            '🌟 *تحية طيبة* 🌟\n\n' +
-            'السلام عليكم ورحمة الله وبركاته\n\n' +
-            'أ. *' + data.name + '*\n\n' +
-            lineThin + '\n\n' +
-            '✨ نتمنى لكم يوماً سعيداً\n' +
-            'مليئاً بالنجاح والتوفيق ✨\n\n' +
-            lineThin + '\n\n' +
-            '🤝 *نحن هنا لخدمتكم دائماً*\n' +
-            '📞 للتواصل: ' + WHATSAPP_NUMBER + '\n\n' +
-            footer;
-    }
-    
-    if (type === 'newProject') {
-        return header + '\n\n' +
-            '🎉 *مشروع جديد* 🎉\n\n' +
-            '👤 *العميل:* ' + data.client + '\n' +
-            '📁 *النوع:* ' + data.typeLabel + '\n' +
-            '📍 *العنوان:* ' + data.address + '\n' +
-            '💰 *المبلغ:* ' + data.total + '\n\n' +
-            lineThin + '\n\n' +
-            '📌 *الخطوة الأولى:*\n   ' + data.firstStep + '\n\n' +
-            footer;
-    }
-    
-    return header + '\n\n' + (data.message || '') + '\n\n' + footer;
-}
 
     function sendWhatsApp(phone, msg) {
         if (!phone) return false;
@@ -3014,92 +2361,58 @@
         else if (projectType === 'elevation') project = elevationPermits.find(function(x) { return x.id === projectId; });
         else if (projectType === 'reconciliation') project = reconciliations.find(function(x) { return x.id === projectId; });
         if (!project) return;
-        
         var eng = project.engineer_id ? getEngineer(project.engineer_id) : null;
         if (!eng || !eng.phone) {
             Swal.fire({ icon: 'warning', title: 'لا يوجد مهندس', text: 'الرجاء تعيين مهندس برقم هاتف' });
             return;
         }
-        
         var step = steps[stepNum - 1];
         if (!step) return;
-        
         Swal.fire({
             title: '📤 إرسال تذكير',
-            html: '<div style="text-align:right;font-size:13px;line-height:1.8;">' +
-                  '<p><strong>👷 المهندس:</strong> ' + eng.name + '</p>' +
-                  '<p><strong>📱 الجوال:</strong> ' + eng.phone + '</p>' +
-                  '<p><strong>📌 الخطوة:</strong> ' + step.name + '</p>' +
-                  '</div>',
+            html: '<div style="text-align:right;font-size:13px;line-height:1.8;"><p><strong>👷 المهندس:</strong> ' + eng.name + '</p><p><strong>📱 الجوال:</strong> ' + eng.phone + '</p><p><strong>📌 الخطوة:</strong> ' + step.name + '</p></div>',
             showCancelButton: true, confirmButtonText: '📤 إرسال الآن', cancelButtonText: 'إلغاء',
             confirmButtonColor: '#25D366'
         }).then(function(result) {
             if (!result.isConfirmed) return;
             var msg = buildWhatsAppMessage('step', {
-                client: project.client,
-                typeLabel: getTypeLabel(projectType),
-                transaction: project.transaction,
-                address: project.address,
-                stepName: step.name,
-                dept: step.dept,
-                duration: step.duration
+                client: project.client, typeLabel: getTypeLabel(projectType),
+                transaction: project.transaction, address: project.address,
+                stepName: step.name, dept: step.dept, duration: step.duration
             });
             sendWhatsApp(eng.phone, msg);
         });
     }
 
-    // ==================== ALERTS (حل مشكلة التنبيهات) ====================
+    // ==================== ALERTS ====================
     async function addAlert(type, projectId, message, cat) {
         if (!cat) cat = 'status';
-        
-        // 1. إضافة محلية فورية
         var tempAlert = { 
             id: 'temp_' + Date.now(), 
             type: type, projectId: projectId, 
             message: message, cat: cat, 
             date: new Date().toLocaleString('ar-EG'),
-            createdAt: new Date().toISOString()
+            createdAt: { seconds: Date.now() / 1000 }
         };
         allAlerts.unshift(tempAlert);
-        renderAlerts(); 
-        updateUI();
-        
-        // 2. عرض Toast فوري
-        var iconMap = {
-            'payment': 'success',
-            'deadline': 'warning',
-            'document': 'info',
-            'status': 'success',
-            'engineer': 'info',
-            'appointment': 'info'
-        };
+        renderAlerts(); updateUI();
+        var iconMap = { 'payment': 'success', 'deadline': 'warning', 'document': 'info', 'status': 'success', 'engineer': 'info', 'appointment': 'info' };
         Swal.fire({ 
             icon: iconMap[cat] || 'info', 
             title: '🔔 تنبيه جديد', 
             text: message, 
-            timer: 3500, 
-            timerProgressBar: true, 
-            showConfirmButton: false, 
-            toast: true, 
-            position: 'top-start',
-            background: 'linear-gradient(135deg, #fff, #F5F3FF)',
-            color: '#1A1A2E'
+            timer: 3500, timerProgressBar: true, showConfirmButton: false, 
+            toast: true, position: 'top-start',
+            background: 'linear-gradient(135deg, #fff, #F5F3FF)', color: '#1A1A2E'
         });
-        
-        // 3. الحفظ في Firebase
         try {
             if (db && collection && addDoc) {
                 await addDoc(collection(db, 'alerts'), { 
-                    type: type, projectId: projectId, 
-                    message: message, cat: cat, 
-                    date: new Date().toLocaleString('ar-EG'), 
-                    createdAt: serverTimestamp() 
+                    type: type, projectId: projectId, message: message, cat: cat, 
+                    date: new Date().toLocaleString('ar-EG'), createdAt: serverTimestamp() 
                 });
-                console.log('✅ تم حفظ التنبيه:', message);
             }
-        } catch (e) { 
-            console.error('⚠️ فشل حفظ التنبيه في Firebase:', e.message);
-        }
+        } catch (e) { console.error('⚠️ فشل حفظ التنبيه:', e.message); }
     }
 
     // ==================== LOGIN ====================
@@ -3152,56 +2465,69 @@
 
     // ==================== LOAD DATA ====================
     async function loadAllDataFromFirebase() {
-    try {
-        setConnectionStatus('syncing', 'جاري المزامنة...');
-        console.log('🔄 بدء تحميل البيانات...');
-        
-        var engSnap = await getDocs(collection(db, 'engineers'));
-        engineers = [];
-        engSnap.forEach(function(d) { engineers.push({ id: d.id, ...d.data() }); });
-        console.log('✅ مهندسين:', engineers.length);
-        
-        var bpSnap = await getDocs(collection(db, 'buildingPermits'));
-        buildingPermits = [];
-        bpSnap.forEach(function(d) { buildingPermits.push({ id: d.id, ...d.data() }); });
-        console.log('✅ رخص بناء:', buildingPermits.length);
-        
-        var epSnap = await getDocs(collection(db, 'elevationPermits'));
-        elevationPermits = [];
-        epSnap.forEach(function(d) { elevationPermits.push({ id: d.id, ...d.data() }); });
-        console.log('✅ رخص تعلية:', elevationPermits.length);
-        
-        var recSnap = await getDocs(collection(db, 'reconciliations'));
-        reconciliations = [];
-        recSnap.forEach(function(d) { reconciliations.push({ id: d.id, ...d.data() }); });
-        console.log('✅ تصالح:', reconciliations.length);
-        
-        var commSnap = await getDocs(collection(db, 'communications'));
-        communications = [];
-        commSnap.forEach(function(d) { communications.push({ id: d.id, ...d.data() }); });
-        
-        var alertSnap = await getDocs(collection(db, 'alerts'));
-        allAlerts = [];
-        alertSnap.forEach(function(d) { allAlerts.push({ id: d.id, ...d.data() }); });
-        allAlerts.sort(function(a, b) { return (b.createdAt || '').localeCompare(a.createdAt || ''); });
-        
-        var appSnap = await getDocs(collection(db, 'appointments'));
-        appointments = [];
-        appSnap.forEach(function(d) { appointments.push({ id: d.id, ...d.data() }); });
-        
-        console.log('✅ تم تحميل كل البيانات');
-        setConnectionStatus('online', 'متصل - ' + new Date().toLocaleTimeString('ar-EG'));
-        updateUI();
-        renderAll();
-        checkAppointmentsForReminders();
-    } catch (error) {
-        console.error('❌ خطأ في التحميل:', error);
-        setConnectionStatus('offline', 'خطأ: ' + error.message);
-        
-        
-     
+        try {
+            setConnectionStatus('syncing', 'جاري المزامنة...');
+            console.log('🔄 بدء تحميل البيانات...');
+            
+            var engSnap = await getDocs(collection(db, 'engineers'));
+            engineers = [];
+            engSnap.forEach(function(d) { engineers.push({ id: d.id, ...d.data() }); });
+            console.log('✅ مهندسين:', engineers.length);
+            
+            var bpSnap = await getDocs(collection(db, 'buildingPermits'));
+            buildingPermits = [];
+            bpSnap.forEach(function(d) { buildingPermits.push({ id: d.id, ...d.data() }); });
+            console.log('✅ رخص بناء:', buildingPermits.length);
+            
+            var epSnap = await getDocs(collection(db, 'elevationPermits'));
+            elevationPermits = [];
+            epSnap.forEach(function(d) { elevationPermits.push({ id: d.id, ...d.data() }); });
+            console.log('✅ رخص تعلية:', elevationPermits.length);
+            
+            var recSnap = await getDocs(collection(db, 'reconciliations'));
+            reconciliations = [];
+            recSnap.forEach(function(d) { reconciliations.push({ id: d.id, ...d.data() }); });
+            console.log('✅ تصالح:', reconciliations.length);
+            
+            var commSnap = await getDocs(collection(db, 'communications'));
+            communications = [];
+            commSnap.forEach(function(d) { communications.push({ id: d.id, ...d.data() }); });
+            
+            var alertSnap = await getDocs(collection(db, 'alerts'));
+            allAlerts = [];
+            alertSnap.forEach(function(d) { allAlerts.push({ id: d.id, ...d.data() }); });
+            sortAlertsByDate(allAlerts);
+            
+            var appSnap = await getDocs(collection(db, 'appointments'));
+            appointments = [];
+            appSnap.forEach(function(d) { appointments.push({ id: d.id, ...d.data() }); });
+            
+            console.log('✅ تم تحميل كل البيانات');
+            setConnectionStatus('online', 'متصل - ' + new Date().toLocaleTimeString('ar-EG'));
+            updateUI();
+            renderAll();
+            checkAppointmentsForReminders();
+        } catch (error) {
+            console.error('❌ خطأ في التحميل:', error);
+            setConnectionStatus('offline', 'خطأ: ' + error.message);
+            Swal.fire({
+                icon: 'error',
+                title: '⚠️ خطأ في الاتصال بـ Firebase',
+                html: '<div style="text-align:right;font-size:13px;">' +
+                      '<p><strong>السبب:</strong> ' + error.message + '</p>' +
+                      '<p style="margin-top:10px;color:#DC2626;"><strong>💡 الحل:</strong></p>' +
+                      '<ol style="padding-right:20px;margin-top:6px;">' +
+                      '<li>افتح <a href="https://console.firebase.google.com/" target="_blank" style="color:#6B21A8;">Firebase Console</a></li>' +
+                      '<li>Firestore Database → Rules</li>' +
+                      '<li>ضع القواعد التالية ثم اضغط Publish:</li>' +
+                      '</ol>' +
+                      '<pre style="background:#F5F3FF;padding:10px;border-radius:8px;margin-top:10px;font-size:11px;direction:ltr;text-align:left;">rules_version = \'2\';\nservice cloud.firestore {\n  match /databases/{database}/documents {\n    match /{document=**} {\n      allow read, write: if true;\n    }\n  }\n}</pre>' +
+                      '</div>',
+                confirmButtonText: 'فهمت',
+                confirmButtonColor: '#6B21A8'
+            });
+        }
     }
-}
 
     function setupRealtimeSync() {
         onSnapshot(collection(db, 'buildingPermits'), function(snapshot) {
@@ -3213,7 +2539,10 @@
                 if (p) document.getElementById('modalBody').innerHTML = renderProjectDetails(p, 'building');
             }
             setConnectionStatus('online', 'متصل - ' + new Date().toLocaleTimeString('ar-EG'));
-        }, function(err) { setConnectionStatus('offline', 'خطأ في المزامنة'); });
+        }, function(err) { 
+            console.error('❌ buildingPermits sync error:', err);
+            setConnectionStatus('offline', 'خطأ في المزامنة'); 
+        });
         
         onSnapshot(collection(db, 'elevationPermits'), function(snapshot) {
             elevationPermits = [];
@@ -3223,7 +2552,7 @@
                 var p = elevationPermits.find(function(x) { return x.id === currentOpenProject.id; });
                 if (p) document.getElementById('modalBody').innerHTML = renderProjectDetails(p, 'elevation');
             }
-        });
+        }, function(err) { console.error('❌ elevationPermits sync error:', err); });
         
         onSnapshot(collection(db, 'reconciliations'), function(snapshot) {
             reconciliations = [];
@@ -3233,32 +2562,32 @@
                 var p = reconciliations.find(function(x) { return x.id === currentOpenProject.id; });
                 if (p) document.getElementById('modalBody').innerHTML = renderProjectDetails(p, 'reconciliation');
             }
-        });
+        }, function(err) { console.error('❌ reconciliations sync error:', err); });
         
         onSnapshot(collection(db, 'engineers'), function(snapshot) {
             engineers = [];
             snapshot.forEach(function(d) { engineers.push({ id: d.id, ...d.data() }); });
             renderEngineers(); updateSelects(); updateUI();
-        });
+        }, function(err) { console.error('❌ engineers sync error:', err); });
         
         onSnapshot(collection(db, 'alerts'), function(snapshot) {
             allAlerts = [];
             snapshot.forEach(function(d) { allAlerts.push({ id: d.id, ...d.data() }); });
-            allAlerts.sort(function(a, b) { return (b.createdAt || '').localeCompare(a.createdAt || ''); });
+            sortAlertsByDate(allAlerts);
             renderAlerts(); updateUI();
-        });
+        }, function(err) { console.error('❌ alerts sync error:', err); });
         
         onSnapshot(collection(db, 'communications'), function(snapshot) {
             communications = [];
             snapshot.forEach(function(d) { communications.push({ id: d.id, ...d.data() }); });
             renderCommunications();
-        });
+        }, function(err) { console.error('❌ communications sync error:', err); });
         
         onSnapshot(collection(db, 'appointments'), function(snapshot) {
             appointments = [];
             snapshot.forEach(function(d) { appointments.push({ id: d.id, ...d.data() }); });
             renderAppointments(); updateUI();
-        });
+        }, function(err) { console.error('❌ appointments sync error:', err); });
     }
 
     // ==================== BUILDING ====================
@@ -3268,7 +2597,7 @@
         var total = parseFloat(document.getElementById('b_total').value) || 0;
         var paid = parseFloat(document.getElementById('b_paid').value) || 0;
         var hasFiles = false;
-        Object.keys(uploadedFiles.b).forEach(function(k) { if (uploadedFiles.b[k] && uploadedFiles.b[k].length > 0) hasFiles = true; });
+        Object.keys(uploadedFiles.b || {}).forEach(function(k) { if (uploadedFiles.b[k] && uploadedFiles.b[k].length > 0) hasFiles = true; });
         Swal.fire({ title: hasFiles ? 'جاري معالجة الملفات...' : 'جاري الحفظ...', allowOutsideClick: false, didOpen: function() { Swal.showLoading(); } });
         try {
             var docsData = {};
@@ -3377,21 +2706,11 @@
             var progress = (currentStep / total) * 100;
             var remaining = (p.total || 0) - (p.paid || 0);
             html += '<div class="project-tile building" onclick="openProjectModal(\'building\',\'' + p.id + '\')">';
-            html += '<div class="tile-header">';
-            html += '<div class="tile-icon"><svg class="icon-svg"><use href="#i-building"/></svg></div>';
-            html += '<div class="tile-info">';
-            html += '<div class="tile-title">' + p.client + '</div>';
-            html += '<div class="tile-sub">' + (p.address || '').substring(0, 30) + '</div>';
-            html += '</div></div>';
+            html += '<div class="tile-header"><div class="tile-icon"><svg class="icon-svg"><use href="#i-building"/></svg></div><div class="tile-info"><div class="tile-title">' + p.client + '</div><div class="tile-sub">' + (p.address || '').substring(0, 30) + '</div></div></div>';
             html += '<div class="tile-status status-' + p.status + '">' + getStatusText(p.status) + '</div>';
-            html += '<div class="tile-progress">';
-            html += '<div class="tile-progress-info"><span>التقدم</span><span>' + currentStep + '/' + total + '</span></div>';
-            html += '<div class="tile-progress-bar"><div class="fill" style="width:' + progress + '%;"></div></div>';
+            html += '<div class="tile-progress"><div class="tile-progress-info"><span>التقدم</span><span>' + currentStep + '/' + total + '</span></div><div class="tile-progress-bar"><div class="fill" style="width:' + progress + '%;"></div></div></div>';
+            html += '<div class="tile-money"><div class="item"><div class="label">الإجمالي</div><div class="value">' + formatCurrency(p.total) + '</div></div><div class="item"><div class="label">المتبقي</div><div class="value" style="color:' + (remaining > 0 ? 'var(--danger-dark)' : 'var(--success-dark)') + ';">' + formatCurrency(remaining) + '</div></div></div>';
             html += '</div>';
-            html += '<div class="tile-money">';
-            html += '<div class="item"><div class="label">الإجمالي</div><div class="value">' + formatCurrency(p.total) + '</div></div>';
-            html += '<div class="item"><div class="label">المتبقي</div><div class="value" style="color:' + (remaining > 0 ? 'var(--danger-dark)' : 'var(--success-dark)') + ';">' + formatCurrency(remaining) + '</div></div>';
-            html += '</div></div>';
         });
         container.innerHTML = html;
     }
@@ -3437,7 +2756,6 @@
         else if (type === 'reconciliation') project = reconciliations.find(function(x) { return x.id === id; });
         if (!project) return;
         if (stepNum !== (project.current_step || 0) + 1) { Swal.fire({ icon: 'warning', title: 'تنبيه', text: 'الرجاء إنجاز الخطوات بالترتيب' }); return; }
-        
         var eng = project.engineer_id ? getEngineer(project.engineer_id) : null;
         var result = await Swal.fire({
             title: '✅ إنجاز الخطوة ' + stepNum,
@@ -3446,16 +2764,11 @@
                   (stepNum < steps.length ? '<p><strong>➡️ القادمة:</strong> ' + steps[stepNum].name + '</p>' : '<p style="color:#10B981;font-weight:800;">🎉 سيكتمل المشروع!</p>') +
                   (eng ? '<p style="margin-top:10px;color:#6B21A8;"><strong>👷 المهندس:</strong> ' + eng.name + '</p>' : '') +
                   '</div>',
-            showCancelButton: true,
-            showDenyButton: !!eng,
-            confirmButtonText: '✅ إنجاز فقط',
-            denyButtonText: '📤 إنجاز + إرسال',
-            cancelButtonText: 'إلغاء',
-            confirmButtonColor: '#10B981',
-            denyButtonColor: '#25D366'
+            showCancelButton: true, showDenyButton: !!eng,
+            confirmButtonText: '✅ إنجاز فقط', denyButtonText: '📤 إنجاز + إرسال', cancelButtonText: 'إلغاء',
+            confirmButtonColor: '#10B981', denyButtonColor: '#25D366'
         });
         if (!result.isConfirmed && !result.isDenied) return;
-        
         try {
             var updateData = { current_step: stepNum };
             if (stepNum >= steps.length) updateData.status = 'completed';
@@ -3605,21 +2918,11 @@
             var progress = (currentStep / total) * 100;
             var remaining = (p.total || 0) - (p.paid || 0);
             html += '<div class="project-tile elevation" onclick="openProjectModal(\'elevation\',\'' + p.id + '\')">';
-            html += '<div class="tile-header">';
-            html += '<div class="tile-icon"><svg class="icon-svg"><use href="#i-elevation"/></svg></div>';
-            html += '<div class="tile-info">';
-            html += '<div class="tile-title">' + p.client + '</div>';
-            html += '<div class="tile-sub">' + (p.address || '').substring(0, 30) + '</div>';
-            html += '</div></div>';
+            html += '<div class="tile-header"><div class="tile-icon"><svg class="icon-svg"><use href="#i-elevation"/></svg></div><div class="tile-info"><div class="tile-title">' + p.client + '</div><div class="tile-sub">' + (p.address || '').substring(0, 30) + '</div></div></div>';
             html += '<div class="tile-status status-' + p.status + '">' + getStatusText(p.status) + '</div>';
-            html += '<div class="tile-progress">';
-            html += '<div class="tile-progress-info"><span>التقدم</span><span>' + currentStep + '/' + total + '</span></div>';
-            html += '<div class="tile-progress-bar"><div class="fill" style="width:' + progress + '%;"></div></div>';
+            html += '<div class="tile-progress"><div class="tile-progress-info"><span>التقدم</span><span>' + currentStep + '/' + total + '</span></div><div class="tile-progress-bar"><div class="fill" style="width:' + progress + '%;"></div></div></div>';
+            html += '<div class="tile-money"><div class="item"><div class="label">الإجمالي</div><div class="value">' + formatCurrency(p.total) + '</div></div><div class="item"><div class="label">المتبقي</div><div class="value" style="color:' + (remaining > 0 ? 'var(--danger-dark)' : 'var(--success-dark)') + ';">' + formatCurrency(remaining) + '</div></div></div>';
             html += '</div>';
-            html += '<div class="tile-money">';
-            html += '<div class="item"><div class="label">الإجمالي</div><div class="value">' + formatCurrency(p.total) + '</div></div>';
-            html += '<div class="item"><div class="label">المتبقي</div><div class="value" style="color:' + (remaining > 0 ? 'var(--danger-dark)' : 'var(--success-dark)') + ';">' + formatCurrency(remaining) + '</div></div>';
-            html += '</div></div>';
         });
         c.innerHTML = html;
     }
@@ -3730,21 +3033,11 @@
             var progress = (currentStep / total) * 100;
             var remaining = (p.total || 0) - (p.paid || 0);
             html += '<div class="project-tile reconciliation" onclick="openProjectModal(\'reconciliation\',\'' + p.id + '\')">';
-            html += '<div class="tile-header">';
-            html += '<div class="tile-icon"><svg class="icon-svg"><use href="#i-scale"/></svg></div>';
-            html += '<div class="tile-info">';
-            html += '<div class="tile-title">' + p.client + '</div>';
-            html += '<div class="tile-sub">' + (p.address || '').substring(0, 30) + '</div>';
-            html += '</div></div>';
+            html += '<div class="tile-header"><div class="tile-icon"><svg class="icon-svg"><use href="#i-scale"/></svg></div><div class="tile-info"><div class="tile-title">' + p.client + '</div><div class="tile-sub">' + (p.address || '').substring(0, 30) + '</div></div></div>';
             html += '<div class="tile-status status-' + p.status + '">' + getStatusText(p.status) + '</div>';
-            html += '<div class="tile-progress">';
-            html += '<div class="tile-progress-info"><span>التقدم</span><span>' + currentStep + '/' + total + '</span></div>';
-            html += '<div class="tile-progress-bar"><div class="fill" style="width:' + progress + '%;"></div></div>';
+            html += '<div class="tile-progress"><div class="tile-progress-info"><span>التقدم</span><span>' + currentStep + '/' + total + '</span></div><div class="tile-progress-bar"><div class="fill" style="width:' + progress + '%;"></div></div></div>';
+            html += '<div class="tile-money"><div class="item"><div class="label">الإجمالي</div><div class="value">' + formatCurrency(p.total) + '</div></div><div class="item"><div class="label">المتبقي</div><div class="value" style="color:' + (remaining > 0 ? 'var(--danger-dark)' : 'var(--success-dark)') + ';">' + formatCurrency(remaining) + '</div></div></div>';
             html += '</div>';
-            html += '<div class="tile-money">';
-            html += '<div class="item"><div class="label">الإجمالي</div><div class="value">' + formatCurrency(p.total) + '</div></div>';
-            html += '<div class="item"><div class="label">المتبقي</div><div class="value" style="color:' + (remaining > 0 ? 'var(--danger-dark)' : 'var(--success-dark)') + ';">' + formatCurrency(remaining) + '</div></div>';
-            html += '</div></div>';
         });
         c.innerHTML = html;
     }
@@ -3814,10 +3107,7 @@
         engineers.forEach(function(e) {
             var initial = (e.name || '؟').charAt(0);
             html += '<div class="engineer-tile">';
-            html += '<div class="eng-header">';
-            html += '<div class="eng-avatar">' + initial + '</div>';
-            html += '<div class="eng-info"><div class="eng-name">' + e.name + '</div><div class="eng-phone">' + (e.phone || '') + '</div></div>';
-            html += '</div>';
+            html += '<div class="eng-header"><div class="eng-avatar">' + initial + '</div><div class="eng-info"><div class="eng-name">' + e.name + '</div><div class="eng-phone">' + (e.phone || '') + '</div></div></div>';
             html += '<div class="eng-specialty">' + (e.specialization === 'structural' ? 'إنشائي' : e.specialization === 'architectural' ? 'معماري' : e.specialization === 'electrical' ? 'كهرباء' : 'ميكانيكا') + '</div>';
             html += '<div class="eng-actions">';
             html += '<button onclick="editEngineer(\'' + e.id + '\')" class="btn btn-gold btn-sm"><svg class="icon-svg"><use href="#i-pencil"/></svg> تعديل</button>';
@@ -4322,7 +3612,6 @@
     }
 
     document.addEventListener('DOMContentLoaded', function() {
-        // تعيين صورة المستخدم
         if (MY_PHOTO_URL) {
             var loginPhoto = document.getElementById('loginPhoto');
             var headerPhoto = document.getElementById('headerPhoto');
@@ -4330,7 +3619,6 @@
             if (headerPhoto) headerPhoto.src = MY_PHOTO_URL;
         }
         
-        // Force hide loading after 8 seconds as fallback
         setTimeout(function() {
             var loading = document.getElementById('loadingScreen');
             var login = document.getElementById('loginScreen');
@@ -4360,7 +3648,6 @@
             if (e.key === 'Enter') doLogin();
         });
         
-        // ESC keys
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') {
                 closePreview();
