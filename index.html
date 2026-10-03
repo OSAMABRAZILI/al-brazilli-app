@@ -42,7 +42,6 @@
             --gray-700: #374151;
             --gray-900: #111827;
             
-            /* متغيرات السطح */
             --bg-main: linear-gradient(135deg, #F5F3FF 0%, #EDE9FE 50%, #F3E8FF 100%);
             --bg-radial-1: rgba(107,33,168,0.15);
             --bg-radial-2: rgba(212,175,55,0.1);
@@ -61,7 +60,6 @@
             --shadow-primary: 0 8px 25px rgba(107,33,168,0.4);
         }
         
-        /* 🌙 الوضع الليلي */
         body.dark-mode {
             --gray-50: #1A1A2E;
             --gray-100: #252540;
@@ -104,7 +102,6 @@
         .icon-svg { width: 20px; height: 20px; stroke-width: 2; stroke: currentColor; fill: none; display: inline-block; vertical-align: middle; }
         .icon-svg-sm { width: 16px; height: 16px; }
         
-        /* 🌙 زر الوضع الليلي */
         .dark-mode-toggle {
             position: fixed;
             top: 20px;
@@ -148,7 +145,6 @@
             }
         }
         
-        /* LOADING */
         .loading-screen {
             display: flex; align-items: center; justify-content: center;
             min-height: 100vh;
@@ -182,7 +178,6 @@
         .loading-screen .subtext { font-size: 14px; opacity: 0.75; position: relative; z-index: 1; }
         .loading-screen.hidden { display: none; }
         
-        /* CONNECTION */
         .connection-status {
             position: fixed; bottom: 12px; left: 12px;
             background: var(--surface); padding: 8px 18px;
@@ -201,7 +196,6 @@
         .connection-status.syncing .dot { background: var(--warning); animation: pulse 1s infinite; }
         @keyframes pulse { 0%,100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(1.2); } }
         
-        /* LOGIN */
         .login-screen {
             display: flex; align-items: center; justify-content: center;
             min-height: 100vh;
@@ -322,11 +316,9 @@
             margin-top: 14px; display: none; font-weight: 700; border: 1px solid #FECACA;
         }
         
-        /* APP */
         .app { display: none; padding: 12px; max-width: 1400px; margin: 0 auto; }
         .app.active { display: block; }
         
-        /* HEADER */
         .header {
             background: linear-gradient(135deg, var(--primary) 0%, var(--black) 100%);
             color: white; padding: 16px 22px; border-radius: 24px;
@@ -381,7 +373,6 @@
         .header-stats .stat .icon-svg { color: var(--gold-light); width: 14px; height: 14px; }
         .header-stats .stat strong { font-size: 14px; color: var(--gold-light); }
         
-        /* TABS */
         .tabs {
             display: flex; gap: 6px; background: var(--surface); padding: 8px;
             border-radius: 18px; box-shadow: var(--shadow-lg);
@@ -411,7 +402,6 @@
             to { opacity: 1; transform: translateY(0); }
         }
         
-        /* CARDS */
         .card {
             background: var(--surface); border-radius: 20px; padding: 20px;
             box-shadow: var(--shadow-md); margin-bottom: 14px;
@@ -435,7 +425,6 @@
             font-size: 12px; font-weight: 800; box-shadow: var(--shadow-primary);
         }
         
-        /* STATS */
         .grid-4 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
         @media (min-width: 700px) { .grid-4 { grid-template-columns: repeat(4, 1fr); } }
         
@@ -474,7 +463,6 @@
             color: var(--primary);
         }
         
-        /* PROJECTS GRID */
         .projects-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
@@ -554,7 +542,6 @@
         .project-tile .tile-money .item .label { color: var(--text-muted); font-weight: 600; font-size: 10px; }
         .project-tile .tile-money .item .value { font-weight: 800; color: var(--text-main); font-size: 12px; margin-top: 2px; }
         
-        /* Docs Badge on tile */
         .tile-docs-badge {
             display: inline-flex; align-items: center; gap: 6px;
             padding: 6px 12px;
@@ -577,7 +564,6 @@
         .empty-state .icon-wrap .icon-svg { width: 50px; height: 50px; color: var(--text-muted); }
         .empty-state h3 { font-size: 18px; color: var(--text-main); margin-bottom: 8px; font-weight: 800; }
         
-        /* MODAL */
         .modal-overlay {
             display: none; position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
@@ -653,7 +639,6 @@
             border-bottom: 1px solid var(--gray-100);
         }
         
-        /* DETAILS */
         .details-grid-modal {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
@@ -694,7 +679,6 @@
         }
         .info-box.transaction .icon-svg { color: var(--success-dark); }
         
-        /* GEAR STEPS */
         .steps-section {
             background: linear-gradient(135deg, var(--surface-alt), var(--gray-100));
             padding: 20px 16px; border-radius: 20px;
@@ -865,7 +849,6 @@
             border-top: 1px solid var(--border-light);
         }
         
-        /* DOCUMENTS داخل Modal */
         .documents-section {
             background: linear-gradient(135deg, rgba(16,185,129,0.1), rgba(5,150,105,0.15));
             padding: 16px; border-radius: 16px;
@@ -1403,7 +1386,12 @@
         }
     </style>
 </head>
-<body><svg style="display:none;" xmlns="http://www.w3.org/2000/svg">
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- 🎨 SVG ICONS LIBRARY -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<svg style="display:none;" xmlns="http://www.w3.org/2000/svg">
     <symbol id="i-chart" viewBox="0 0 24 24"><path d="M3 3v18h18M7 14l4-4 4 4 5-5"/></symbol>
     <symbol id="i-building" viewBox="0 0 24 24"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 9h.01M15 9h.01M9 13h.01M15 13h.01M9 17h.01M15 17h.01"/></symbol>
     <symbol id="i-elevation" viewBox="0 0 24 24"><path d="M3 21h18M5 21V9h14v12M9 9V5h6v4M9 15h6"/></symbol>
@@ -1467,23 +1455,34 @@
     </symbol>
 </svg>
 
+<!-- ═══════════════════════════════════════════════════════════ -->
 <!-- 🌙 زر الوضع الليلي -->
+<!-- ═══════════════════════════════════════════════════════════ -->
 <button class="dark-mode-toggle" id="darkModeToggle" onclick="toggleDarkMode()" title="تبديل الوضع الليلي">
     <span class="sun-icon">☀️</span>
     <span class="moon-icon">🌙</span>
 </button>
 
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- ⏳ شاشة التحميل -->
+<!-- ═══════════════════════════════════════════════════════════ -->
 <div class="loading-screen" id="loadingScreen">
     <div class="spinner"></div>
     <div class="brand">Al Brazili</div>
     <div class="subtext">جاري الاتصال بقاعدة البيانات...</div>
 </div>
 
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- 📡 حالة الاتصال -->
+<!-- ═══════════════════════════════════════════════════════════ -->
 <div class="connection-status" id="connectionStatus">
     <div class="dot"></div>
     <span id="connectionText">جاري الاتصال...</span>
 </div>
 
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- 🔐 شاشة الدخول -->
+<!-- ═══════════════════════════════════════════════════════════ -->
 <div class="login-screen hidden" id="loginScreen">
     <div class="login-box">
         <div class="photo-container">
@@ -1507,6 +1506,9 @@
     </div>
 </div>
 
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- 📋 Modal تفاصيل المشروع -->
+<!-- ═══════════════════════════════════════════════════════════ -->
 <div class="modal-overlay" id="projectModal" onclick="closeModalIfOutside(event)">
     <div class="modal-content" onclick="event.stopPropagation()">
         <div class="modal-header">
@@ -1527,6 +1529,9 @@
     </div>
 </div>
 
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- 👁️ Modal معاينة الملفات -->
+<!-- ═══════════════════════════════════════════════════════════ -->
 <div class="preview-modal" id="previewModal">
     <div class="preview-header">
         <div class="preview-title" id="previewTitle">معاينة الملف</div>
@@ -1542,8 +1547,12 @@
     </div>
     <div class="preview-content" id="previewContent"></div>
 </div>
-
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- 🏛️ التطبيق الرئيسي -->
+<!-- ═══════════════════════════════════════════════════════════ -->
 <div class="app" id="appContainer">
+
+    <!-- ═══ HEADER ═══ -->
     <div class="header">
         <div class="header-content">
             <div class="header-brand">
@@ -1573,6 +1582,7 @@
         </div>
     </div>
 
+    <!-- ═══ TABS ═══ -->
     <div class="tabs" id="mainTabs">
         <button class="tab-btn active" data-tab="dashboard"><svg class="icon-svg"><use href="#i-chart"/></svg>الرئيسية</button>
         <button class="tab-btn" data-tab="building"><svg class="icon-svg"><use href="#i-building"/></svg>بناء</button>
@@ -1586,8 +1596,10 @@
         <button class="tab-btn" data-tab="reports"><svg class="icon-svg"><use href="#i-doc"/></svg>تقارير</button>
         <button class="tab-btn" data-tab="invoices"><svg class="icon-svg"><use href="#i-money"/></svg>فواتير</button>
     </div>
-    
-    <!-- DASHBOARD -->
+
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <!-- 📊 DASHBOARD -->
+    <!-- ═══════════════════════════════════════════════════════ -->
     <div id="tab-dashboard" class="tab-content active">
         <div class="grid-4">
             <div class="stat-card building" onclick="switchTab('building')">
@@ -1632,7 +1644,9 @@
         </div>
     </div>
 
-    <!-- BUILDING -->
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <!-- 🏗️ BUILDING -->
+    <!-- ═══════════════════════════════════════════════════════ -->
     <div id="tab-building" class="tab-content">
         <button type="button" class="add-btn-floating" id="btnAddBuilding" onclick="toggleBuildingForm()">
             <svg class="icon-svg"><use href="#i-plus-circle"/></svg>
@@ -1706,7 +1720,9 @@
         </div>
     </div>
 
-    <!-- ELEVATION -->
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <!-- 📐 ELEVATION -->
+    <!-- ═══════════════════════════════════════════════════════ -->
     <div id="tab-elevation" class="tab-content">
         <button type="button" class="add-btn-floating" id="btnAddElevation" onclick="toggleElevationForm()">
             <svg class="icon-svg"><use href="#i-plus-circle"/></svg>
@@ -1768,7 +1784,9 @@
         </div>
     </div>
 
-    <!-- RECONCILIATION -->
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <!-- ⚖️ RECONCILIATION -->
+    <!-- ═══════════════════════════════════════════════════════ -->
     <div id="tab-reconciliation" class="tab-content">
         <button type="button" class="add-btn-floating" id="btnAddReconciliation" onclick="toggleReconciliationForm()">
             <svg class="icon-svg"><use href="#i-plus-circle"/></svg>
@@ -1832,7 +1850,9 @@
         </div>
     </div>
 
-    <!-- ENGINEERS -->
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <!-- 👷 ENGINEERS -->
+    <!-- ═══════════════════════════════════════════════════════ -->
     <div id="tab-engineers" class="tab-content">
         <button type="button" class="add-btn-floating" id="btnAddEngineer" onclick="toggleEngineerForm()">
             <svg class="icon-svg"><use href="#i-plus-circle"/></svg>
@@ -1883,7 +1903,9 @@
         </div>
     </div>
 
-    <!-- COMMUNICATIONS -->
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <!-- 💬 COMMUNICATIONS -->
+    <!-- ═══════════════════════════════════════════════════════ -->
     <div id="tab-communications" class="tab-content">
         <div class="card">
             <div class="card-header">
@@ -1914,7 +1936,9 @@
         </div>
     </div>
 
-    <!-- APPOINTMENTS -->
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <!-- 📅 APPOINTMENTS -->
+    <!-- ═══════════════════════════════════════════════════════ -->
     <div id="tab-appointments" class="tab-content">
         <button type="button" class="add-btn-floating" id="btnAddAppointment" onclick="toggleAppointmentForm()">
             <svg class="icon-svg"><use href="#i-plus-circle"/></svg>
@@ -1968,7 +1992,9 @@
         </div>
     </div>
 
-    <!-- ARCHIVE -->
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <!-- 📁 ARCHIVE -->
+    <!-- ═══════════════════════════════════════════════════════ -->
     <div id="tab-archive" class="tab-content">
         <div class="card">
             <div class="card-header">
@@ -1989,7 +2015,9 @@
         </div>
     </div>
 
-    <!-- ALERTS -->
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <!-- 🔔 ALERTS -->
+    <!-- ═══════════════════════════════════════════════════════ -->
     <div id="tab-alerts" class="tab-content">
         <div class="card">
             <div class="card-header">
@@ -2000,7 +2028,9 @@
         </div>
     </div>
 
-    <!-- REPORTS -->
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <!-- 📄 REPORTS -->
+    <!-- ═══════════════════════════════════════════════════════ -->
     <div id="tab-reports" class="tab-content">
         <div class="card">
             <div class="card-header">
@@ -2018,7 +2048,9 @@
         </div>
     </div>
 
-    <!-- INVOICES -->
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <!-- 💰 INVOICES -->
+    <!-- ═══════════════════════════════════════════════════════ -->
     <div id="tab-invoices" class="tab-content">
         <div class="card">
             <div class="card-header">
@@ -2032,11 +2064,18 @@
         </div>
     </div>
 
+    <!-- ═══ FOOTER ═══ -->
     <div class="footer">
         <span class="company">Al Brazili</span>
         <br><small>جمهورية مصر العربية | ☁️ Firebase + Cloudinary</small>
     </div>
-</div><script type="module">
+
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- 🔥 FIREBASE INITIALIZATION -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<script type="module">
     import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js';
     import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, deleteDoc, onSnapshot, query, orderBy, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js';
 
@@ -2059,7 +2098,9 @@
     window.dispatchEvent(new Event('firebase-ready'));
     console.log('✅ Firebase initialized');
 </script>
-
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- 🧠 MAIN SCRIPT -->
+<!-- ═══════════════════════════════════════════════════════════ -->
 <script>
     // ==================== CONFIGURATION ====================
     var MY_PHOTO_URL = "https://i.ibb.co/jPp8pHwg/Untitled-design.jpg";
@@ -2085,6 +2126,7 @@
     var db, collection, addDoc, getDocs, doc, updateDoc, deleteDoc, onSnapshot, query, orderBy, serverTimestamp;
     var uploadedFiles = { b: {}, e: {}, r: {} };
     var currentOpenProject = null;
+    window.payments = [];
 
     // ==================== 🌙 DARK MODE ====================
     function initDarkMode() {
@@ -2092,7 +2134,6 @@
         if (saved === 'true') {
             document.body.classList.add('dark-mode');
         } else if (saved === null) {
-            // اكتشاف تفضيل النظام
             if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
                 document.body.classList.add('dark-mode');
                 localStorage.setItem('al_brazili_dark_mode', 'true');
@@ -2105,7 +2146,6 @@
         var isDark = document.body.classList.contains('dark-mode');
         localStorage.setItem('al_brazili_dark_mode', isDark ? 'true' : 'false');
         
-        // إشعار صغير
         Swal.fire({
             icon: isDark ? 'success' : 'info',
             title: isDark ? '🌙 الوضع الليلي' : '☀️ الوضع النهاري',
@@ -2116,7 +2156,6 @@
         });
     }
     
-    // تشغيل الوضع الليلي فور التحميل
     initDarkMode();
 
     // ==================== BUILDING STEPS ====================
@@ -2428,7 +2467,6 @@
         
         var html = '';
         
-        // Actions
         html += '<div class="modal-actions">';
         html += '<button onclick="editProject(\'' + type + '\',\'' + project.id + '\')" class="btn btn-gold btn-sm"><svg class="icon-svg"><use href="#i-pencil"/></svg> تعديل</button>';
         if (type === 'building') {
@@ -2442,11 +2480,9 @@
         html += '<button onclick="deleteProjectFromModal()" class="btn btn-danger btn-sm"><svg class="icon-svg"><use href="#i-trash"/></svg></button>';
         html += '</div>';
         
-        // Info boxes
         if (project.transaction) html += '<div class="info-box transaction"><svg class="icon-svg"><use href="#i-file-text"/></svg> رقم المعاملة: ' + project.transaction + '</div>';
         if (project.next_step) html += '<div class="info-box next-step"><svg class="icon-svg"><use href="#i-arrow-left"/></svg> الخطوة القادمة: ' + project.next_step + '</div>';
         
-        // Details grid
         html += '<div class="details-grid-modal">';
         html += '<div class="detail-item"><div class="label"><svg class="icon-svg"><use href="#i-map-pin"/></svg> العنوان</div><div class="value" style="font-size:13px;">' + (project.address || '-') + '</div></div>';
         html += '<div class="detail-item"><div class="label"><svg class="icon-svg"><use href="#i-phone"/></svg> الجوال</div><div class="value">' + (project.phone || '-') + '</div></div>';
@@ -2471,10 +2507,8 @@
         
         if (project.agreement) html += '<div class="info-box agreement"><svg class="icon-svg"><use href="#i-file-text"/></svg> ' + project.agreement + '</div>';
         
-        // Progress
         html += '<div style="margin-bottom:16px;"><div style="display:flex;justify-content:space-between;font-size:12px;font-weight:800;margin-bottom:6px;"><span>التقدم</span><span>' + progress.toFixed(0) + '%</span></div><div style="height:8px;background:var(--gray-100);border-radius:10px;overflow:hidden;"><div style="height:100%;background:linear-gradient(90deg,var(--primary),var(--gold));width:' + progress + '%;border-radius:10px;transition:width 0.6s;"></div></div></div>';
         
-        // GEAR STEPS
         html += '<div class="steps-section">';
         html += '<div class="section-title"><span class="title-text"><svg class="icon-svg"><use href="#i-gear"/></svg> خطوات المشروع</span><span class="progress-badge">' + completed + '/' + total + ' منجز • ' + remaining + ' متبقي</span></div>';
         html += '<div class="gears-timeline">';
@@ -2512,13 +2546,11 @@
         }
         html += '</div>';
         
-        // DOCUMENTS
         html += renderDocsForCard(project.documents, type, project.id);
         
         return html;
     }
     
-    // ⭐ دالة عرض المستندات داخل Modal مع التبديل والحذف
     function renderDocsForCard(docs, projectType, projectId) {
         if (!docs || Object.keys(docs).length === 0) return '';
         var docList = getDocsForType(projectType);
@@ -2570,7 +2602,6 @@
         return html;
     }
     
-    // ⭐ تبديل مستند
     async function replaceDocument(projectType, projectId, docKey, fileIndex) {
         var input = document.createElement('input');
         input.type = 'file';
@@ -2651,7 +2682,6 @@
         input.click();
     }
     
-    // ⭐ حذف مستند
     async function deleteDocument(projectType, projectId, docKey, fileIndex) {
         var collName = getCollName(projectType);
         var project = getProjectFromArray(projectType, projectId);
@@ -2708,7 +2738,6 @@
         closeProjectModal();
         await deleteProject(type, id);
     }
-
     // ==================== TABS ====================
     function switchTab(tabName) {
         document.querySelectorAll('.tab-btn').forEach(function(b) { b.classList.remove('active'); });
@@ -3061,7 +3090,7 @@
                 buildDocsGrid('r', DOCS_RECONCILIATION, 'r_docs_grid');
                 loadAllDataFromFirebase();
                 setupRealtimeSync();
-                setupInvoicesSync();  // ⭐ جديد
+                setupInvoicesSync();
                 initTabsAndEvents();
             });
         } else {
@@ -3415,7 +3444,6 @@
             Swal.fire({ icon: 'success', title: 'تم الحذف', timer: 1500, showConfirmButton: false });
         } catch (e) { Swal.fire({ icon: 'error', title: 'خطأ', text: e.message }); }
     }
-
     // ==================== ELEVATION ====================
     document.getElementById('elevationForm').addEventListener('submit', async function(e) {
         e.preventDefault();
@@ -4197,20 +4225,475 @@
         updateAppointmentProjects();
     }
 
+    // ═══════════════════════════════════════════════════════════
+    // 🎛️ TABS & EVENTS INIT
+    // ═══════════════════════════════════════════════════════════
     function initTabsAndEvents() {
         document.querySelectorAll('.tab-btn').forEach(function(btn) {
             btn.addEventListener('click', function() { switchTab(this.dataset.tab); });
         });
+        
         var bf = document.getElementById('b_filter');
         var bs = document.getElementById('b_search');
         if (bf) bf.onchange = renderBuildingPermits;
         if (bs) bs.oninput = renderBuildingPermits;
+        
         var af = document.getElementById('archive_filter_type');
         var as = document.getElementById('archive_search');
         if (af) af.onchange = renderArchive;
         if (as) as.oninput = renderArchive;
+        
+        var invSearch = document.getElementById('invoice_search');
+        if (invSearch) {
+            invSearch.oninput = function() {
+                if (typeof renderInvoices === 'function') renderInvoices();
+            };
+        }
+        
+        var commType = document.getElementById('comm_type');
+        if (commType) {
+            commType.addEventListener('change', function() {
+                if (typeof updateCommProjects === 'function') updateCommProjects();
+            });
+        }
+        
+        var reportType = document.getElementById('report_type');
+        if (reportType) {
+            reportType.addEventListener('change', function() {
+                if (typeof updateReportProjects === 'function') updateReportProjects();
+            });
+        }
+        
+        var appProjectType = document.getElementById('app_project_type');
+        if (appProjectType) {
+            appProjectType.addEventListener('change', function() {
+                if (typeof updateAppointmentProjects === 'function') updateAppointmentProjects();
+            });
+        }
+        
+        var darkToggle = document.getElementById('darkModeToggle');
+        if (darkToggle && typeof toggleDarkMode === 'function') {
+            darkToggle.onclick = toggleDarkMode;
+        }
+        
+        console.log('✅ initTabsAndEvents - جاهز');
     }
 
+    // ═══════════════════════════════════════════════════════════
+    // 💰 نظام الفواتير المتكامل
+    // ═══════════════════════════════════════════════════════════
+
+    async function addPaymentWithInvoice(type, id) {
+        var project = getProjectFromArray(type, id);
+        if (!project) return;
+        
+        var remaining = (project.total || 0) - (project.paid || 0);
+        
+        var result = await Swal.fire({
+            title: '💰 تسجيل دفعة جديدة',
+            width: 620,
+            html: `
+              <div style="text-align:right;font-size:14px;direction:rtl;">
+                <div style="background:linear-gradient(135deg,#F5F3FF,#EDE9FE);padding:14px;border-radius:12px;margin-bottom:16px;border-right:4px solid #6B21A8;">
+                  <div style="font-weight:800;color:#6B21A8;margin-bottom:8px;">📋 بيانات العميل</div>
+                  <div style="font-size:13px;line-height:1.8;">
+                    <div><strong>الاسم:</strong> ${project.client}</div>
+                    <div><strong>الجوال:</strong> ${project.phone || '-'}</div>
+                    <div><strong>العنوان:</strong> ${(project.address || '').substring(0, 50)}</div>
+                  </div>
+                </div>
+                
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px;">
+                  <div style="background:#F0FDF4;padding:12px;border-radius:10px;text-align:center;">
+                    <div style="font-size:11px;color:#6B7280;font-weight:700;">الإجمالي</div>
+                    <div style="font-size:16px;font-weight:900;color:#059669;">${formatCurrency(project.total)}</div>
+                  </div>
+                  <div style="background:#EFF6FF;padding:12px;border-radius:10px;text-align:center;">
+                    <div style="font-size:11px;color:#6B7280;font-weight:700;">المحصل</div>
+                    <div style="font-size:16px;font-weight:900;color:#2563EB;">${formatCurrency(project.paid)}</div>
+                  </div>
+                  <div style="background:#FEF2F2;padding:12px;border-radius:10px;text-align:center;grid-column:1/-1;">
+                    <div style="font-size:11px;color:#6B7280;font-weight:700;">المتبقي</div>
+                    <div style="font-size:18px;font-weight:900;color:#DC2626;">${formatCurrency(remaining)}</div>
+                  </div>
+                </div>
+                
+                <div style="margin-bottom:12px;">
+                  <label style="display:block;font-weight:700;font-size:12px;margin-bottom:6px;color:#111827;">المبلغ المدفوع (ج.م) <span style="color:#DC2626;">*</span></label>
+                  <input type="number" id="inv_amount" value="${remaining}" min="1" max="${remaining}" step="0.01"
+                         style="width:100%;padding:12px;border:2px solid #E5E7EB;border-radius:10px;font-size:18px;font-weight:800;text-align:center;color:#059669;">
+                </div>
+                
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+                  <div>
+                    <label style="display:block;font-weight:700;font-size:12px;margin-bottom:6px;color:#111827;">طريقة الدفع</label>
+                    <select id="inv_method" style="width:100%;padding:10px;border:2px solid #E5E7EB;border-radius:10px;font-size:13px;background:white;">
+                      <option value="cash">💵 نقدي</option>
+                      <option value="bank">🏦 تحويل بنكي</option>
+                      <option value="instapay">📱 إنستاباي</option>
+                      <option value="vodafone">📲 فودافون كاش</option>
+                      <option value="check">📝 شيك</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label style="display:block;font-weight:700;font-size:12px;margin-bottom:6px;color:#111827;">التاريخ</label>
+                    <input type="date" id="inv_date" value="${new Date().toISOString().split('T')[0]}"
+                           style="width:100%;padding:10px;border:2px solid #E5E7EB;border-radius:10px;font-size:13px;">
+                  </div>
+                </div>
+                
+                <div style="margin-top:12px;">
+                  <label style="display:block;font-weight:700;font-size:12px;margin-bottom:6px;color:#111827;">ملاحظات</label>
+                  <input type="text" id="inv_notes" placeholder="ملاحظات إضافية..."
+                         style="width:100%;padding:10px;border:2px solid #E5E7EB;border-radius:10px;font-size:13px;">
+                </div>
+                
+                <label style="display:flex;align-items:center;gap:10px;margin-top:14px;padding:12px;background:#FFFBEB;border-radius:10px;cursor:pointer;border:2px solid #FDE68A;">
+                  <input type="checkbox" id="inv_show_invoice" checked style="width:18px;height:18px;cursor:pointer;">
+                  <span style="font-weight:800;color:#92400E;font-size:13px;">🖨️ إصدار فاتورة PDF بعد الحفظ</span>
+                </label>
+              </div>
+            `,
+            showCancelButton: true,
+            confirmButtonText: '💾 حفظ وإصدار',
+            cancelButtonText: 'إلغاء',
+            confirmButtonColor: '#10B981',
+            preConfirm: function() {
+                var amount = parseFloat(document.getElementById('inv_amount').value);
+                if (!amount || amount <= 0) {
+                    Swal.showValidationMessage('أدخل مبلغ صحيح');
+                    return false;
+                }
+                if (amount > remaining) {
+                    Swal.showValidationMessage('المبلغ أكبر من المتبقي (' + formatCurrency(remaining) + ')');
+                    return false;
+                }
+                return {
+                    amount: amount,
+                    method: document.getElementById('inv_method').value,
+                    date: document.getElementById('inv_date').value,
+                    notes: document.getElementById('inv_notes').value,
+                    showInvoice: document.getElementById('inv_show_invoice').checked
+                };
+            }
+        });
+        
+        if (!result.isConfirmed) return;
+        
+        var paymentData = result.value;
+        var collName = getCollName(type);
+        var invoiceNumber = 'INV-' + new Date().getFullYear() + '-' + String(Date.now()).slice(-6);
+        
+        try {
+            var newPaid = (project.paid || 0) + paymentData.amount;
+            var newRemaining = Math.max(0, (project.total || 0) - newPaid);
+            
+            await updateDoc(doc(db, collName, id), {
+                paid: newPaid,
+                remaining: newRemaining,
+                lastPaymentAt: serverTimestamp()
+            });
+            
+            await addDoc(collection(db, 'payments'), {
+                invoiceNumber: invoiceNumber,
+                projectId: id,
+                projectType: type,
+                client: project.client,
+                phone: project.phone,
+                address: project.address,
+                transaction: project.transaction,
+                amount: paymentData.amount,
+                method: paymentData.method,
+                date: paymentData.date,
+                notes: paymentData.notes,
+                totalBefore: project.total,
+                paidBefore: project.paid,
+                totalAfter: newPaid,
+                remainingAfter: newRemaining,
+                createdAt: serverTimestamp()
+            });
+            
+            await addAlert(type, id, 
+                '💰 دفعة ' + formatCurrency(paymentData.amount) + ' - ' + getMethodLabel(paymentData.method), 
+                'payment');
+            
+            if (paymentData.showInvoice) {
+                await generateInvoice({
+                    invoiceNumber: invoiceNumber,
+                    client: project.client,
+                    phone: project.phone,
+                    address: project.address,
+                    projectType: type,
+                    transaction: project.transaction,
+                    amount: paymentData.amount,
+                    method: paymentData.method,
+                    date: paymentData.date,
+                    notes: paymentData.notes,
+                    totalBefore: project.total,
+                    paidBefore: project.paid,
+                    totalAfter: newPaid,
+                    remainingAfter: newRemaining
+                });
+            } else {
+                Swal.fire({
+                    icon: 'success',
+                    title: '✅ تم الحفظ',
+                    html: '<div style="text-align:right;font-size:13px;line-height:2;">' +
+                        '<p>💰 <strong>المبلغ:</strong> ' + formatCurrency(paymentData.amount) + '</p>' +
+                        '<p>📊 <strong>المحصل:</strong> ' + formatCurrency(newPaid) + '</p>' +
+                        '<p>📌 <strong>المتبقي:</strong> ' + formatCurrency(newRemaining) + '</p>' +
+                        '</div>',
+                    timer: 2500
+                });
+            }
+            
+        } catch (error) {
+            Swal.fire({ icon: 'error', title: 'خطأ', text: error.message });
+        }
+    }
+
+    function getMethodLabel(method) {
+        return {
+            cash: '💵 نقدي',
+            bank: '🏦 تحويل بنكي',
+            instapay: '📱 إنستاباي',
+            vodafone: '📲 فودافون كاش',
+            check: '📝 شيك'
+        }[method] || method;
+    }
+
+    async function generateInvoice(data) {
+        Swal.fire({
+            title: '🖨️ جاري إصدار الفاتورة...',
+            html: '<div style="text-align:center;font-size:13px;color:#6B7280;">يرجى الانتظار قليلاً</div>',
+            allowOutsideClick: false,
+            showConfirmButton: false,
+            didOpen: function() { Swal.showLoading(); }
+        });
+        
+        var html = buildInvoiceHTML(data);
+        var container = document.createElement('div');
+        container.innerHTML = html;
+        container.style.cssText = 'position:fixed;left:-9999px;top:0;z-index:-1;';
+        document.body.appendChild(container);
+        
+        try {
+            await html2pdf()
+                .set({
+                    margin: 0,
+                    filename: 'فاتورة_' + data.invoiceNumber + '_' + data.client + '.pdf',
+                    image: { type: 'jpeg', quality: 0.98 },
+                    html2canvas: { 
+                        scale: 2, 
+                        useCORS: true, 
+                        backgroundColor: '#FFFFFF',
+                        letterRendering: true
+                    },
+                    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+                })
+                .from(container)
+                .save();
+            
+            Swal.close();
+            Swal.fire({
+                icon: 'success',
+                title: '✅ تم إصدار الفاتورة',
+                html: '<div style="text-align:right;font-size:13px;">' +
+                    '<p>📄 <strong>رقم الفاتورة:</strong> ' + data.invoiceNumber + '</p>' +
+                    '<p>💰 <strong>المبلغ:</strong> ' + formatCurrency(data.amount) + '</p>' +
+                    '</div>',
+                showCancelButton: true,
+                confirmButtonText: '📤 إرسال WhatsApp',
+                cancelButtonText: 'إغلاق',
+                confirmButtonColor: '#25D366'
+            }).then(function(res) {
+                if (res.isConfirmed) sendInvoiceWhatsApp(data);
+            });
+        } catch (err) {
+            Swal.close();
+            console.error('خطأ الفاتورة:', err);
+            Swal.fire({ icon: 'error', title: 'خطأ في إصدار الفاتورة', text: err.message });
+        } finally {
+            document.body.removeChild(container);
+        }
+    }
+
+    function buildInvoiceHTML(d) {
+        var typeLabel = getTypeLabel(d.projectType);
+        var methodLabel = getMethodLabel(d.method);
+        var now = new Date();
+        
+        return '<div style="font-family: \'Tahoma\', \'Arial\', sans-serif; direction: rtl; padding: 35px; background: white; width: 210mm; min-height: 297mm; position: relative; color: #111827;">' +
+            '<div style="background: linear-gradient(135deg, #6B21A8 0%, #0F0F1E 100%); color: white; padding: 25px 30px; border-radius: 18px; margin-bottom: 25px; position: relative; overflow: hidden;">' +
+                '<div style="display: flex; justify-content: space-between; align-items: center; position: relative; z-index: 1;">' +
+                    '<div>' +
+                        '<div style="font-size: 36px; font-weight: 900; letter-spacing: 1.5px;">Al <span style="color: #D4AF37;">Brazili</span></div>' +
+                        '<div style="font-size: 12px; opacity: 0.9; margin-top: 6px; font-weight: 600;">نظام إدارة الأعمال المتكامل</div>' +
+                        '<div style="font-size: 11px; opacity: 0.85; margin-top: 8px;">🇪🇬 جمهورية مصر العربية | 📞 01110798913</div>' +
+                    '</div>' +
+                    '<div style="background: rgba(255,255,255,0.15); padding: 16px 24px; border-radius: 14px; text-align: center; border: 2px solid #D4AF37;">' +
+                        '<div style="font-size: 11px; color: #F4E4A6; font-weight: 800; letter-spacing: 1px;">فاتورة ضريبية</div>' +
+                        '<div style="font-size: 16px; font-weight: 900; margin-top: 6px; color: white;">' + d.invoiceNumber + '</div>' +
+                    '</div>' +
+                '</div>' +
+            '</div>' +
+            
+            '<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 25px;">' +
+                '<div style="background: #F9FAFB; padding: 18px; border-radius: 14px; border-right: 5px solid #6B21A8;">' +
+                    '<div style="font-weight: 900; color: #6B21A8; margin-bottom: 12px; font-size: 15px;">👤 بيانات العميل</div>' +
+                    '<div style="font-size: 13px; line-height: 2;">' +
+                        '<div><strong>الاسم:</strong> ' + d.client + '</div>' +
+                        '<div><strong>الجوال:</strong> ' + (d.phone || '-') + '</div>' +
+                        '<div><strong>العنوان:</strong> ' + (d.address || '-') + '</div>' +
+                    '</div>' +
+                '</div>' +
+                '<div style="background: #FFFBEB; padding: 18px; border-radius: 14px; border-right: 5px solid #D4AF37;">' +
+                    '<div style="font-weight: 900; color: #B8860B; margin-bottom: 12px; font-size: 15px;">📋 بيانات المعاملة</div>' +
+                    '<div style="font-size: 13px; line-height: 2;">' +
+                        '<div><strong>النوع:</strong> ' + typeLabel + '</div>' +
+                        '<div><strong>رقم المعاملة:</strong> ' + (d.transaction || '-') + '</div>' +
+                        '<div><strong>تاريخ الدفع:</strong> ' + d.date + '</div>' +
+                    '</div>' +
+                '</div>' +
+            '</div>' +
+            
+            '<div style="margin-bottom: 25px;">' +
+                '<div style="background: linear-gradient(135deg, #6B21A8, #0F0F1E); color: white; padding: 14px 20px; border-radius: 14px 14px 0 0; font-weight: 900; font-size: 15px;">💰 تفاصيل الدفعة</div>' +
+                '<table style="width: 100%; border-collapse: collapse; font-size: 13px; background: white;">' +
+                    '<tbody>' +
+                        '<tr><td style="padding: 14px; border: 1px solid #E5E7EB; font-weight: 700;">المبلغ الإجمالي للمشروع</td><td style="padding: 14px; text-align: center; border: 1px solid #E5E7EB; font-weight: 800; color: #111827;">' + formatCurrency(d.totalBefore) + '</td></tr>' +
+                        '<tr style="background: #F9FAFB;"><td style="padding: 14px; border: 1px solid #E5E7EB; font-weight: 700;">المبلغ المحصل سابقاً</td><td style="padding: 14px; text-align: center; border: 1px solid #E5E7EB; font-weight: 800; color: #2563EB;">' + formatCurrency(d.paidBefore) + '</td></tr>' +
+                        '<tr style="background: #F0FDF4;"><td style="padding: 16px; border: 1px solid #E5E7EB; font-weight: 900; color: #059669; font-size: 14px;">💵 المبلغ المدفوع الآن</td><td style="padding: 16px; text-align: center; border: 1px solid #E5E7EB; font-weight: 900; color: #059669; font-size: 18px;">' + formatCurrency(d.amount) + '</td></tr>' +
+                        '<tr><td style="padding: 14px; border: 1px solid #E5E7EB; font-weight: 700;">طريقة الدفع</td><td style="padding: 14px; text-align: center; border: 1px solid #E5E7EB; font-weight: 800;">' + methodLabel + '</td></tr>' +
+                        '<tr style="background: #EFF6FF;"><td style="padding: 14px; border: 1px solid #E5E7EB; font-weight: 900;">إجمالي المحصل بعد الدفعة</td><td style="padding: 14px; text-align: center; border: 1px solid #E5E7EB; font-weight: 900; color: #2563EB; font-size: 15px;">' + formatCurrency(d.totalAfter) + '</td></tr>' +
+                        '<tr style="background: #FEF2F2;"><td style="padding: 16px; border: 1px solid #E5E7EB; font-weight: 900; color: #DC2626; font-size: 14px;">💸 المبلغ المتبقي</td><td style="padding: 16px; text-align: center; border: 1px solid #E5E7EB; font-weight: 900; color: #DC2626; font-size: 18px;">' + formatCurrency(d.remainingAfter) + '</td></tr>' +
+                    '</tbody>' +
+                '</table>' +
+            '</div>' +
+            
+            (d.notes ? '<div style="background: #FFFBEB; padding: 16px; border-radius: 12px; margin-bottom: 25px; border-right: 5px solid #F59E0B; font-size: 13px;"><strong style="color: #92400E;">📝 ملاحظات:</strong><div style="margin-top: 8px;">' + d.notes + '</div></div>' : '') +
+            
+            '<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 50px; margin-top: 70px;">' +
+                '<div style="text-align: center;"><div style="border-bottom: 2px solid #111827; height: 55px; margin-bottom: 10px;"></div><div style="font-size: 12px; color: #6B7280; font-weight: 800;">توقيع العميل</div></div>' +
+                '<div style="text-align: center;"><div style="border-bottom: 2px solid #111827; height: 55px; margin-bottom: 10px;"></div><div style="font-size: 12px; color: #6B7280; font-weight: 800;">توقيع المسؤول</div></div>' +
+            '</div>' +
+            
+            '<div style="position: absolute; bottom: 25px; left: 35px; right: 35px; text-align: center; padding-top: 18px; border-top: 2px solid #E5E7EB; font-size: 11px; color: #6B7280; line-height: 1.8;">' +
+                '<div style="font-weight: 900; color: #6B21A8; font-size: 14px; margin-bottom: 8px;">Al Brazili Technologies</div>' +
+                '<div>📞 01110798913 | 🇪🇬 جمهورية مصر العربية</div>' +
+                '<div style="margin-top: 8px; font-size: 10px; opacity: 0.7;">هذه الفاتورة تم إصدارها إلكترونياً - ' + now.toLocaleString('ar-EG') + '</div>' +
+            '</div>' +
+        '</div>';
+    }
+
+    function sendInvoiceWhatsApp(d) {
+        var line = '━━━━━━━━━━━━━━━━━━━━━━━━━━━';
+        var msg = '🧾 *AL BRAZILI TECHNOLOGIES*\n' + line +
+            '\n   📄 *فاتورة ضريبية*\n' + line +
+            '\n\n🔢 *رقم الفاتورة:* ' + d.invoiceNumber +
+            '\n📅 *التاريخ:* ' + d.date +
+            '\n\n👤 *العميل:* ' + d.client +
+            '\n📋 *المعاملة:* ' + getTypeLabel(d.projectType) +
+            '\n\n' + line +
+            '\n   💰 *تفاصيل الدفعة*\n' + line +
+            '\n\n💵 *المبلغ المدفوع:* ' + formatCurrency(d.amount) +
+            '\n💳 *طريقة الدفع:* ' + getMethodLabel(d.method) +
+            '\n\n' + line +
+            '\n\n📊 *المحصل:* ' + formatCurrency(d.totalAfter) +
+            '\n💸 *المتبقي:* ' + formatCurrency(d.remainingAfter) +
+            '\n\n' + line +
+            '\n\n🙏 شكراً لثقتكم بنا\n📞 للاستفسار: 01110798913' +
+            '\n\n🕐 ' + new Date().toLocaleString('ar-EG');
+        
+        sendWhatsApp(d.phone, msg);
+    }
+
+    function renderInvoices() {
+        var c = document.getElementById('invoicesList');
+        if (!c || !window.payments) return;
+        
+        var searchEl = document.getElementById('invoice_search');
+        var search = (searchEl ? searchEl.value : '').toLowerCase();
+        var list = window.payments;
+        if (search) {
+            list = list.filter(function(p) {
+                return (p.client || '').toLowerCase().includes(search) || 
+                       (p.invoiceNumber || '').toLowerCase().includes(search);
+            });
+        }
+        
+        var countEl = document.getElementById('invoicesCount');
+        if (countEl) countEl.textContent = list.length;
+        
+        if (list.length === 0) {
+            c.innerHTML = '<div class="empty-state" style="grid-column:1/-1;"><div class="icon-wrap"><svg class="icon-svg"><use href="#i-money"/></svg></div><h3>لا توجد فواتير</h3><p style="font-size:12px;">الفواتير تُنشأ تلقائياً عند تسجيل دفعة</p></div>';
+            return;
+        }
+        
+        var html = '';
+        list.forEach(function(p) {
+            var paymentData = JSON.stringify(p).replace(/'/g, "&apos;");
+            html += '<div class="project-tile" style="cursor:default;">';
+            html += '<div class="tile-header">';
+            html += '<div class="tile-icon" style="background:linear-gradient(135deg,#D1FAE5,#A7F3D0);color:#059669;"><svg class="icon-svg"><use href="#i-money"/></svg></div>';
+            html += '<div class="tile-info"><div class="tile-title">' + p.client + '</div><div class="tile-sub">' + p.invoiceNumber + '</div></div>';
+            html += '</div>';
+            html += '<div style="font-size:15px;font-weight:900;color:#059669;text-align:center;padding:8px 0;">💰 ' + formatCurrency(p.amount) + '</div>';
+            html += '<div style="font-size:11px;color:var(--text-muted);text-align:center;">📅 ' + p.date + ' | ' + getMethodLabel(p.method) + '</div>';
+            html += '<div class="tile-money" style="margin-top:10px;">';
+            html += '<div class="item"><div class="label">المحصل</div><div class="value" style="color:#2563EB;">' + formatCurrency(p.totalAfter) + '</div></div>';
+            html += '<div class="item"><div class="label">المتبقي</div><div class="value" style="color:' + (p.remainingAfter > 0 ? 'var(--danger)' : 'var(--success)') + ';">' + formatCurrency(p.remainingAfter) + '</div></div>';
+            html += '</div>';
+            html += '<div style="display:flex;gap:6px;margin-top:10px;">';
+            html += '<button onclick=\'reprintInvoice(' + paymentData + ')\' class="btn btn-info btn-sm" style="flex:1;"><svg class="icon-svg"><use href="#i-download"/></svg> طباعة</button>';
+            html += '<button onclick=\'sendInvoiceWhatsApp(' + paymentData + ')\' class="btn btn-whatsapp btn-sm" style="flex:1;"><svg class="icon-svg"><use href="#i-whatsapp"/></svg> واتساب</button>';
+            html += '</div></div>';
+        });
+        c.innerHTML = html;
+    }
+
+    function reprintInvoice(payment) {
+        generateInvoice({
+            invoiceNumber: payment.invoiceNumber,
+            client: payment.client,
+            phone: payment.phone,
+            address: payment.address,
+            projectType: payment.projectType,
+            transaction: payment.transaction,
+            amount: payment.amount,
+            method: payment.method,
+            date: payment.date,
+            notes: payment.notes,
+            totalBefore: payment.totalBefore,
+            paidBefore: payment.paidBefore,
+            totalAfter: payment.totalAfter,
+            remainingAfter: payment.remainingAfter
+        });
+    }
+
+    function setupInvoicesSync() {
+        if (!collection || !onSnapshot) {
+            console.warn('⚠️ Firebase ليس جاهزاً لـ setupInvoicesSync');
+            return;
+        }
+        
+        onSnapshot(collection(db, 'payments'), function(snapshot) {
+            window.payments = [];
+            snapshot.forEach(function(d) { 
+                window.payments.push({ id: d.id, ...d.data() }); 
+            });
+            window.payments.sort(function(a, b) {
+                var aTime = (a.createdAt && a.createdAt.seconds) || 0;
+                var bTime = (b.createdAt && b.createdAt.seconds) || 0;
+                return bTime - aTime;
+            });
+            renderInvoices();
+        });
+    }
+
+    // ═══════════════════════════════════════════════════════════
+    // 🚀 DOMContentLoaded
+    // ═══════════════════════════════════════════════════════════
     document.addEventListener('DOMContentLoaded', function() {
         if (MY_PHOTO_URL) {
             var loginPhoto = document.getElementById('loginPhoto');
@@ -4248,577 +4731,21 @@
         });
         
         document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') { closePreview(); closeProjectModal(); }
+            if (e.key === 'Escape') { 
+                if (typeof closePreview === 'function') closePreview(); 
+                if (typeof closeProjectModal === 'function') closeProjectModal(); 
+            }
         });
         
-        // 💡 اكتشاف تغيير تفضيل النظام للوضع الليلي
         if (window.matchMedia) {
             window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(e) {
                 if (localStorage.getItem('al_brazili_dark_mode') === null) {
                     if (e.matches) document.body.classList.add('dark-mode');
                     else document.body.classList.remove('dark-mode');
                 }
-            }); 
+            });
         }
         
-        // ═══════════════════════════════════════════════════════════
-// 💰 نظام الفواتير المتكامل
-// ═══════════════════════════════════════════════════════════
-
-async function addPaymentWithInvoice(type, id) {
-  const project = getProjectFromArray(type, id);
-  if (!project) return;
-  
-  const remaining = (project.total || 0) - (project.paid || 0);
-  
-  const result = await Swal.fire({
-    title: '💰 تسجيل دفعة جديدة',
-    width: 620,
-    html: `
-      <div style="text-align:right;font-size:14px;direction:rtl;">
-        <div style="background:linear-gradient(135deg,#F5F3FF,#EDE9FE);padding:14px;border-radius:12px;margin-bottom:16px;border-right:4px solid #6B21A8;">
-          <div style="font-weight:800;color:#6B21A8;margin-bottom:8px;">📋 بيانات العميل</div>
-          <div style="font-size:13px;line-height:1.8;">
-            <div><strong>الاسم:</strong> ${project.client}</div>
-            <div><strong>الجوال:</strong> ${project.phone || '-'}</div>
-            <div><strong>العنوان:</strong> ${(project.address || '').substring(0, 50)}</div>
-          </div>
-        </div>
-        
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px;">
-          <div style="background:#F0FDF4;padding:12px;border-radius:10px;text-align:center;">
-            <div style="font-size:11px;color:#6B7280;font-weight:700;">الإجمالي</div>
-            <div style="font-size:16px;font-weight:900;color:#059669;">${formatCurrency(project.total)}</div>
-          </div>
-          <div style="background:#EFF6FF;padding:12px;border-radius:10px;text-align:center;">
-            <div style="font-size:11px;color:#6B7280;font-weight:700;">المحصل</div>
-            <div style="font-size:16px;font-weight:900;color:#2563EB;">${formatCurrency(project.paid)}</div>
-          </div>
-          <div style="background:#FEF2F2;padding:12px;border-radius:10px;text-align:center;grid-column:1/-1;">
-            <div style="font-size:11px;color:#6B7280;font-weight:700;">المتبقي</div>
-            <div style="font-size:18px;font-weight:900;color:#DC2626;">${formatCurrency(remaining)}</div>
-          </div>
-        </div>
-        
-        <div style="margin-bottom:12px;">
-          <label style="display:block;font-weight:700;font-size:12px;margin-bottom:6px;color:#111827;">المبلغ المدفوع (ج.م) <span style="color:#DC2626;">*</span></label>
-          <input type="number" id="inv_amount" value="${remaining}" min="1" max="${remaining}" step="0.01"
-                 style="width:100%;padding:12px;border:2px solid #E5E7EB;border-radius:10px;font-size:18px;font-weight:800;text-align:center;color:#059669;">
-        </div>
-        
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
-          <div>
-            <label style="display:block;font-weight:700;font-size:12px;margin-bottom:6px;color:#111827;">طريقة الدفع</label>
-            <select id="inv_method" style="width:100%;padding:10px;border:2px solid #E5E7EB;border-radius:10px;font-size:13px;background:white;">
-              <option value="cash">💵 نقدي</option>
-              <option value="bank">🏦 تحويل بنكي</option>
-              <option value="instapay">📱 إنستاباي</option>
-              <option value="vodafone">📲 فودافون كاش</option>
-              <option value="check">📝 شيك</option>
-            </select>
-          </div>
-          <div>
-            <label style="display:block;font-weight:700;font-size:12px;margin-bottom:6px;color:#111827;">التاريخ</label>
-            <input type="date" id="inv_date" value="${new Date().toISOString().split('T')[0]}"
-                   style="width:100%;padding:10px;border:2px solid #E5E7EB;border-radius:10px;font-size:13px;">
-          </div>
-        </div>
-        
-        <div style="margin-top:12px;">
-          <label style="display:block;font-weight:700;font-size:12px;margin-bottom:6px;color:#111827;">ملاحظات</label>
-          <input type="text" id="inv_notes" placeholder="ملاحظات إضافية..."
-                 style="width:100%;padding:10px;border:2px solid #E5E7EB;border-radius:10px;font-size:13px;">
-        </div>
-        
-        <label style="display:flex;align-items:center;gap:10px;margin-top:14px;padding:12px;background:#FFFBEB;border-radius:10px;cursor:pointer;border:2px solid #FDE68A;">
-          <input type="checkbox" id="inv_show_invoice" checked style="width:18px;height:18px;cursor:pointer;">
-          <span style="font-weight:800;color:#92400E;font-size:13px;">🖨️ إصدار فاتورة PDF بعد الحفظ</span>
-        </label>
-      </div>
-    `,
-    showCancelButton: true,
-    confirmButtonText: '💾 حفظ وإصدار',
-    cancelButtonText: 'إلغاء',
-    confirmButtonColor: '#10B981',
-    preConfirm: () => {
-      const amount = parseFloat(document.getElementById('inv_amount').value);
-      if (!amount || amount <= 0) {
-        Swal.showValidationMessage('أدخل مبلغ صحيح');
-        return false;
-      }
-      if (amount > remaining) {
-        Swal.showValidationMessage(`المبلغ أكبر من المتبقي (${formatCurrency(remaining)})`);
-        return false;
-      }
-      return {
-        amount: amount,
-        method: document.getElementById('inv_method').value,
-        date: document.getElementById('inv_date').value,
-        notes: document.getElementById('inv_notes').value,
-        showInvoice: document.getElementById('inv_show_invoice').checked
-      };
-    }
-  });
-  
-  if (!result.isConfirmed) return;
-  
-  const paymentData = result.value;
-  const collName = getCollName(type);
-  const invoiceNumber = `INV-${new Date().getFullYear()}-${String(Date.now()).slice(-6)}`;
-  
-  try {
-    const newPaid = (project.paid || 0) + paymentData.amount;
-    const newRemaining = Math.max(0, (project.total || 0) - newPaid);
-    
-    await updateDoc(doc(db, collName, id), {
-      paid: newPaid,
-      remaining: newRemaining,
-      lastPaymentAt: serverTimestamp()
-    });
-    
-    await addDoc(collection(db, 'payments'), {
-      invoiceNumber: invoiceNumber,
-      projectId: id,
-      projectType: type,
-      client: project.client,
-      phone: project.phone,
-      address: project.address,
-      transaction: project.transaction,
-      amount: paymentData.amount,
-      method: paymentData.method,
-      date: paymentData.date,
-      notes: paymentData.notes,
-      totalBefore: project.total,
-      paidBefore: project.paid,
-      totalAfter: newPaid,
-      remainingAfter: newRemaining,
-      createdAt: serverTimestamp()
-    });
-    
-    await addAlert(type, id, 
-      `💰 دفعة ${formatCurrency(paymentData.amount)} - ${getMethodLabel(paymentData.method)}`, 
-      'payment');
-    
-    if (paymentData.showInvoice) {
-      await generateInvoice({
-        invoiceNumber,
-        client: project.client,
-        phone: project.phone,
-        address: project.address,
-        projectType: type,
-        transaction: project.transaction,
-        amount: paymentData.amount,
-        method: paymentData.method,
-        date: paymentData.date,
-        notes: paymentData.notes,
-        totalBefore: project.total,
-        paidBefore: project.paid,
-        totalAfter: newPaid,
-        remainingAfter: newRemaining
-      });
-    } else {
-      Swal.fire({
-        icon: 'success',
-        title: '✅ تم الحفظ',
-        html: `
-          <div style="text-align:right;font-size:13px;line-height:2;">
-            <p>💰 <strong>المبلغ:</strong> ${formatCurrency(paymentData.amount)}</p>
-            <p>📊 <strong>المحصل:</strong> ${formatCurrency(newPaid)}</p>
-            <p>📌 <strong>المتبقي:</strong> ${formatCurrency(newRemaining)}</p>
-          </div>
-        `,
-        timer: 2500
-      });
-    }
-    
-  } catch (error) {
-    Swal.fire({ icon: 'error', title: 'خطأ', text: error.message });
-  }
-}
-
-function getMethodLabel(method) {
-  return {
-    cash: '💵 نقدي',
-    bank: '🏦 تحويل بنكي',
-    instapay: '📱 إنستاباي',
-    vodafone: '📲 فودافون كاش',
-    check: '📝 شيك'
-  }[method] || method;
-}
-
-async function generateInvoice(data) {
-  Swal.fire({
-    title: '🖨️ جاري إصدار الفاتورة...',
-    html: '<div style="text-align:center;font-size:13px;color:#6B7280;">يرجى الانتظار قليلاً</div>',
-    allowOutsideClick: false,
-    showConfirmButton: false,
-    didOpen: () => Swal.showLoading()
-  });
-  
-  const html = buildInvoiceHTML(data);
-  const container = document.createElement('div');
-  container.innerHTML = html;
-  container.style.cssText = 'position:fixed;left:-9999px;top:0;z-index:-1;';
-  document.body.appendChild(container);
-  
-  try {
-    await html2pdf()
-      .set({
-        margin: 0,
-        filename: `فاتورة_${data.invoiceNumber}_${data.client}.pdf`,
-        image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { 
-          scale: 2, 
-          useCORS: true, 
-          backgroundColor: '#FFFFFF',
-          letterRendering: true
-        },
-        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-      })
-      .from(container)
-      .save();
-    
-    Swal.close();
-    Swal.fire({
-      icon: 'success',
-      title: '✅ تم إصدار الفاتورة',
-      html: `<div style="text-align:right;font-size:13px;">
-        <p>📄 <strong>رقم الفاتورة:</strong> ${data.invoiceNumber}</p>
-        <p>💰 <strong>المبلغ:</strong> ${formatCurrency(data.amount)}</p>
-      </div>`,
-      showCancelButton: true,
-      confirmButtonText: '📤 إرسال WhatsApp',
-      cancelButtonText: 'إغلاق',
-      confirmButtonColor: '#25D366'
-    }).then((res) => {
-      if (res.isConfirmed) sendInvoiceWhatsApp(data);
-    });
-  } catch (err) {
-    Swal.close();
-    console.error('خطأ الفاتورة:', err);
-    Swal.fire({ icon: 'error', title: 'خطأ في إصدار الفاتورة', text: err.message });
-  } finally {
-    document.body.removeChild(container);
-  }
-}
-
-function buildInvoiceHTML(d) {
-  const typeLabel = getTypeLabel(d.projectType);
-  const methodLabel = getMethodLabel(d.method);
-  const now = new Date();
-  
-  return `
-    <div style="
-      font-family: 'Tahoma', 'Arial', sans-serif;
-      direction: rtl;
-      padding: 35px;
-      background: white;
-      width: 210mm;
-      min-height: 297mm;
-      position: relative;
-      color: #111827;
-    ">
-      <!-- الترويسة -->
-      <div style="
-        background: linear-gradient(135deg, #6B21A8 0%, #0F0F1E 100%);
-        color: white;
-        padding: 25px 30px;
-        border-radius: 18px;
-        margin-bottom: 25px;
-        position: relative;
-        overflow: hidden;
-      ">
-        <div style="display: flex; justify-content: space-between; align-items: center; position: relative; z-index: 1;">
-          <div>
-            <div style="font-size: 36px; font-weight: 900; letter-spacing: 1.5px;">
-              Al <span style="color: #D4AF37;">Brazili</span>
-            </div>
-            <div style="font-size: 12px; opacity: 0.9; margin-top: 6px; font-weight: 600;">
-              نظام إدارة الأعمال المتكامل
-            </div>
-            <div style="font-size: 11px; opacity: 0.85; margin-top: 8px;">
-              🇪🇬 جمهورية مصر العربية | 📞 01110798913
-            </div>
-          </div>
-          <div style="
-            background: rgba(255,255,255,0.15);
-            padding: 16px 24px;
-            border-radius: 14px;
-            text-align: center;
-            border: 2px solid #D4AF37;
-          ">
-            <div style="font-size: 11px; color: #F4E4A6; font-weight: 800; letter-spacing: 1px;">فاتورة ضريبية</div>
-            <div style="font-size: 16px; font-weight: 900; margin-top: 6px; color: white;">
-              ${d.invoiceNumber}
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      <!-- بيانات العميل والمعاملة -->
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 25px;">
-        <div style="background: #F9FAFB; padding: 18px; border-radius: 14px; border-right: 5px solid #6B21A8;">
-          <div style="font-weight: 900; color: #6B21A8; margin-bottom: 12px; font-size: 15px;">
-            👤 بيانات العميل
-          </div>
-          <div style="font-size: 13px; line-height: 2;">
-            <div><strong>الاسم:</strong> ${d.client}</div>
-            <div><strong>الجوال:</strong> ${d.phone || '-'}</div>
-            <div><strong>العنوان:</strong> ${d.address || '-'}</div>
-          </div>
-        </div>
-        
-        <div style="background: #FFFBEB; padding: 18px; border-radius: 14px; border-right: 5px solid #D4AF37;">
-          <div style="font-weight: 900; color: #B8860B; margin-bottom: 12px; font-size: 15px;">
-            📋 بيانات المعاملة
-          </div>
-          <div style="font-size: 13px; line-height: 2;">
-            <div><strong>النوع:</strong> ${typeLabel}</div>
-            <div><strong>رقم المعاملة:</strong> ${d.transaction || '-'}</div>
-            <div><strong>تاريخ الدفع:</strong> ${d.date}</div>
-          </div>
-        </div>
-      </div>
-      
-      <!-- تفاصيل الدفعة -->
-      <div style="margin-bottom: 25px;">
-        <div style="
-          background: linear-gradient(135deg, #6B21A8, #0F0F1E);
-          color: white;
-          padding: 14px 20px;
-          border-radius: 14px 14px 0 0;
-          font-weight: 900;
-          font-size: 15px;
-        ">
-          💰 تفاصيل الدفعة
-        </div>
-        <table style="width: 100%; border-collapse: collapse; font-size: 13px; background: white;">
-          <tbody>
-            <tr>
-              <td style="padding: 14px; border: 1px solid #E5E7EB; font-weight: 700;">المبلغ الإجمالي للمشروع</td>
-              <td style="padding: 14px; text-align: center; border: 1px solid #E5E7EB; font-weight: 800; color: #111827;">${formatCurrency(d.totalBefore)}</td>
-            </tr>
-            <tr style="background: #F9FAFB;">
-              <td style="padding: 14px; border: 1px solid #E5E7EB; font-weight: 700;">المبلغ المحصل سابقاً</td>
-              <td style="padding: 14px; text-align: center; border: 1px solid #E5E7EB; font-weight: 800; color: #2563EB;">${formatCurrency(d.paidBefore)}</td>
-            </tr>
-            <tr style="background: #F0FDF4;">
-              <td style="padding: 16px; border: 1px solid #E5E7EB; font-weight: 900; color: #059669; font-size: 14px;">
-                💵 المبلغ المدفوع الآن
-              </td>
-              <td style="padding: 16px; text-align: center; border: 1px solid #E5E7EB; font-weight: 900; color: #059669; font-size: 18px;">
-                ${formatCurrency(d.amount)}
-              </td>
-            </tr>
-            <tr>
-              <td style="padding: 14px; border: 1px solid #E5E7EB; font-weight: 700;">طريقة الدفع</td>
-              <td style="padding: 14px; text-align: center; border: 1px solid #E5E7EB; font-weight: 800;">${methodLabel}</td>
-            </tr>
-            <tr style="background: #EFF6FF;">
-              <td style="padding: 14px; border: 1px solid #E5E7EB; font-weight: 900;">إجمالي المحصل بعد الدفعة</td>
-              <td style="padding: 14px; text-align: center; border: 1px solid #E5E7EB; font-weight: 900; color: #2563EB; font-size: 15px;">
-                ${formatCurrency(d.totalAfter)}
-              </td>
-            </tr>
-            <tr style="background: #FEF2F2;">
-              <td style="padding: 16px; border: 1px solid #E5E7EB; font-weight: 900; color: #DC2626; font-size: 14px;">
-                💸 المبلغ المتبقي
-              </td>
-              <td style="padding: 16px; text-align: center; border: 1px solid #E5E7EB; font-weight: 900; color: #DC2626; font-size: 18px;">
-                ${formatCurrency(d.remainingAfter)}
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      
-      ${d.notes ? `
-        <div style="background: #FFFBEB; padding: 16px; border-radius: 12px; margin-bottom: 25px; border-right: 5px solid #F59E0B; font-size: 13px;">
-          <strong style="color: #92400E;">📝 ملاحظات:</strong>
-          <div style="margin-top: 8px;">${d.notes}</div>
-        </div>
-      ` : ''}
-      
-      <!-- التوقيعات -->
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 50px; margin-top: 70px;">
-        <div style="text-align: center;">
-          <div style="border-bottom: 2px solid #111827; height: 55px; margin-bottom: 10px;"></div>
-          <div style="font-size: 12px; color: #6B7280; font-weight: 800;">توقيع العميل</div>
-        </div>
-        <div style="text-align: center;">
-          <div style="border-bottom: 2px solid #111827; height: 55px; margin-bottom: 10px;"></div>
-          <div style="font-size: 12px; color: #6B7280; font-weight: 800;">توقيع المسؤول</div>
-        </div>
-      </div>
-      
-      <!-- التذييل -->
-      <div style="
-        position: absolute;
-        bottom: 25px;
-        left: 35px;
-        right: 35px;
-        text-align: center;
-        padding-top: 18px;
-        border-top: 2px solid #E5E7EB;
-        font-size: 11px;
-        color: #6B7280;
-        line-height: 1.8;
-      ">
-        <div style="font-weight: 900; color: #6B21A8; font-size: 14px; margin-bottom: 8px;">
-          Al Brazili Technologies
-        </div>
-        <div>📞 01110798913 | 🇪🇬 جمهورية مصر العربية</div>
-        <div style="margin-top: 8px; font-size: 10px; opacity: 0.7;">
-          هذه الفاتورة تم إصدارها إلكترونياً - ${now.toLocaleString('ar-EG')}
-        </div>
-      </div>
-    </div>
-  `;
-}
-
-function sendInvoiceWhatsApp(d) {
-  const line = '━━━━━━━━━━━━━━━━━━━━━━━━━━━';
-  const msg = `🧾 *AL BRAZILI TECHNOLOGIES*
-${line}
-   📄 *فاتورة ضريبية*
-${line}
-
-🔢 *رقم الفاتورة:* ${d.invoiceNumber}
-📅 *التاريخ:* ${d.date}
-
-👤 *العميل:* ${d.client}
-📋 *المعاملة:* ${getTypeLabel(d.projectType)}
-
-${line}
-   💰 *تفاصيل الدفعة*
-${line}
-
-💵 *المبلغ المدفوع:* ${formatCurrency(d.amount)}
-💳 *طريقة الدفع:* ${getMethodLabel(d.method)}
-
-${line}
-
-📊 *المحصل:* ${formatCurrency(d.totalAfter)}
-💸 *المتبقي:* ${formatCurrency(d.remainingAfter)}
-
-${line}
-
-🙏 شكراً لثقتكم بنا
-📞 للاستفسار: 01110798913
-
-🕐 ${new Date().toLocaleString('ar-EG')}`;
-
-  sendWhatsApp(d.phone, msg);
-}
-
-// ═══════════════════════════════════════════════════════════
-// 📋 عرض سجل الفواتير
-// ═══════════════════════════════════════════════════════════
-
-function renderInvoices() {
-  const c = document.getElementById('invoicesList');
-  if (!c || !window.payments) return;
-  
-  const search = (document.getElementById('invoice_search')?.value || '').toLowerCase();
-  let list = window.payments;
-  if (search) {
-    list = list.filter(p => 
-      (p.client || '').toLowerCase().includes(search) || 
-      (p.invoiceNumber || '').toLowerCase().includes(search)
-    );
-  }
-  
-  const countEl = document.getElementById('invoicesCount');
-  if (countEl) countEl.textContent = list.length;
-  
-  if (list.length === 0) {
-    c.innerHTML = '<div class="empty-state" style="grid-column:1/-1;"><div class="icon-wrap"><svg class="icon-svg"><use href="#i-money"/></svg></div><h3>لا توجد فواتير</h3><p style="font-size:12px;">الفواتير تُنشأ تلقائياً عند تسجيل دفعة</p></div>';
-    return;
-  }
-  
-  let html = '';
-  list.forEach(function(p) {
-    html += `
-      <div class="project-tile" style="cursor:default;">
-        <div class="tile-header">
-          <div class="tile-icon" style="background:linear-gradient(135deg,#D1FAE5,#A7F3D0);color:#059669;">
-            <svg class="icon-svg"><use href="#i-money"/></svg>
-          </div>
-          <div class="tile-info">
-            <div class="tile-title">${p.client}</div>
-            <div class="tile-sub">${p.invoiceNumber}</div>
-          </div>
-        </div>
-        <div style="font-size:15px;font-weight:900;color:#059669;text-align:center;padding:8px 0;">
-          💰 ${formatCurrency(p.amount)}
-        </div>
-        <div style="font-size:11px;color:var(--text-muted);text-align:center;">
-          📅 ${p.date} | ${getMethodLabel(p.method)}
-        </div>
-        <div class="tile-money" style="margin-top:10px;">
-          <div class="item">
-            <div class="label">المحصل</div>
-            <div class="value" style="color:#2563EB;">${formatCurrency(p.totalAfter)}</div>
-          </div>
-          <div class="item">
-            <div class="label">المتبقي</div>
-            <div class="value" style="color:${p.remainingAfter > 0 ? 'var(--danger)' : 'var(--success)'};">
-              ${formatCurrency(p.remainingAfter)}
-            </div>
-          </div>
-        </div>
-        <div style="display:flex;gap:6px;margin-top:10px;">
-          <button onclick='reprintInvoice(${JSON.stringify(p).replace(/'/g, "&apos;")})' class="btn btn-info btn-sm" style="flex:1;">
-            <svg class="icon-svg"><use href="#i-download"/></svg> طباعة
-          </button>
-          <button onclick='sendInvoiceWhatsApp(${JSON.stringify(p).replace(/'/g, "&apos;")})' class="btn btn-whatsapp btn-sm" style="flex:1;">
-            <svg class="icon-svg"><use href="#i-whatsapp"/></svg> واتساب
-          </button>
-        </div>
-      </div>
-    `;
-  });
-  c.innerHTML = html;
-}
-
-function reprintInvoice(payment) {
-  generateInvoice({
-    invoiceNumber: payment.invoiceNumber,
-    client: payment.client,
-    phone: payment.phone,
-    address: payment.address,
-    projectType: payment.projectType,
-    transaction: payment.transaction,
-    amount: payment.amount,
-    method: payment.method,
-    date: payment.date,
-    notes: payment.notes,
-    totalBefore: payment.totalBefore,
-    paidBefore: payment.paidBefore,
-    totalAfter: payment.totalAfter,
-    remainingAfter: payment.remainingAfter
-  });
-}
-
-// ═══════════════════════════════════════════════════════════
-// 🔄 مزامنة الفواتير الفورية
-// ═══════════════════════════════════════════════════════════
-
-// أضف داخل دالة setupRealtimeSync:
-function setupInvoicesSync() {
-  onSnapshot(collection(db, 'payments'), function(snapshot) {
-    window.payments = [];
-    snapshot.forEach(function(d) { 
-      window.payments.push({ id: d.id, ...d.data() }); 
-    });
-    window.payments.sort((a, b) => {
-      const aTime = a.createdAt?.seconds || 0;
-      const bTime = b.createdAt?.seconds || 0;
-      return bTime - aTime;
-    });
-    renderInvoices();
-  });
-}
         console.log('═══════════════════════════════');
         console.log('✅ Al Brazili System Ready');
         console.log('🌙 Dark Mode:', document.body.classList.contains('dark-mode') ? 'ON' : 'OFF');
@@ -4827,5 +4754,6 @@ function setupInvoicesSync() {
         console.log('═══════════════════════════════');
     });
 </script>
+
 </body>
 </html>
